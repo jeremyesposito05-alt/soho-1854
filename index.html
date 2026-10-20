@@ -2561,7 +2561,7 @@ function chargerImages(){
  for (const el of ouv.querySelectorAll('[data-img]')){
   const im = new Image(); im.alt = '';
   // on accepte le fichier en .png, .webp ou .jpg, quel que soit le nom donné dans le code
-  const base = el.dataset.img.replace(/.w+$/, ''), essais = ['.png', '.webp', '.jpg'].map(x => base + x);
+  const base = el.dataset.img.replace(/\.\w+$/, ''), essais = ['.png', '.webp', '.jpg'].map(x => base + x);
   im.onload = () => { if (el.isConnected) el.append(im); };
   im.onerror = () => { if (essais.length) im.src = essais.shift(); };
   im.src = essais.shift();
