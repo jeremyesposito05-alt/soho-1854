@@ -121,7 +121,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 </head><body>
 <main id="viewport"><canvas id="scene" width="1200" height="640" tabindex="0" aria-label="Soho, quartier explorable. Cliquez pour marcher ou utilisez les flèches et ZQSD. Espace pour parler à un témoin voisin."></canvas></main>
 <div class="hud"><section class="identity plate" aria-label="Lieu et heure"><h1>SOHO <span>· 1854</span></h1><div id="location">Broad Street</div><div class="clockline"><span id="clock">Vendredi 1 septembre · 08 h 00</span><span id="period">Le matin</span></div></section><nav class="nav" aria-label="Menu du jeu"><button id="carnet-button" aria-haspopup="dialog" title="Ouvrir le carnet (touche C)">Carnet (0)</button><button id="menu-button" aria-haspopup="dialog">⚙ Paramètres</button></nav><button id="startup-retry" hidden>Réessayer le chargement</button><p id="status" class="toast plate" role="status">Chargement du quartier…</p><button id="action" class="action" hidden><kbd>Espace</kbd><span><small>Interagir</small><span id="nearby"></span></span></button><div id="dpad" class="dpad" aria-label="Commandes tactiles"><button data-dir="0,-1" aria-label="Monter">↑</button><button data-dir="-1,0" aria-label="Aller à gauche">←</button><button data-dir="0,1" aria-label="Descendre">↓</button><button data-dir="1,0" aria-label="Aller à droite">→</button></div></div>
-<dialog id="menu" aria-labelledby="menu-title"><header class="menuhead"><div><div class="badge">La marche est en pause</div><h2 id="menu-title">Paramètres</h2></div><button id="menu-close" aria-label="Fermer le menu">×</button></header><div class="group-title">Laisser passer le temps</div><div class="row buttons"><button id="wait">Attendre 30 min</button><button id="wait2">+ 2 heures</button></div><div class="row"><label for="until">Attendre jusqu'à</label><select id="until"><option value="">Choisir…</option><option value="6">06 h</option><option value="8">08 h</option><option value="12">12 h</option><option value="18">18 h</option><option value="19">19 h</option><option value="21">21 h</option><option value="23">23 h</option></select></div><section class="group"><div class="group-title">Vue et ambiance</div><div class="row"><label for="zoom">Distance de la caméra</label><select id="zoom"><option value="1.1" selected>Rapprochée · ×1,1</option><option value="1.25">Très rapprochée · ×1,25</option><option value="1">Échelle ×1</option><option value="0.95">Plus large · ×0,95</option><option value="0.75">Très large · ×0,75</option></select></div><div class="row buttons"><button id="map" aria-pressed="false">Quartier</button></div><p class="fine">Les vues larges affichent davantage de décor. La vue rapprochée est conseillée pour explorer.</p><div class="row"><label for="frame-rate">Animations</label><select id="frame-rate"><option value="60" selected>Fluides</option><option value="30">Économes</option></select></div><label class="check" for="atmosphere">Brumes et fumées<input id="atmosphere" type="checkbox" checked></label><label class="check" for="weather-motion">Animer brumes et nuages<input id="weather-motion" type="checkbox" checked></label><label class="check" for="touch-controls">Afficher les flèches tactiles<input id="touch-controls" type="checkbox"></label><label class="check" for="all-markers">Repérer tous les témoins<input id="all-markers" type="checkbox"></label><div class="row buttons"><button id="fullscreen">Plein écran</button><button id="labels" aria-pressed="false">Noms des lieux</button></div></section><section class="group"><details><summary>Comment explorer ?</summary><p>Cliquez sur les pavés pour marcher, ou sur un témoin pour le rejoindre. Les flèches et ZQSD permettent aussi de se déplacer. Espace permet de parler. Votre personnage porte une écharpe rouge.</p><p>Le temps avance avec vos pas ou quand vous attendez. Les témoins suivent leurs horaires ; leurs trajets de promenade restent ceux d'une démonstration. Les repères des témoins apparaissent à proximité ; le menu permet de tous les afficher. Les intérieurs seront préparés dans une prochaine étape.</p></details><details id="schedule"><summary>Les témoins du quartier</summary><ul id="witnesses"></ul></details><details><summary>Réglages de vérification</summary><div class="row buttons"><button id="debug" aria-pressed="false">Voir les passages</button><button id="reset">Recommencer</button></div><p class="fine">Les contours verts montrent le sol praticable. Le quartier complet est disponible. Les contours montrent tout le sol praticable. Les intérieurs seront préparés ensuite.</p></details></section></dialog>
+<dialog id="menu" aria-labelledby="menu-title"><header class="menuhead"><div><div class="badge">La marche est en pause</div><h2 id="menu-title">Paramètres</h2></div><button id="menu-close" aria-label="Fermer le menu">×</button></header><div class="group-title">Laisser passer le temps</div><div class="row buttons"><button id="wait">Attendre 30 min</button><button id="wait2">+ 2 heures</button></div><div class="row"><label for="until">Attendre jusqu'à</label><select id="until"><option value="">Choisir…</option><option value="6">06 h</option><option value="8">08 h</option><option value="12">12 h</option><option value="18">18 h</option><option value="19">19 h</option><option value="21">21 h</option><option value="23">23 h</option></select></div><section class="group"><div class="group-title">Musique</div><div class="row"><label for="musique">Volume</label><select id="musique"><option value="0">Coupée</option><option value="0.2">Très douce</option><option value="0.35">Douce</option><option value="0.6">Normale</option><option value="1">Forte</option></select></div><p class="fine">Une musique le jour, une autre la nuit (de 20 h à 6 h). Elle démarre au premier geste.</p></section><section class="group"><div class="group-title">Vue et ambiance</div><div class="row"><label for="zoom">Distance de la caméra</label><select id="zoom"><option value="1.1" selected>Rapprochée · ×1,1</option><option value="1.25">Très rapprochée · ×1,25</option><option value="1">Échelle ×1</option><option value="0.95">Plus large · ×0,95</option><option value="0.75">Très large · ×0,75</option></select></div><div class="row buttons"><button id="map" aria-pressed="false">Quartier</button></div><p class="fine">Les vues larges affichent davantage de décor. La vue rapprochée est conseillée pour explorer.</p><div class="row"><label for="frame-rate">Animations</label><select id="frame-rate"><option value="60" selected>Fluides</option><option value="30">Économes</option></select></div><label class="check" for="atmosphere">Brumes et fumées<input id="atmosphere" type="checkbox" checked></label><label class="check" for="weather-motion">Animer brumes et nuages<input id="weather-motion" type="checkbox" checked></label><label class="check" for="touch-controls">Afficher les flèches tactiles<input id="touch-controls" type="checkbox"></label><label class="check" for="all-markers">Repérer tous les témoins<input id="all-markers" type="checkbox"></label><div class="row buttons"><button id="fullscreen">Plein écran</button><button id="labels" aria-pressed="false">Noms des lieux</button></div></section><section class="group"><details><summary>Comment explorer ?</summary><p>Cliquez sur les pavés pour marcher, ou sur un témoin pour le rejoindre. Les flèches et ZQSD permettent aussi de se déplacer. Espace permet de parler. Votre personnage porte une écharpe rouge.</p><p>Le temps avance avec vos pas ou quand vous attendez. Les témoins suivent leurs horaires ; leurs trajets de promenade restent ceux d'une démonstration. Les repères des témoins apparaissent à proximité ; le menu permet de tous les afficher. Les intérieurs seront préparés dans une prochaine étape.</p></details><details id="schedule"><summary>Les témoins du quartier</summary><ul id="witnesses"></ul></details><details><summary>Réglages de vérification</summary><div class="row buttons"><button id="debug" aria-pressed="false">Voir les passages</button><button id="reset">Recommencer</button></div><p class="fine">Les contours verts montrent le sol praticable. Le quartier complet est disponible. Les contours montrent tout le sol praticable. Les intérieurs seront préparés ensuite.</p></details></section></dialog>
 <dialog id="carnet" aria-labelledby="carnet-titre"><div class="badge">Votre carnet d’enquête</div><button id="carnet-close" class="fermer">Reprendre la marche</button><h2 id="carnet-titre">Carnet d’enquête</h2><section class="methode"><h3>La méthode du docteur Snow</h3><ol><li><strong>Recueillir</strong> : parlez aux habitants, notez ce qu’ils ont vu.</li><li><strong>Classer</strong> : pour chaque indice, dites quelle explication il soutient et laquelle il affaiblit.</li><li><strong>Juger</strong> : un fait vu de ses yeux vaut plus qu’une rumeur.</li><li><strong>Conclure</strong> : rayez les explications que les faits contredisent.</li></ol><p class="reussite">Vous avez réussi quand une seule explication tient debout, appuyée sur plusieurs indices fiables.</p></section><h3>Les explications possibles</h3><div class="grille-wrap"><table class="grille"><thead><tr><th>Explication</th><th>Indices pour</th><th>Indices contre</th><th></th></tr></thead><tbody id="grille-corps"></tbody></table></div><h3>Les indices</h3><div id="carnet-indices"></div><p class="fine"><button id="carnet-reset" class="petit">Effacer le carnet</button> Le carnet est gardé dans ce navigateur.</p></dialog><dialog id="dialogue" aria-labelledby="speaker"><div class="badge">Un témoignage de l'enquête</div><h2 id="speaker"></h2><div id="speech"></div><button id="close">Reprendre la marche</button></dialog>
 <noscript><div class="nojs">Le jeu a besoin de JavaScript pour démarrer. Ouvrez ce fichier dans un navigateur qui autorise JavaScript.</div></noscript>
 <script data-soho="startup">
@@ -2321,6 +2321,66 @@ addEventListener('keydown', e => {
 ui('carnet-reset').onclick = () => { if (!confirm('Effacer tout le carnet et recommencer l’enquête ?')) return; carnet.indices = []; carnet.connues = {eau:true}; carnet.rayees = {}; carnet.vus = {}; sauver(); dessinerCarnet(); majBoutonCarnet(); };
 majBoutonCarnet();
 window.SOHO_ENQUETE = {carnet, ENQUETE, EXPLICATIONS, ouvrirCarnet};
+
+// ============================================================
+// MUSIQUE · une piste de jour, une piste de nuit, fondu au changement (20 oct. 2026)
+// Injecté par reconstruire-html.pl dans la fermeture de jeu.js, comme enquete.js.
+// Nuit musicale : de 20 h à 6 h. Le son ne démarre qu'au premier geste du joueur (règle des navigateurs).
+// Le volume passe par Web Audio : sur iPhone, audio.volume est en lecture seule.
+// ============================================================
+const PISTES = {jour:'audio/jour-broad-street.mp3', nuit:'audio/nuit-beneath-the-iron-gate.mp3'};
+const CLE_SON = 'soho1854-musique';
+let volume = 0.35;
+try { const v = parseFloat(localStorage.getItem(CLE_SON)); if (v >= 0 && v <= 1) volume = v; } catch {}
+const pistes = {};
+let contexte = null, actuelle = null, demarree = false;
+const piste = nom => {
+ if (pistes[nom]) return pistes[nom];
+ const a = new Audio(PISTES[nom]); a.loop = true; a.preload = 'auto';
+ const p = {a, niveau:0, gain:null};
+ if (contexte){ p.gain = contexte.createGain(); p.gain.gain.value = 0; contexte.createMediaElementSource(a).connect(p.gain).connect(contexte.destination); }
+ else a.volume = 0;
+ return pistes[nom] = p;
+};
+const regler = (p, v) => { p.niveau = v; if (p.gain) p.gain.gain.value = v * volume; else p.a.volume = Math.min(1, v * volume); };
+const voulue = () => { const h = (state.minutes / 60) % 24; return h >= 20 || h < 6 ? 'nuit' : 'jour'; };
+function demarrerMusique(){
+ if (demarree || volume === 0) return; demarree = true;
+ try { const AC = window.AudioContext || window.webkitAudioContext; if (AC) contexte = new AC(); } catch { contexte = null; }
+ if (contexte && contexte.state === 'suspended') contexte.resume().catch(() => {});
+ actuelle = voulue(); const p = piste(actuelle); regler(p, 0); p.a.play().catch(() => { demarree = false; });
+}
+// Toutes les 100 ms : on rapproche chaque piste de son niveau cible (fondu de 3 s environ).
+setInterval(() => {
+ if (!demarree) return;
+ const cible = voulue();
+ if (cible !== actuelle){ actuelle = cible; const p = piste(cible); if (p.a.paused) p.a.play().catch(() => {}); }
+ for (const nom in pistes){
+  const p = pistes[nom], but = nom === actuelle ? 1 : 0;
+  if (p.niveau === but) continue;
+  regler(p, but > p.niveau ? Math.min(but, p.niveau + 0.033) : Math.max(but, p.niveau - 0.033));
+  if (p.niveau === 0 && nom !== actuelle){ p.a.pause(); p.a.currentTime = 0; }
+ }
+}, 100);
+// onglet caché : silence ; retour : reprise
+document.addEventListener('visibilitychange', () => {
+ if (!demarree) return;
+ if (document.hidden){ for (const nom in pistes) pistes[nom].a.pause(); }
+ else { const p = pistes[actuelle]; if (p) p.a.play().catch(() => {}); }
+});
+for (const ev of ['pointerdown', 'keydown']) addEventListener(ev, demarrerMusique, {capture:true});
+const choixSon = ui('musique');
+if (choixSon){
+ choixSon.value = String(volume);
+ if (choixSon.value !== String(volume)){ choixSon.append(new Option('Personnalisé', String(volume))); choixSon.value = String(volume); }
+ choixSon.onchange = () => {
+  volume = parseFloat(choixSon.value) || 0;
+  try { localStorage.setItem(CLE_SON, String(volume)); } catch {}
+  if (volume > 0 && !demarree) demarrerMusique();
+  for (const nom in pistes) regler(pistes[nom], pistes[nom].niveau);
+ };
+}
+window.SOHO_MUSIQUE = {pistes, voulue, volume:() => volume, demarree:() => demarree};
 
 window.SOHO_TEST={world:WORLD,openMenu,closeMenu,toggleMap,paused,state,player,camera,viewport,canvas:cv,layout:LAYOUT,npcs,DATA,floor,nearest,findPath,blocked,worldToScreen,screenToWorld,pointers,resolveWalkGoal,moveTo,goToPerson,talk,changeTime,reset,draw,step,resize,shouldPaint,placeEntry,layoutLabels,visible:()=>visibleActors,pump,pumps,keys,markerOpacity,layoutStreetLabels,reducedMotion,visualStats:()=>WORLD.decor?.stats()};
 reset();resize();requestAnimationFrame(frame);
