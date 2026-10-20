@@ -4,7 +4,7 @@
 :root{color-scheme:dark;--paper:#eadfc8;--ink:#312920;--muted:#bdb09a;--line:#c2a77955}*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#27251e;color:var(--paper);font:14px/1.5 Georgia,"Times New Roman",serif}button,select{font:12px/1.3 system-ui,sans-serif;cursor:pointer}button,select{border:1px solid var(--line);border-radius:5px;background:#302a22e8;color:var(--paper);padding:10px 12px;min-height:40px}button:hover,select:hover{background:#514535}button:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid #e6c88a;outline-offset:3px}canvas:focus-visible{outline:none}button[aria-pressed="true"]{background:#ad9364;color:#201b15}button:disabled{opacity:.5;cursor:default}#viewport{position:fixed;inset:0;background:#27251e}canvas{display:block;width:100%;height:100%;touch-action:none;cursor:crosshair}.hud{position:fixed;z-index:2;pointer-events:none;inset:0}.hud>*{pointer-events:auto}.plate{background:#28231cdd;border:1px solid #c1a77744;box-shadow:0 3px 20px #0004;border-radius:6px;backdrop-filter:blur(8px)}.identity{position:absolute;top:max(16px,env(safe-area-inset-top));left:max(16px,env(safe-area-inset-left));padding:10px 15px;max-width:320px}.identity h1{margin:0;font:18px/1.2 Georgia,serif;letter-spacing:.06em}.identity h1 span{font-size:13px;color:#c5b493}.identity #location{margin:4px 0 6px;color:#e2d0ad;font-style:italic;font-size:12px}.clockline{display:flex;gap:12px;align-items:center;border-top:1px solid #c1a77730;padding-top:6px;font:11px/1.4 system-ui,sans-serif;color:#d5c4a7}#period{color:#ad9f88;font-size:10px}.nav{position:absolute;right:max(16px,env(safe-area-inset-right));top:max(16px,env(safe-area-inset-top));display:flex;gap:7px}.nav button{box-shadow:0 3px 15px #0004;background:#28231ce8}#menu-button{font-weight:600}.toast{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);max-width:min(540px,calc(100vw - 32px));margin:0;padding:9px 15px;text-align:center;font:12px/1.5 system-ui,sans-serif;pointer-events:none}.action{position:absolute;left:50%;bottom:max(28px,env(safe-area-inset-bottom));transform:translateX(-50%);display:flex;gap:11px;align-items:center;max-width:calc(100vw - 32px);white-space:normal;text-align:left;background:#e8dbc1f2;color:#352c20;border-color:#a58c60;box-shadow:0 3px 26px #0005;padding:10px 16px}.action kbd{padding:3px 6px;border:1px solid #947c54;border-radius:3px;font:11px system-ui,sans-serif}.action small{display:block;font-size:10px;color:#746044}.dpad{position:absolute;left:max(18px,env(safe-area-inset-left));bottom:max(20px,env(safe-area-inset-bottom));display:none;grid-template-columns:repeat(3,42px);gap:4px}.dpad button{height:42px;min-height:42px;padding:0;font:20px/1 system-ui,sans-serif;background:#29231cce;touch-action:none;user-select:none}.dpad button:first-child{grid-column:2}.dpad button:nth-child(2){grid-column:1}.dpad.forced{display:grid}dialog{color-scheme:light;background:#e9dfcb;color:var(--ink);border:1px solid #9b835b;border-radius:9px;box-shadow:0 15px 80px #0008;width:calc(100% - 32px);max-width:560px;max-height:calc(100dvh - 48px);padding:25px 28px;overflow:auto;overscroll-behavior:contain}dialog::backdrop{background:#13110d55}dialog h2{font-weight:400;font-size:25px;line-height:1.2;margin:0 0 15px}dialog p{margin:0 0 14px}dialog button,dialog select{background:#f2e7d1;color:#3c3022;border-color:#ae956e}dialog button:hover,dialog select:hover{background:#fff4dd}dialog button[aria-pressed="true"]{background:#6c5839;color:#fff2d9}dialog .badge{color:#8f7251;font:10px/1.5 system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;margin:0 0 6px}#dialogue>button{float:right}#menu{position:fixed;left:auto;right:max(16px,env(safe-area-inset-right));top:max(16px,env(safe-area-inset-top));bottom:auto;margin:0;max-width:355px;padding:21px 23px;font:12px/1.5 system-ui,sans-serif}#menu h2{font:25px Georgia,serif;margin:0}.menuhead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:21px}.menuhead button{font-size:18px;min-height:32px;padding:3px 10px}.group{padding-top:15px;margin-top:15px;border-top:1px solid #b9a17c88}.group-title{font:italic 16px Georgia,serif;margin-bottom:10px;color:#725d41}.row{display:flex;align-items:center;gap:8px;margin:8px 0}.row>label{flex:1}.row select{max-width:150px}.row.buttons{flex-wrap:wrap}.row.buttons button{flex:1;white-space:nowrap}.check{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:12px 0}.check input{accent-color:#6b5538;width:17px;height:17px;margin:0}summary{cursor:pointer;color:#6f573b;padding:6px 0}details p{font:12px/1.6 system-ui,sans-serif;margin:9px 0;color:#715d43}#witnesses{padding:3px 0 0 15px;margin:0;color:#715d43;font-size:11px}#witnesses li{margin:6px 0}.fine{color:#8a7351;font:10px/1.5 system-ui,sans-serif}#menu .fine{margin:8px 0 0}#status:not([hidden])~#action:not([hidden]){bottom:77px}[hidden]{display:none!important}
 @media(pointer:coarse){.dpad{display:grid}.toast{bottom:170px}.action{bottom:25px;left:auto;right:14px;transform:none;max-width:calc(100vw - 180px)}.action kbd{display:none}#status:not([hidden])~#action:not([hidden]){bottom:25px}}
 #carnet{max-width:720px;font:14px/1.5 system-ui,sans-serif}#carnet h2{font:25px Georgia,serif}#carnet h3{font:italic 17px Georgia,serif;color:#5e4a30;margin:20px 0 8px}#carnet .fermer{float:right}.methode{background:#f4ecda;border-left:4px solid #8f7251;padding:10px 14px;border-radius:4px}.methode h3{margin-top:0}.methode ol{margin:0;padding-left:20px}.methode li{margin:3px 0}.reussite{margin:8px 0 0!important;color:#5e4a30;font-style:italic}.grille-wrap{overflow-x:auto}.grille{border-collapse:collapse;width:100%;font-size:13px}.grille th,.grille td{border-bottom:1px solid #b9a17c88;padding:6px 8px;text-align:left}.grille th{font-weight:600;color:#5e4a30}.grille button{min-height:30px;padding:4px 9px}.grille tr.rayee td:first-child{text-decoration:line-through;color:#8a7351}.grille tr.inconnue td{color:#9a8768;font-style:italic}.indice{border:1px solid #c2a779;border-radius:6px;padding:10px 12px;margin:0 0 10px;background:#f6efe0}.indice .texte{margin:0 0 3px;font-weight:600}.indice .source{margin:0 0 8px;color:#715d43;font-size:12px}.indice label{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:5px 0;font-size:13px}.indice label small{color:#8a7351}.indice select{max-width:52%;min-height:34px;padding:5px 8px}.indice textarea{width:100%;min-height:44px;margin-top:6px;font:13px/1.4 system-ui,sans-serif;border:1px solid #c2a779;border-radius:4px;padding:6px;background:#fffaf0;color:#3c3022}.vide{color:#715d43;font-style:italic}.carnet-note{border-top:1px solid #b9a17c88;padding-top:10px;color:#6c5839;font:13px/1.5 system-ui,sans-serif}button.petit{min-height:30px;padding:4px 9px}@media(max-width:650px){.indice label{flex-direction:column;align-items:stretch}.indice select{max-width:100%}}
-#musique,#bruitages{flex:1.4;min-width:0;width:100%;accent-color:#6b5538;min-height:28px;cursor:pointer}#musique-val,#bruitages-val{flex:none;width:44px;white-space:nowrap;font-size:12px;text-align:right;color:#715d43;font-variant-numeric:tabular-nums}@media(max-width:650px){.identity{left:10px;top:10px;padding:8px 10px;max-width:calc(100vw - 146px)}.identity h1{font-size:16px}.identity h1 span{font-size:11px}.identity #location{font-size:11px;margin:3px 0 5px}.clockline{display:block;font-size:10px}#period{display:none}.nav{right:10px;top:10px;gap:5px}.nav button{font-size:11px;padding:9px 10px;min-height:37px}.toast{font-size:11px}.action{font-size:11px;padding:9px 11px}#menu{right:10px;top:10px;max-height:calc(100dvh - 20px);max-width:calc(100vw - 20px);padding:20px}dialog{padding:22px}.clockline{max-width:160px}}
+#musique,#bruitages{flex:1.4;min-width:0;width:100%;accent-color:#6b5538;min-height:28px;cursor:pointer}#musique-val,#bruitages-val{flex:none;width:44px;white-space:nowrap;font-size:12px;text-align:right;color:#715d43;font-variant-numeric:tabular-nums}.ouverture{position:fixed;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;padding:16px;background:radial-gradient(ellipse at center,#1d1a14b0,#0f0d0af2);backdrop-filter:blur(5px) sepia(.35);-webkit-backdrop-filter:blur(5px) sepia(.35);overflow:auto}.ouverture.titre{background:linear-gradient(#0f0d0a40,#0f0d0ad0),url(images/ouverture/fond-menu.jpg) center/cover no-repeat,radial-gradient(ellipse at center,#1d1a14b0,#0f0d0af2)}.ouv-carte{width:100%;max-width:640px;max-height:calc(100dvh - 32px);overflow:auto;background:linear-gradient(160deg,#efe6d2,#e2d4b6);color:#312920;border:1px solid #9b835b;border-radius:6px;box-shadow:0 20px 90px #000c,inset 0 0 0 6px #e9dfcb,inset 0 0 0 7px #b49a6e;padding:34px 38px;font:15px/1.55 Georgia,"Libre Caslon Text",serif;text-align:center}.ouv-carte h2{font:400 28px/1.2 "Libre Caslon Text",Georgia,serif;margin:4px 0 14px;color:#2a2219}.ouv-sur{font:12px/1 system-ui,sans-serif;letter-spacing:.3em;text-transform:uppercase;color:#8f7251;margin:6px 0 10px}.ouv-titre{font:400 48px/1.05 "Libre Caslon Text",Georgia,serif;margin:0;letter-spacing:.02em;color:#231c14}.ouv-sous{font-style:italic;color:#6c5839;margin:10px 0 26px}.ouv-boutons{display:flex;flex-direction:column;gap:10px;max-width:320px;margin:0 auto}.ouverture button{font:15px/1.3 Georgia,serif;background:#f2e7d1;color:#3c3022;border:1px solid #ae956e;border-radius:5px;padding:11px 16px;min-height:46px;cursor:pointer}.ouverture button:hover{background:#fff4dd}.ouverture button:focus-visible{outline:2px solid #6c5839;outline-offset:3px}.ouverture button:disabled{opacity:.5;cursor:default}.ouverture button.ouv-principal{background:#4b3c28;color:#f6ecd6;border-color:#4b3c28}.ouverture button.ouv-principal:hover{background:#5e4b33}.ouverture button small{display:block;font:12px system-ui,sans-serif;opacity:.8;margin-top:2px}.ouverture button.ouv-discret{background:transparent;border-color:transparent;text-decoration:underline;color:#6c5839}.ouv-etat{font:12px system-ui,sans-serif;color:#8a7351;margin:14px 0 0;min-height:1em}.ouv-etape{font:11px/1.4 system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#8f7251;margin:0}.ouv-intro{text-align:left;margin:0 0 10px}.ouv-consigne{text-align:left;font:14px/1.5 system-ui,sans-serif;color:#5e4a30;margin:10px 0 16px}.ouv-persos{display:grid;grid-template-columns:1fr 1fr;gap:14px}.ouverture button.ouv-perso{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:16px 14px;background:#f6efe0}.ouv-portrait{position:relative;width:96px;height:96px;border-radius:50%;overflow:hidden;background:radial-gradient(circle at 35% 30%,#d9c9a6,#9b835b);border:2px solid #7a6545;display:grid;place-items:center}.ouv-portrait span{font:400 44px "Libre Caslon Text",Georgia,serif;color:#f6ecd6}.ouv-portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.ouv-perso-nom{font:400 20px "Libre Caslon Text",Georgia,serif;color:#2a2219}.ouv-perso-role{font:12px system-ui,sans-serif;color:#8f7251;letter-spacing:.04em}.ouv-perso-texte{font:13px/1.5 system-ui,sans-serif;color:#4a3c2b}.ouv-lignes{text-align:left;margin:0 0 6px;padding-left:20px}.ouv-lignes li{margin:0 0 10px}.ouv-lignes strong{color:#6b3a12}.ouv-points{display:flex;justify-content:center;gap:7px;margin:8px 0 4px}.ouv-points span{width:8px;height:8px;border-radius:50%;background:#c2a779}.ouv-points span.actif{background:#4b3c28}.ouv-nav{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:18px;flex-wrap:wrap}.ouv-nav .ouv-principal{margin-left:auto}.ouv-lettre{text-align:left;background:#fbf5e6;border:1px solid #d3bf98;padding:18px 22px;margin:10px 0 6px;font:italic 15px/1.6 "Libre Caslon Text",Georgia,serif;box-shadow:2px 3px 0 #c9b48b}.ouv-lettre p{margin:0 0 9px}.ouv-adresse{text-align:right;font-size:13px;color:#7a6545}.ouv-signature{text-align:right;margin-top:12px!important}.ouv-credits{text-align:left;font:13px/1.5 system-ui,sans-serif;margin:0}.ouv-credits dt{font:italic 16px Georgia,serif;color:#5e4a30;margin-top:12px}.ouv-credits dd{margin:2px 0 0}@media(max-width:650px){.ouv-carte{padding:24px 20px}.ouv-titre{font-size:36px}.ouv-carte h2{font-size:23px}.ouv-persos{grid-template-columns:1fr}.ouverture button.ouv-perso{flex-direction:row;flex-wrap:wrap;text-align:left;justify-content:flex-start}.ouv-portrait{width:64px;height:64px}.ouv-portrait span{font-size:30px}.ouv-perso-texte{flex-basis:100%}}@media(max-width:650px){.identity{left:10px;top:10px;padding:8px 10px;max-width:calc(100vw - 146px)}.identity h1{font-size:16px}.identity h1 span{font-size:11px}.identity #location{font-size:11px;margin:3px 0 5px}.clockline{display:block;font-size:10px}#period{display:none}.nav{right:10px;top:10px;gap:5px}.nav button{font-size:11px;padding:9px 10px;min-height:37px}.toast{font-size:11px}.action{font-size:11px;padding:9px 11px}#menu{right:10px;top:10px;max-height:calc(100dvh - 20px);max-width:calc(100vw - 20px);padding:20px}dialog{padding:22px}.clockline{max-width:160px}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}.plate{backdrop-filter:none}}
 #startup-retry{position:absolute;left:50%;bottom:92px;transform:translateX(-50%)}#status{overflow-wrap:anywhere}noscript .nojs{position:fixed;z-index:10;left:10%;right:10%;top:40%;padding:24px;background:#eadfc8;color:#312920;border:1px solid #947c54}
 
@@ -121,7 +121,8 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 </head><body>
 <main id="viewport"><canvas id="scene" width="1200" height="640" tabindex="0" aria-label="Soho, quartier explorable. Cliquez pour marcher ou utilisez les flèches et ZQSD. Espace pour parler à un témoin voisin."></canvas></main>
 <div class="hud"><section class="identity plate" aria-label="Lieu et heure"><h1>SOHO <span>· 1854</span></h1><div id="location">Broad Street</div><div class="clockline"><span id="clock">Vendredi 1 septembre · 08 h 00</span><span id="period">Le matin</span></div></section><nav class="nav" aria-label="Menu du jeu"><button id="carnet-button" aria-haspopup="dialog" title="Ouvrir le carnet (touche C)">Carnet (0)</button><button id="menu-button" aria-haspopup="dialog">⚙ Paramètres</button></nav><button id="startup-retry" hidden>Réessayer le chargement</button><p id="status" class="toast plate" role="status">Chargement du quartier…</p><button id="action" class="action" hidden><kbd>Espace</kbd><span><small>Interagir</small><span id="nearby"></span></span></button><div id="dpad" class="dpad" aria-label="Commandes tactiles"><button data-dir="0,-1" aria-label="Monter">↑</button><button data-dir="-1,0" aria-label="Aller à gauche">←</button><button data-dir="0,1" aria-label="Descendre">↓</button><button data-dir="1,0" aria-label="Aller à droite">→</button></div></div>
-<dialog id="menu" aria-labelledby="menu-title"><header class="menuhead"><div><div class="badge">La marche est en pause</div><h2 id="menu-title">Paramètres</h2></div><button id="menu-close" aria-label="Fermer le menu">×</button></header><div class="group-title">Laisser passer le temps</div><div class="row buttons"><button id="wait">Attendre 30 min</button><button id="wait2">+ 2 heures</button></div><div class="row"><label for="until">Attendre jusqu'à</label><select id="until"><option value="">Choisir…</option><option value="6">06 h</option><option value="8">08 h</option><option value="12">12 h</option><option value="18">18 h</option><option value="19">19 h</option><option value="21">21 h</option><option value="23">23 h</option></select></div><section class="group"><div class="group-title">Son</div><div class="row"><label for="musique">Musique</label><input type="range" id="musique" min="0" max="100" step="5" value="35"><output id="musique-val" for="musique">35 %</output></div><div class="row"><label for="bruitages">Bruitages</label><input type="range" id="bruitages" min="0" max="100" step="5" value="50"><output id="bruitages-val" for="bruitages">50 %</output></div><p class="fine">Une musique le jour, une autre la nuit (de 20 h à 6 h), et des bruits du quartier de temps en temps. Le son démarre au premier geste.</p></section><section class="group"><div class="group-title">Vue et ambiance</div><div class="row"><label for="zoom">Distance de la caméra</label><select id="zoom"><option value="1.1" selected>Rapprochée · ×1,1</option><option value="1.25">Très rapprochée · ×1,25</option><option value="1">Échelle ×1</option><option value="0.95">Plus large · ×0,95</option><option value="0.75">Très large · ×0,75</option></select></div><div class="row buttons"><button id="map" aria-pressed="false">Quartier</button></div><p class="fine">Les vues larges affichent davantage de décor. La vue rapprochée est conseillée pour explorer.</p><div class="row"><label for="frame-rate">Animations</label><select id="frame-rate"><option value="60" selected>Fluides</option><option value="30">Économes</option></select></div><label class="check" for="atmosphere">Brumes et fumées<input id="atmosphere" type="checkbox" checked></label><label class="check" for="weather-motion">Animer brumes et nuages<input id="weather-motion" type="checkbox" checked></label><label class="check" for="touch-controls">Afficher les flèches tactiles<input id="touch-controls" type="checkbox"></label><label class="check" for="all-markers">Repérer tous les témoins<input id="all-markers" type="checkbox"></label><div class="row buttons"><button id="fullscreen">Plein écran</button><button id="labels" aria-pressed="false">Noms des lieux</button></div></section><section class="group"><details><summary>Comment explorer ?</summary><p>Cliquez sur les pavés pour marcher, ou sur un témoin pour le rejoindre. Les flèches et ZQSD permettent aussi de se déplacer. Espace permet de parler. Votre personnage porte une écharpe rouge.</p><p>Le temps avance avec vos pas ou quand vous attendez. Les témoins suivent leurs horaires ; leurs trajets de promenade restent ceux d'une démonstration. Les repères des témoins apparaissent à proximité ; le menu permet de tous les afficher. Les intérieurs seront préparés dans une prochaine étape.</p></details><details id="schedule"><summary>Les témoins du quartier</summary><ul id="witnesses"></ul></details><details><summary>Réglages de vérification</summary><div class="row buttons"><button id="debug" aria-pressed="false">Voir les passages</button><button id="reset">Recommencer</button></div><p class="fine">Les contours verts montrent le sol praticable. Le quartier complet est disponible. Les contours montrent tout le sol praticable. Les intérieurs seront préparés ensuite.</p></details></section></dialog>
+<div id="ouverture" class="ouverture" role="dialog" aria-modal="true" aria-label="Choléra à Soho" hidden></div>
+<dialog id="menu" aria-labelledby="menu-title"><header class="menuhead"><div><div class="badge">La marche est en pause</div><h2 id="menu-title">Paramètres</h2></div><button id="menu-close" aria-label="Fermer le menu">×</button></header><div class="group-title">Laisser passer le temps</div><div class="row buttons"><button id="wait">Attendre 30 min</button><button id="wait2">+ 2 heures</button></div><div class="row"><label for="until">Attendre jusqu'à</label><select id="until"><option value="">Choisir…</option><option value="6">06 h</option><option value="8">08 h</option><option value="12">12 h</option><option value="18">18 h</option><option value="19">19 h</option><option value="21">21 h</option><option value="23">23 h</option></select></div><section class="group"><div class="group-title">Son</div><div class="row"><label for="musique">Musique</label><input type="range" id="musique" min="0" max="100" step="5" value="35"><output id="musique-val" for="musique">35 %</output></div><div class="row"><label for="bruitages">Bruitages</label><input type="range" id="bruitages" min="0" max="100" step="5" value="50"><output id="bruitages-val" for="bruitages">50 %</output></div><p class="fine">Une musique le jour, une autre la nuit (de 20 h à 6 h), et des bruits du quartier de temps en temps. Le son démarre au premier geste.</p></section><section class="group"><div class="group-title">Vue et ambiance</div><div class="row"><label for="zoom">Distance de la caméra</label><select id="zoom"><option value="1.1" selected>Rapprochée · ×1,1</option><option value="1.25">Très rapprochée · ×1,25</option><option value="1">Échelle ×1</option><option value="0.95">Plus large · ×0,95</option><option value="0.75">Très large · ×0,75</option></select></div><div class="row buttons"><button id="map" aria-pressed="false">Quartier</button></div><p class="fine">Les vues larges affichent davantage de décor. La vue rapprochée est conseillée pour explorer.</p><div class="row"><label for="frame-rate">Animations</label><select id="frame-rate"><option value="60" selected>Fluides</option><option value="30">Économes</option></select></div><label class="check" for="atmosphere">Brumes et fumées<input id="atmosphere" type="checkbox" checked></label><label class="check" for="weather-motion">Animer brumes et nuages<input id="weather-motion" type="checkbox" checked></label><label class="check" for="touch-controls">Afficher les flèches tactiles<input id="touch-controls" type="checkbox"></label><label class="check" for="all-markers">Repérer tous les témoins<input id="all-markers" type="checkbox"></label><div class="row buttons"><button id="fullscreen">Plein écran</button><button id="labels" aria-pressed="false">Noms des lieux</button></div></section><section class="group"><details><summary>Comment explorer ?</summary><p>Cliquez sur les pavés pour marcher, ou sur un témoin pour le rejoindre. Les flèches et ZQSD permettent aussi de se déplacer. Espace permet de parler. Votre personnage porte une écharpe rouge.</p><p>Le temps avance avec vos pas ou quand vous attendez. Les témoins suivent leurs horaires ; leurs trajets de promenade restent ceux d'une démonstration. Les repères des témoins apparaissent à proximité ; le menu permet de tous les afficher. Les intérieurs seront préparés dans une prochaine étape.</p></details><details id="schedule"><summary>Les témoins du quartier</summary><ul id="witnesses"></ul></details><details><summary>Réglages de vérification</summary><div class="row buttons"><button id="debug" aria-pressed="false">Voir les passages</button><button id="reset">Recommencer</button></div><p class="fine">Les contours verts montrent le sol praticable. Le quartier complet est disponible. Les contours montrent tout le sol praticable. Les intérieurs seront préparés ensuite.</p></details></section><section class="group"><div class="row buttons"><button id="retour-titre">Revenir à l’écran titre</button></div><p class="fine">Votre enquête est gardée : choisissez « Continuer l’enquête » pour la reprendre.</p></section></dialog>
 <dialog id="carnet" aria-labelledby="carnet-titre"><div class="badge">Votre carnet d’enquête</div><button id="carnet-close" class="fermer">Reprendre la marche</button><h2 id="carnet-titre">Carnet d’enquête</h2><section class="methode"><h3>La méthode du docteur Snow</h3><ol><li><strong>Recueillir</strong> : parlez aux habitants, notez ce qu’ils ont vu.</li><li><strong>Classer</strong> : pour chaque indice, dites quelle explication il soutient et laquelle il affaiblit.</li><li><strong>Juger</strong> : un fait vu de ses yeux vaut plus qu’une rumeur.</li><li><strong>Conclure</strong> : rayez les explications que les faits contredisent.</li></ol><p class="reussite">Vous avez réussi quand une seule explication tient debout, appuyée sur plusieurs indices fiables.</p></section><h3>Les explications possibles</h3><div class="grille-wrap"><table class="grille"><thead><tr><th>Explication</th><th>Indices pour</th><th>Indices contre</th><th></th></tr></thead><tbody id="grille-corps"></tbody></table></div><h3>Les indices</h3><div id="carnet-indices"></div><p class="fine"><button id="carnet-reset" class="petit">Effacer le carnet</button> Le carnet est gardé dans ce navigateur.</p></dialog><dialog id="dialogue" aria-labelledby="speaker"><div class="badge">Un témoignage de l'enquête</div><h2 id="speaker"></h2><div id="speech"></div><button id="close">Reprendre la marche</button></dialog>
 <noscript><div class="nojs">Le jeu a besoin de JavaScript pour démarrer. Ouvrez ce fichier dans un navigateur qui autorise JavaScript.</div></noscript>
 <script data-soho="startup">
@@ -2306,7 +2307,7 @@ function dessinerGrille(){
  }
 }
 function ouvrirCarnet(){
- if (ui('dialogue').open || ui('menu').open) return;
+ if (ui('dialogue').open || ui('menu').open || (ui('ouverture') && !ui('ouverture').hidden)) return;
  keys.clear(); stop(); dessinerCarnet(); ui('carnet').showModal();
  if (!carnet.methodeVue){ carnet.methodeVue = true; sauver(); }
 }
@@ -2472,6 +2473,158 @@ if (choixBruits){
  };
 }
 window.SOHO_MUSIQUE = {pistes, voulue, volume:() => volume, demarree:() => demarree, BRUITS, CLOCHE, ECRITURE, jouerBruit};
+
+// ============================================================
+// OUVERTURE · écran titre, choix du personnage, contexte, lettre de Snow, crédits (21 oct. 2026)
+// Injecté par reconstruire-html.pl dans la fermeture de jeu.js, après enquete.js et musique.js.
+// Tant que l'ouverture est affichée, elle couvre le jeu et bloque le clavier ; la ville vit derrière, floutée.
+// Faits : Snow 1855 ; recensement de 1851 ; registre médical britannique (Blackwell, 1859).
+// ============================================================
+const CLE_PARTIE = 'soho1854-partie';
+let partie = null;
+try { partie = JSON.parse(localStorage.getItem(CLE_PARTIE) || 'null'); } catch {}
+const sauverPartie = () => { try { localStorage.setItem(CLE_PARTIE, JSON.stringify(partie)); } catch {} };
+
+// Les portraits viendront de ChatGPT ; en attendant, un médaillon avec l'initiale.
+const PERSONNAGES = {
+ thomas: {nom:'Thomas Hale', age:'16 ans', role:'L’apprenti du docteur Snow', portrait:'images/ouverture/portrait-thomas.png',
+  histoire:['Snow vous forme comme on l’a formé lui-même : en le suivant chez les malades.',
+            'Vous savez préparer un remède et tenir une conversation avec un inconnu.',
+            'Vous voulez devenir médecin.']},
+ emily: {nom:'Emily Hale', age:'17 ans', role:'L’assistante du docteur Snow', portrait:'images/ouverture/portrait-emily.png',
+  histoire:['Vous tenez les registres de Snow et recopiez ses notes.',
+            'Vous remarquez les détails que les autres oublient.',
+            'Vous voulez devenir médecin, mais en 1854 aucune femme n’en a le droit en Grande-Bretagne.']},
+};
+const HISTOIRE_COMMUNE = 'Thomas et Emily sont frère et sœur. Leurs parents sont morts du choléra en 1849, à Londres. Le docteur John Snow, un ami de la famille, les a recueillis chez lui.';
+
+// Quatre cartes, une idée chacune. Phrases courtes, mots du cours en gras.
+const CONTEXTE = [
+ {titre:'Londres, 1854', lignes:[
+  'Londres compte plus de deux millions d’habitants. C’est la plus grande ville du monde.',
+  'À Soho, les familles pauvres s’entassent dans des maisons étroites, souvent une famille par pièce.',
+  'Il n’y a pas d’eau courante. On va chercher l’eau aux pompes de la rue.']},
+ {titre:'Le choléra', lignes:[
+  'Le choléra est une maladie venue d’Inde. Elle provoque des diarrhées et des vomissements très violents.',
+  'Un malade peut mourir en moins d’un jour.',
+  'En 1849, une **épidémie** de choléra a tué plus de 50 000 personnes en Angleterre.']},
+ {titre:'Ce que l’on croit en 1854', lignes:[
+  'La plupart des médecins pensent que le choléra vient de l’air vicié : le **miasme**.',
+  'Selon eux, les mauvaises odeurs des égouts et des ordures empoisonnent l’air.',
+  'D’autres croient à la **contagion** : la maladie passerait d’un malade à ceux qui l’approchent.']},
+ {titre:'Le docteur John Snow', lignes:[
+  'John Snow est un médecin londonien, né à York en 1813, dans une famille modeste.',
+  'Il est célèbre : en 1853, il a endormi la reine Victoria au chloroforme pour un accouchement.',
+  'Depuis 1849, il défend une idée que presque personne n’accepte : le choléra passe par l’eau.']},
+];
+const LETTRE = perso => [
+ (perso === 'emily' ? 'Emily' : 'Thomas') + ',',
+ 'Depuis 1849, je répète que le choléra passe par l’eau. On m’écoute poliment, puis on parle d’air vicié.',
+ 'Des malades sont signalés autour de Broad Street, à Soho. Si une épidémie éclate, c’est notre chance de comprendre. Et peut-être de sauver des vies.',
+ 'Allez dans le quartier. Parlez aux habitants. Notez tout dans votre carnet, même ce qui semble contredire mon idée.',
+ 'Une idée ne vaut rien sans preuves. Il en faudra assez pour convaincre les autorités de la paroisse.',
+ 'Revenez me voir chaque soir, au 18 Sackville Street.',
+ 'John Snow',
+];
+const CREDITS = [
+ ['Le jeu', 'Conçu pour le cours d’histoire de 9e année (PEI), Collège Alpin Beau Soleil.'],
+ ['L’histoire', 'John Snow, On the Mode of Communication of Cholera, 2e édition, 1855. N. Paneth et al., « A Rivalry of Foulness », American Journal of Public Health, 1998.'],
+ ['Les personnages', 'Thomas et Emily Hale sont inventés. Snow, M. Huggins, M. Eley, M. Gould et le révérend Whitehead ont existé ; leurs paroles sont adaptées de Snow.'],
+ ['Le son', 'Musiques : Broad Street et Beneath the Iron Gate. Bruitages : La Sonothèque (lasonotheque.fr).'],
+ ['La police', 'Libre Caslon Text, licence SIL Open Font License.'],
+];
+
+const ouv = ui('ouverture');
+const gras = t => t.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+const esc = t => t.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const ecran = html => { ouv.classList.remove("titre"); ouv.innerHTML = '<div class="ouv-carte">' + html + '</div>'; const b = ouv.querySelector('[autofocus]') || ouv.querySelector('button'); if (b) b.focus({preventScroll:true}); };
+const medaillon = id => '<div class="ouv-portrait" data-perso="' + id + '"><img alt="" src="' + PERSONNAGES[id].portrait + '" onerror="this.remove()"><span>' + PERSONNAGES[id].nom[0] + '</span></div>';
+
+function ecranTitre(){
+ const reprise = !!(partie && partie.perso);
+ ecran('<p class="ouv-sur">Londres · été 1854</p><h1 class="ouv-titre">Choléra à Soho</h1>'
+  + '<p class="ouv-sous">Qu’est-ce qui tue les habitants de Soho ?</p>'
+  + '<div class="ouv-boutons">'
+  + (reprise ? '<button class="ouv-principal" data-act="continuer" autofocus>Continuer l’enquête<small>' + esc(PERSONNAGES[partie.perso].nom) + '</small></button>' : '')
+  + '<button class="' + (reprise ? '' : 'ouv-principal') + '" data-act="nouvelle"' + (reprise ? '' : ' autofocus') + '>Nouvelle enquête</button>'
+  + '<button data-act="parametres">Paramètres</button><button data-act="credits">Crédits et sources</button></div>'
+  + '<p class="ouv-etat" id="ouv-etat"></p>');
+ majEtat(); ouv.classList.add("titre");
+}
+function choixPerso(){
+ const carte = id => { const p = PERSONNAGES[id];
+  return '<button class="ouv-perso" data-act="perso" data-id="' + id + '">' + medaillon(id)
+   + '<span class="ouv-perso-nom">' + p.nom + '</span><span class="ouv-perso-role">' + p.role + ' · ' + p.age + '</span>'
+   + '<span class="ouv-perso-texte">' + p.histoire.map(esc).join(' ') + '</span></button>'; };
+ ecran('<p class="ouv-etape">Étape 1 sur 3</p><h2>Qui êtes-vous ?</h2><p class="ouv-intro">' + esc(HISTOIRE_COMMUNE) + '</p>'
+  + '<p class="ouv-consigne">Choisissez votre personnage. L’enquête est la même ; seules quelques répliques changent.</p>'
+  + '<div class="ouv-persos">' + carte('thomas') + carte('emily') + '</div>'
+  + '<div class="ouv-nav"><button data-act="titre">Retour</button></div>');
+}
+let carteContexte = 0;
+function ecranContexte(){
+ const c = CONTEXTE[carteContexte], n = CONTEXTE.length;
+ ecran('<p class="ouv-etape">Étape 2 sur 3 · Carte ' + (carteContexte + 1) + ' sur ' + n + '</p><h2>' + esc(c.titre) + '</h2>'
+  + '<ul class="ouv-lignes">' + c.lignes.map(l => '<li>' + gras(esc(l)) + '</li>').join('') + '</ul>'
+  + '<div class="ouv-points">' + CONTEXTE.map((_, i) => '<span' + (i === carteContexte ? ' class="actif"' : '') + '></span>').join('') + '</div>'
+  + '<div class="ouv-nav"><button data-act="ctx-prec">Retour</button><button data-act="passer" class="ouv-discret">Passer</button>'
+  + '<button class="ouv-principal" data-act="ctx-suiv" autofocus>' + (carteContexte < n - 1 ? 'Suivant' : 'Lire la lettre de Snow') + '</button></div>');
+}
+function ecranLettre(){
+ const l = LETTRE(partie.perso);
+ ecran('<p class="ouv-etape">Étape 3 sur 3 · Pourquoi vous enquêtez</p><div class="ouv-lettre"><p class="ouv-adresse">18 Sackville Street, Londres</p>'
+  + l.map((t, i) => '<p' + (i === l.length - 1 ? ' class="ouv-signature"' : '') + '>' + esc(t) + '</p>').join('') + '</div>'
+  + '<p class="ouv-consigne"><strong>Votre mission :</strong> découvrir ce qui tue les habitants de Soho, avec des preuves solides.</p>'
+  + '<div class="ouv-nav"><button data-act="ctx-retour">Retour</button><button class="ouv-principal" data-act="commencer" autofocus' + (state.ready ? '' : ' disabled') + '>Commencer l’enquête</button></div>'
+  + '<p class="ouv-etat" id="ouv-etat"></p>');
+ majEtat();
+}
+function ecranCredits(){
+ ecran('<h2>Crédits et sources</h2><dl class="ouv-credits">' + CREDITS.map(([a, b]) => '<dt>' + esc(a) + '</dt><dd>' + esc(b) + '</dd>').join('') + '</dl>'
+  + '<div class="ouv-nav"><button data-act="titre" autofocus>Retour</button></div>');
+}
+// Le quartier se charge pendant qu'on lit : on ne laisse commencer que lorsqu'il est prêt.
+function majEtat(){
+ const e = ui('ouv-etat'); if (!e) return;
+ e.textContent = state.ready ? '' : 'Préparation du quartier… vous pouvez déjà lire.';
+ const b = ouv.querySelector('[data-act="commencer"]'); if (b) b.disabled = !state.ready;
+}
+const attente = setInterval(() => { if (!ouv.hidden) majEtat(); if (state.ready) { majEtat(); clearInterval(attente); } }, 500);
+
+function fermerOuverture(){ ouv.hidden = true; ouv.innerHTML = ''; keys.clear(); cv.focus({preventScroll:true}); draw(); }
+function ouvrirOuverture(){ keys.clear(); stop(); ouv.hidden = false; ecranTitre(); }
+
+ouv.addEventListener('click', e => {
+ const b = e.target.closest('button[data-act]'); if (!b || b.disabled) return;
+ const act = b.dataset.act;
+ if (act === 'titre') ecranTitre();
+ else if (act === 'credits') ecranCredits();
+ else if (act === 'parametres') openMenu();
+ else if (act === 'continuer') fermerOuverture();
+ else if (act === 'nouvelle'){
+  if (partie && partie.perso && !confirm('Commencer une nouvelle enquête ? Votre carnet actuel sera effacé.')) return;
+  choixPerso();
+ }
+ else if (act === 'perso'){ partie = {perso:b.dataset.id, debut:Date.now()}; carteContexte = 0; ecranContexte(); }
+ else if (act === 'ctx-prec'){ if (carteContexte > 0){ carteContexte--; ecranContexte(); } else choixPerso(); }
+ else if (act === 'ctx-suiv'){ if (carteContexte < CONTEXTE.length - 1){ carteContexte++; ecranContexte(); } else ecranLettre(); }
+ else if (act === 'passer') ecranLettre();
+ else if (act === 'ctx-retour'){ carteContexte = CONTEXTE.length - 1; ecranContexte(); }
+ else if (act === 'commencer'){
+  // nouvelle partie : carnet vide, horloge et position remises à zéro
+  const c = window.SOHO_ENQUETE && window.SOHO_ENQUETE.carnet;
+  if (c){ c.indices = []; c.connues = {eau:true}; c.rayees = {}; c.vus = {}; c.notes = ''; try { localStorage.setItem('soho1854-carnet', JSON.stringify(c)); } catch {} }
+  reset(); sauverPartie(); majBoutonCarnet(); fermerOuverture();
+  say('Parlez aux habitants : approchez-vous et appuyez sur Espace, ou touchez-les. Le carnet s’ouvre avec C.');
+ }
+});
+// L'ouverture bloque les touches du jeu (sauf dans le menu des paramètres, qui passe au-dessus).
+// Entrée et Espace activent quand même le bouton qui a le focus : c'est l'action par défaut du navigateur.
+addEventListener('keydown', e => { if (!ouv.hidden && !ui('menu').open) e.stopImmediatePropagation(); }, true);
+const boutonTitre = ui('retour-titre');
+if (boutonTitre) boutonTitre.onclick = () => { closeMenu(); ouvrirOuverture(); };
+ouvrirOuverture();
+window.SOHO_OUVERTURE = {ouvrirOuverture, partie:() => partie, PERSONNAGES};
 
 window.SOHO_TEST={world:WORLD,openMenu,closeMenu,toggleMap,paused,state,player,camera,viewport,canvas:cv,layout:LAYOUT,npcs,DATA,floor,nearest,findPath,blocked,worldToScreen,screenToWorld,pointers,resolveWalkGoal,moveTo,goToPerson,talk,changeTime,reset,draw,step,resize,shouldPaint,placeEntry,layoutLabels,visible:()=>visibleActors,pump,pumps,keys,markerOpacity,layoutStreetLabels,reducedMotion,visualStats:()=>WORLD.decor?.stats()};
 reset();resize();requestAnimationFrame(frame);
