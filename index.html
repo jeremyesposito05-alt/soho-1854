@@ -2534,6 +2534,16 @@ const CREDITS = [
  ['La police', 'Libre Caslon Text, licence SIL Open Font License.'],
 ];
 
+// La silhouette du joueur suit le personnage choisi. L'écharpe rouge reste : c'est elle qui permet de se repérer.
+const COSTUME_THOMAS = {...COSTUMES.joueur};
+const COSTUME_EMILY = {manteau:'#3b3a46', robe:true, chapeau:'bonnet', echarpe:'#9e1b1b'};
+function appliquerCostume(){
+ const c = partie && partie.perso === 'emily' ? COSTUME_EMILY : COSTUME_THOMAS;
+ for (const k of Object.keys(COSTUMES.joueur)) delete COSTUMES.joueur[k];
+ Object.assign(COSTUMES.joueur, c); draw();
+}
+appliquerCostume();
+
 const ouv = ui('ouverture');
 const gras = t => t.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
 const esc = t => t.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -2614,7 +2624,7 @@ ouv.addEventListener('click', e => {
   // nouvelle partie : carnet vide, horloge et position remises à zéro
   const c = window.SOHO_ENQUETE && window.SOHO_ENQUETE.carnet;
   if (c){ c.indices = []; c.connues = {eau:true}; c.rayees = {}; c.vus = {}; c.notes = ''; try { localStorage.setItem('soho1854-carnet', JSON.stringify(c)); } catch {} }
-  reset(); sauverPartie(); majBoutonCarnet(); fermerOuverture();
+  reset(); sauverPartie(); appliquerCostume(); majBoutonCarnet(); fermerOuverture();
   say('Parlez aux habitants : approchez-vous et appuyez sur Espace, ou touchez-les. Le carnet s’ouvre avec C.');
  }
 });
