@@ -2384,29 +2384,37 @@ if (choixSon){
 // ---------- bruitages d'ambiance ----------
 // Chaque bruit revient au hasard (entre min et max secondes de jeu réel), pendant « duree » secondes,
 // pris à un endroit au hasard du fichier, avec un fondu au début et à la fin.
+// « entier » : le fichier est court, on le joue en entier sans fondu d'entrée. « force » : volume propre au bruit.
+// La cloche est à part : elle sonne les heures (voir plus bas), elle n'a pas de min/max.
 // Pour en ajouter un : déposer le mp3 dans audio/ et ajouter une ligne ici.
 const BRUITS = [
  {id:'corneilles', fichier:'audio/bruit-corneilles.mp3', quand:'jour', min:25, max:60, duree:10},
+ {id:'vent', fichier:'audio/bruit-vent.mp3', quand:'toujours', min:70, max:160, duree:16, force:0.8},
+ {id:'chiens', fichier:'audio/bruit-chiens.mp3', quand:'nuit', min:35, max:85, entier:true, force:0.6},
+ {id:'malade', fichier:'audio/bruit-malade.mp3', quand:'toujours', min:100, max:220, entier:true, force:0.55},
 ];
+const CLOCHE = {id:'cloche', fichier:'audio/bruit-cloche.mp3', entier:true, force:0.7};
 const CLE_BRUITS = 'soho1854-bruitages';
 let volumeBruits = 0.5;
 try { const v = parseFloat(localStorage.getItem(CLE_BRUITS)); if (v >= 0 && v <= 1) volumeBruits = v; } catch {}
 const prochains = {};
 // Avec Web Audio, le fichier est décodé une fois en mémoire : on peut partir de n'importe quel endroit,
 // même quand le serveur ne permet pas de « sauter » dans un mp3 (le petit serveur local, par exemple).
-const jouerBruit = b => {
+const jouerBruit = (b, retard = 0) => {
  if (contexte){
   if (!b.tampon) b.tampon = fetch(b.fichier).then(r => r.arrayBuffer()).then(d => new Promise((ok, ko) => contexte.decodeAudioData(d, ok, ko)));
   b.tampon.then(buf => {
-   const src = contexte.createBufferSource(), g = contexte.createGain(), t = contexte.currentTime, d = Math.min(b.duree, buf.duration);
+   const src = contexte.createBufferSource(), g = contexte.createGain(), t = contexte.currentTime + retard;
+   const d = b.entier ? buf.duration : Math.min(b.duree, buf.duration), v = volumeBruits * (b.force || 1);
    src.buffer = buf; src.connect(g).connect(contexte.destination);
-   g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(volumeBruits, t + 1.5);
-   g.gain.setValueAtTime(volumeBruits, t + d - 2); g.gain.linearRampToValueAtTime(0, t + d);
-   const offset = Math.random() * Math.max(0, buf.duration - d);
-   src.start(t, offset, d); b.dernier = {offset, d};
+   if (b.entier) g.gain.setValueAtTime(v, t);
+   else { g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(v, t + 1.5); g.gain.setValueAtTime(v, t + d - 2); g.gain.linearRampToValueAtTime(0, t + d); }
+   const offset = b.entier ? 0 : Math.random() * Math.max(0, buf.duration - d);
+   src.start(t, offset, d); b.dernier = {offset, d, quand:t};
   }).catch(() => {});
   return;
  }
+ if (retard) { setTimeout(() => jouerBruit(b), retard * 1000); return; }
  if (!b.a){ b.a = new Audio(b.fichier); b.a.preload = 'auto';
   if (contexte){ b.gain = contexte.createGain(); b.gain.gain.value = 0; contexte.createMediaElementSource(b.a).connect(b.gain).connect(contexte.destination); } }
  const a = b.a, fin = Math.max(0, (a.duration || 0) - b.duree);
@@ -2431,6 +2439,17 @@ setInterval(() => {
   if (b.quand === 'toujours' || b.quand === moment) jouerBruit(b);
  }
 }, 1000);
+// La cloche de l'église sonne chaque heure pleine : autant de coups que l'heure (1 à 12), un coup toutes les 2,5 s.
+// Si le temps saute de plusieurs heures (Attendre), elle ne sonne que la dernière.
+let derniereHeure = Math.floor(state.minutes / 60);
+setInterval(() => {
+ const h = Math.floor(state.minutes / 60);
+ if (h === derniereHeure) return;
+ derniereHeure = h;
+ if (!demarree || volumeBruits === 0 || document.hidden) return;
+ const coups = (h % 12) || 12;
+ for (let i = 0; i < coups; i++) jouerBruit(CLOCHE, i * 2.5);
+}, 500);
 const choixBruits = ui('bruitages');
 if (choixBruits){
  choixBruits.value = String(volumeBruits);
@@ -2440,7 +2459,7 @@ if (choixBruits){
   if (volumeBruits > 0 && !demarree) demarrerMusique();
  };
 }
-window.SOHO_MUSIQUE = {pistes, voulue, volume:() => volume, demarree:() => demarree, BRUITS, jouerBruit};
+window.SOHO_MUSIQUE = {pistes, voulue, volume:() => volume, demarree:() => demarree, BRUITS, CLOCHE, jouerBruit};
 
 window.SOHO_TEST={world:WORLD,openMenu,closeMenu,toggleMap,paused,state,player,camera,viewport,canvas:cv,layout:LAYOUT,npcs,DATA,floor,nearest,findPath,blocked,worldToScreen,screenToWorld,pointers,resolveWalkGoal,moveTo,goToPerson,talk,changeTime,reset,draw,step,resize,shouldPaint,placeEntry,layoutLabels,visible:()=>visibleActors,pump,pumps,keys,markerOpacity,layoutStreetLabels,reducedMotion,visualStats:()=>WORLD.decor?.stats()};
 reset();resize();requestAnimationFrame(frame);
