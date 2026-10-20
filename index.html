@@ -3,6 +3,7 @@
 <style>
 :root{color-scheme:dark;--paper:#eadfc8;--ink:#312920;--muted:#bdb09a;--line:#c2a77955}*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#27251e;color:var(--paper);font:14px/1.5 Georgia,"Times New Roman",serif}button,select{font:12px/1.3 system-ui,sans-serif;cursor:pointer}button,select{border:1px solid var(--line);border-radius:5px;background:#302a22e8;color:var(--paper);padding:10px 12px;min-height:40px}button:hover,select:hover{background:#514535}button:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid #e6c88a;outline-offset:3px}canvas:focus-visible{outline:none}button[aria-pressed="true"]{background:#ad9364;color:#201b15}button:disabled{opacity:.5;cursor:default}#viewport{position:fixed;inset:0;background:#27251e}canvas{display:block;width:100%;height:100%;touch-action:none;cursor:crosshair}.hud{position:fixed;z-index:2;pointer-events:none;inset:0}.hud>*{pointer-events:auto}.plate{background:#28231cdd;border:1px solid #c1a77744;box-shadow:0 3px 20px #0004;border-radius:6px;backdrop-filter:blur(8px)}.identity{position:absolute;top:max(16px,env(safe-area-inset-top));left:max(16px,env(safe-area-inset-left));padding:10px 15px;max-width:320px}.identity h1{margin:0;font:18px/1.2 Georgia,serif;letter-spacing:.06em}.identity h1 span{font-size:13px;color:#c5b493}.identity #location{margin:4px 0 6px;color:#e2d0ad;font-style:italic;font-size:12px}.clockline{display:flex;gap:12px;align-items:center;border-top:1px solid #c1a77730;padding-top:6px;font:11px/1.4 system-ui,sans-serif;color:#d5c4a7}#period{color:#ad9f88;font-size:10px}.nav{position:absolute;right:max(16px,env(safe-area-inset-right));top:max(16px,env(safe-area-inset-top));display:flex;gap:7px}.nav button{box-shadow:0 3px 15px #0004;background:#28231ce8}#menu-button{font-weight:600}.toast{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);max-width:min(540px,calc(100vw - 32px));margin:0;padding:9px 15px;text-align:center;font:12px/1.5 system-ui,sans-serif;pointer-events:none}.action{position:absolute;left:50%;bottom:max(28px,env(safe-area-inset-bottom));transform:translateX(-50%);display:flex;gap:11px;align-items:center;max-width:calc(100vw - 32px);white-space:normal;text-align:left;background:#e8dbc1f2;color:#352c20;border-color:#a58c60;box-shadow:0 3px 26px #0005;padding:10px 16px}.action kbd{padding:3px 6px;border:1px solid #947c54;border-radius:3px;font:11px system-ui,sans-serif}.action small{display:block;font-size:10px;color:#746044}.dpad{position:absolute;left:max(18px,env(safe-area-inset-left));bottom:max(20px,env(safe-area-inset-bottom));display:none;grid-template-columns:repeat(3,42px);gap:4px}.dpad button{height:42px;min-height:42px;padding:0;font:20px/1 system-ui,sans-serif;background:#29231cce;touch-action:none;user-select:none}.dpad button:first-child{grid-column:2}.dpad button:nth-child(2){grid-column:1}.dpad.forced{display:grid}dialog{color-scheme:light;background:#e9dfcb;color:var(--ink);border:1px solid #9b835b;border-radius:9px;box-shadow:0 15px 80px #0008;width:calc(100% - 32px);max-width:560px;max-height:calc(100dvh - 48px);padding:25px 28px;overflow:auto;overscroll-behavior:contain}dialog::backdrop{background:#13110d55}dialog h2{font-weight:400;font-size:25px;line-height:1.2;margin:0 0 15px}dialog p{margin:0 0 14px}dialog button,dialog select{background:#f2e7d1;color:#3c3022;border-color:#ae956e}dialog button:hover,dialog select:hover{background:#fff4dd}dialog button[aria-pressed="true"]{background:#6c5839;color:#fff2d9}dialog .badge{color:#8f7251;font:10px/1.5 system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;margin:0 0 6px}#dialogue>button{float:right}#menu{position:fixed;left:auto;right:max(16px,env(safe-area-inset-right));top:max(16px,env(safe-area-inset-top));bottom:auto;margin:0;max-width:355px;padding:21px 23px;font:12px/1.5 system-ui,sans-serif}#menu h2{font:25px Georgia,serif;margin:0}.menuhead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:21px}.menuhead button{font-size:18px;min-height:32px;padding:3px 10px}.group{padding-top:15px;margin-top:15px;border-top:1px solid #b9a17c88}.group-title{font:italic 16px Georgia,serif;margin-bottom:10px;color:#725d41}.row{display:flex;align-items:center;gap:8px;margin:8px 0}.row>label{flex:1}.row select{max-width:150px}.row.buttons{flex-wrap:wrap}.row.buttons button{flex:1;white-space:nowrap}.check{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:12px 0}.check input{accent-color:#6b5538;width:17px;height:17px;margin:0}summary{cursor:pointer;color:#6f573b;padding:6px 0}details p{font:12px/1.6 system-ui,sans-serif;margin:9px 0;color:#715d43}#witnesses{padding:3px 0 0 15px;margin:0;color:#715d43;font-size:11px}#witnesses li{margin:6px 0}.fine{color:#8a7351;font:10px/1.5 system-ui,sans-serif}#menu .fine{margin:8px 0 0}#status:not([hidden])~#action:not([hidden]){bottom:77px}[hidden]{display:none!important}
 @media(pointer:coarse){.dpad{display:grid}.toast{bottom:170px}.action{bottom:25px;left:auto;right:14px;transform:none;max-width:calc(100vw - 180px)}.action kbd{display:none}#status:not([hidden])~#action:not([hidden]){bottom:25px}}
+#carnet{max-width:720px;font:14px/1.5 system-ui,sans-serif}#carnet h2{font:25px Georgia,serif}#carnet h3{font:italic 17px Georgia,serif;color:#5e4a30;margin:20px 0 8px}#carnet .fermer{float:right}.methode{background:#f4ecda;border-left:4px solid #8f7251;padding:10px 14px;border-radius:4px}.methode h3{margin-top:0}.methode ol{margin:0;padding-left:20px}.methode li{margin:3px 0}.reussite{margin:8px 0 0!important;color:#5e4a30;font-style:italic}.grille-wrap{overflow-x:auto}.grille{border-collapse:collapse;width:100%;font-size:13px}.grille th,.grille td{border-bottom:1px solid #b9a17c88;padding:6px 8px;text-align:left}.grille th{font-weight:600;color:#5e4a30}.grille button{min-height:30px;padding:4px 9px}.grille tr.rayee td:first-child{text-decoration:line-through;color:#8a7351}.grille tr.inconnue td{color:#9a8768;font-style:italic}.indice{border:1px solid #c2a779;border-radius:6px;padding:10px 12px;margin:0 0 10px;background:#f6efe0}.indice .texte{margin:0 0 3px;font-weight:600}.indice .source{margin:0 0 8px;color:#715d43;font-size:12px}.indice label{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:5px 0;font-size:13px}.indice label small{color:#8a7351}.indice select{max-width:52%;min-height:34px;padding:5px 8px}.indice textarea{width:100%;min-height:44px;margin-top:6px;font:13px/1.4 system-ui,sans-serif;border:1px solid #c2a779;border-radius:4px;padding:6px;background:#fffaf0;color:#3c3022}.vide{color:#715d43;font-style:italic}.carnet-note{border-top:1px solid #b9a17c88;padding-top:10px;color:#6c5839;font:13px/1.5 system-ui,sans-serif}button.petit{min-height:30px;padding:4px 9px}@media(max-width:650px){.indice label{flex-direction:column;align-items:stretch}.indice select{max-width:100%}}
 @media(max-width:650px){.identity{left:10px;top:10px;padding:8px 10px;max-width:calc(100vw - 146px)}.identity h1{font-size:16px}.identity h1 span{font-size:11px}.identity #location{font-size:11px;margin:3px 0 5px}.clockline{display:block;font-size:10px}#period{display:none}.nav{right:10px;top:10px;gap:5px}.nav button{font-size:11px;padding:9px 10px;min-height:37px}.toast{font-size:11px}.action{font-size:11px;padding:9px 11px}#menu{right:10px;top:10px;max-height:calc(100dvh - 20px);max-width:calc(100vw - 20px);padding:20px}dialog{padding:22px}.clockline{max-width:160px}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}.plate{backdrop-filter:none}}
 #startup-retry{position:absolute;left:50%;bottom:92px;transform:translateX(-50%)}#status{overflow-wrap:anywhere}noscript .nojs{position:fixed;z-index:10;left:10%;right:10%;top:40%;padding:24px;background:#eadfc8;color:#312920;border:1px solid #947c54}
@@ -119,9 +120,9 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 </style>
 </head><body>
 <main id="viewport"><canvas id="scene" width="1200" height="640" tabindex="0" aria-label="Soho, quartier explorable. Cliquez pour marcher ou utilisez les flèches et ZQSD. Espace pour parler à un témoin voisin."></canvas></main>
-<div class="hud"><section class="identity plate" aria-label="Lieu et heure"><h1>SOHO <span>· 1854</span></h1><div id="location">Broad Street</div><div class="clockline"><span id="clock">Vendredi 1 septembre · 08 h 00</span><span id="period">Le matin</span></div></section><nav class="nav" aria-label="Menu du jeu"><button id="menu-button" aria-haspopup="dialog">⚙ Paramètres</button></nav><button id="startup-retry" hidden>Réessayer le chargement</button><p id="status" class="toast plate" role="status">Chargement du quartier…</p><button id="action" class="action" hidden><kbd>Espace</kbd><span><small>Interagir</small><span id="nearby"></span></span></button><div id="dpad" class="dpad" aria-label="Commandes tactiles"><button data-dir="0,-1" aria-label="Monter">↑</button><button data-dir="-1,0" aria-label="Aller à gauche">←</button><button data-dir="0,1" aria-label="Descendre">↓</button><button data-dir="1,0" aria-label="Aller à droite">→</button></div></div>
+<div class="hud"><section class="identity plate" aria-label="Lieu et heure"><h1>SOHO <span>· 1854</span></h1><div id="location">Broad Street</div><div class="clockline"><span id="clock">Vendredi 1 septembre · 08 h 00</span><span id="period">Le matin</span></div></section><nav class="nav" aria-label="Menu du jeu"><button id="carnet-button" aria-haspopup="dialog" title="Ouvrir le carnet (touche C)">Carnet (0)</button><button id="menu-button" aria-haspopup="dialog">⚙ Paramètres</button></nav><button id="startup-retry" hidden>Réessayer le chargement</button><p id="status" class="toast plate" role="status">Chargement du quartier…</p><button id="action" class="action" hidden><kbd>Espace</kbd><span><small>Interagir</small><span id="nearby"></span></span></button><div id="dpad" class="dpad" aria-label="Commandes tactiles"><button data-dir="0,-1" aria-label="Monter">↑</button><button data-dir="-1,0" aria-label="Aller à gauche">←</button><button data-dir="0,1" aria-label="Descendre">↓</button><button data-dir="1,0" aria-label="Aller à droite">→</button></div></div>
 <dialog id="menu" aria-labelledby="menu-title"><header class="menuhead"><div><div class="badge">La marche est en pause</div><h2 id="menu-title">Paramètres</h2></div><button id="menu-close" aria-label="Fermer le menu">×</button></header><div class="group-title">Laisser passer le temps</div><div class="row buttons"><button id="wait">Attendre 30 min</button><button id="wait2">+ 2 heures</button></div><div class="row"><label for="until">Attendre jusqu'à</label><select id="until"><option value="">Choisir…</option><option value="6">06 h</option><option value="8">08 h</option><option value="12">12 h</option><option value="18">18 h</option><option value="19">19 h</option><option value="21">21 h</option><option value="23">23 h</option></select></div><section class="group"><div class="group-title">Vue et ambiance</div><div class="row"><label for="zoom">Distance de la caméra</label><select id="zoom"><option value="1.1" selected>Rapprochée · ×1,1</option><option value="1.25">Très rapprochée · ×1,25</option><option value="1">Échelle ×1</option><option value="0.95">Plus large · ×0,95</option><option value="0.75">Très large · ×0,75</option></select></div><div class="row buttons"><button id="map" aria-pressed="false">Quartier</button></div><p class="fine">Les vues larges affichent davantage de décor. La vue rapprochée est conseillée pour explorer.</p><div class="row"><label for="frame-rate">Animations</label><select id="frame-rate"><option value="60" selected>Fluides</option><option value="30">Économes</option></select></div><label class="check" for="atmosphere">Brumes et fumées<input id="atmosphere" type="checkbox" checked></label><label class="check" for="weather-motion">Animer brumes et nuages<input id="weather-motion" type="checkbox" checked></label><label class="check" for="touch-controls">Afficher les flèches tactiles<input id="touch-controls" type="checkbox"></label><label class="check" for="all-markers">Repérer tous les témoins<input id="all-markers" type="checkbox"></label><div class="row buttons"><button id="fullscreen">Plein écran</button><button id="labels" aria-pressed="false">Noms des lieux</button></div></section><section class="group"><details><summary>Comment explorer ?</summary><p>Cliquez sur les pavés pour marcher, ou sur un témoin pour le rejoindre. Les flèches et ZQSD permettent aussi de se déplacer. Espace permet de parler. Votre personnage porte une écharpe rouge.</p><p>Le temps avance avec vos pas ou quand vous attendez. Les témoins suivent leurs horaires ; leurs trajets de promenade restent ceux d'une démonstration. Les repères des témoins apparaissent à proximité ; le menu permet de tous les afficher. Les intérieurs seront préparés dans une prochaine étape.</p></details><details id="schedule"><summary>Les témoins du quartier</summary><ul id="witnesses"></ul></details><details><summary>Réglages de vérification</summary><div class="row buttons"><button id="debug" aria-pressed="false">Voir les passages</button><button id="reset">Recommencer</button></div><p class="fine">Les contours verts montrent le sol praticable. Le quartier complet est disponible. Les contours montrent tout le sol praticable. Les intérieurs seront préparés ensuite.</p></details></section></dialog>
-<dialog id="dialogue" aria-labelledby="speaker"><div class="badge">Un témoignage de l'enquête</div><h2 id="speaker"></h2><div id="speech"></div><button id="close">Reprendre la marche</button></dialog>
+<dialog id="carnet" aria-labelledby="carnet-titre"><div class="badge">Votre carnet d’enquête</div><button id="carnet-close" class="fermer">Reprendre la marche</button><h2 id="carnet-titre">Carnet d’enquête</h2><section class="methode"><h3>La méthode du docteur Snow</h3><ol><li><strong>Recueillir</strong> : parlez aux habitants, notez ce qu’ils ont vu.</li><li><strong>Classer</strong> : pour chaque indice, dites quelle explication il soutient et laquelle il affaiblit.</li><li><strong>Juger</strong> : un fait vu de ses yeux vaut plus qu’une rumeur.</li><li><strong>Conclure</strong> : rayez les explications que les faits contredisent.</li></ol><p class="reussite">Vous avez réussi quand une seule explication tient debout, appuyée sur plusieurs indices fiables.</p></section><h3>Les explications possibles</h3><div class="grille-wrap"><table class="grille"><thead><tr><th>Explication</th><th>Indices pour</th><th>Indices contre</th><th></th></tr></thead><tbody id="grille-corps"></tbody></table></div><h3>Les indices</h3><div id="carnet-indices"></div><p class="fine"><button id="carnet-reset" class="petit">Effacer le carnet</button> Le carnet est gardé dans ce navigateur.</p></dialog><dialog id="dialogue" aria-labelledby="speaker"><div class="badge">Un témoignage de l'enquête</div><h2 id="speaker"></h2><div id="speech"></div><button id="close">Reprendre la marche</button></dialog>
 <noscript><div class="nojs">Le jeu a besoin de JavaScript pour démarrer. Ouvrez ce fichier dans un navigateur qui autorise JavaScript.</div></noscript>
 <script data-soho="startup">
 /* Installed before any game script: a failed bootstrap must stay visible. */
@@ -2161,6 +2162,166 @@ function shouldPaint(now){
 }
 function frame(now){const dt=previous?Math.min((now-previous)/1000,.05):0;previous=now;step(dt);if(shouldPaint(now))draw();requestAnimationFrame(frame);}
 if(typeof ResizeObserver!=='undefined')new ResizeObserver(resize).observe(view);else addEventListener('resize',resize);
+// ============================================================
+// ENQUÊTE · carnet, indices, grille des explications, coût du temps (étape 2, 20 oct. 2026)
+// Injecté par reconstruire-html.pl dans la fermeture de jeu.js, juste avant window.SOHO_TEST :
+// il voit donc talk, step, state, ui, say, DATA, keys, stop, draw, updateClock.
+// Faits : John Snow, On the Mode of Communication of Cholera, 2e éd., 1855.
+// ============================================================
+
+// Les cinq explications que l'on donnait en 1854. « eau » est connue dès le départ : c'est l'hypothèse de Snow.
+const EXPLICATIONS = [
+ {id:'miasme', nom:'L’air vicié (le miasme)'},
+ {id:'contagion', nom:'La contagion de personne à personne'},
+ {id:'eau', nom:'L’eau de la pompe de Broad Street'},
+ {id:'nourriture', nom:'La nourriture'},
+ {id:'pauvrete', nom:'La pauvreté et la saleté'},
+];
+const FIABILITE = [
+ {id:'vu', nom:'Je l’ai vu moi-même'},
+ {id:'temoin', nom:'Un témoin me l’a dit'},
+ {id:'opinion', nom:'Une opinion ou une rumeur'},
+];
+
+// Contenu pédagogique de chaque témoin. « attendu » sert à la note finale (étape 4), jamais montré au joueur.
+const ENQUETE = {
+ pompe: {lignes:['Vous remplissez un verre à la pompe.','En regardant de près, l’eau contient de minuscules particules blanches.'],
+  indices:[{id:'particules', t:'L’eau de la pompe contient de minuscules particules blanches.', s:'Observé par vous, à la pompe', attendu:{pour:'eau', fiab:'vu'}}]},
+ habitante: {defend:'miasme', lignes:['Toute la rue boit à cette pompe. On trouve son eau meilleure que celle des autres pompes.','Moi, je crois que c’est l’air. Les rues sentent la pourriture. C’est le miasme, tout le monde le dit.'],
+  indices:[{id:'preferee', t:'Beaucoup d’habitants préfèrent l’eau de la pompe de Broad Street.', s:'Une habitante, à la pompe', attendu:{pour:'eau', fiab:'temoin'}},
+           {id:'accuse-air', t:'Une habitante accuse l’air vicié, le miasme.', s:'Une habitante : « tout le monde le dit »', attendu:{pour:'miasme', fiab:'opinion'}}]},
+ huggins: {lignes:['Plus de soixante-dix ouvriers travaillent dans ma brasserie, à deux pas de la pompe. Aucun n’a été gravement malade.','Mes hommes ont droit à de la bière. Je crois qu’ils ne boivent jamais d’eau. Et la brasserie a son propre puits.'],
+  indices:[{id:'brasserie', t:'Brasserie : plus de 70 ouvriers, aucun gravement malade. Ils respirent l’air de Broad Street.', s:'M. Huggins, propriétaire', attendu:{pour:'eau', contre:'miasme', fiab:'temoin'}},
+           {id:'biere', t:'Les ouvriers de la brasserie boivent de la bière et l’eau de leur propre puits, pas celle de la pompe.', s:'M. Huggins : il « croit » qu’ils ne boivent pas d’eau', attendu:{pour:'eau', fiab:'temoin'}}]},
+ eley: {lignes:['J’emploie environ deux cents ouvriers. Deux bacs sont toujours remplis à la pompe pour qu’ils puissent boire.','Dix-huit sont morts. Et l’eau de la pompe sent mauvais quand on la garde deux jours.'],
+  indices:[{id:'capsules', t:'Atelier de capsules : deux bacs d’eau de la pompe, 18 ouvriers morts.', s:'M. Eley, fabricant', attendu:{pour:'eau', fiab:'temoin'}}]},
+ gould: {lignes:['J’ai fait chercher de l’eau à la pompe. Elle était parfaitement claire.','Mais elle sentait mauvais. Je ne l’ai pas bue.'],
+  indices:[{id:'odeur', t:'L’eau de la pompe est claire, mais elle sent mauvais.', s:'M. Gould, savant, voisin de la pompe', attendu:{pour:'eau', fiab:'temoin'}}]},
+ hospice: {lignes:['Nous avons 535 pensionnaires, parmi les plus pauvres du quartier. Seuls 5 sont morts du choléra.','L’hospice a son propre puits. Nous n’envoyons jamais chercher l’eau de Broad Street. Pourtant, les maisons autour de nous comptent beaucoup de morts.'],
+  indices:[{id:'hospice', t:'Hospice : 535 pensionnaires très pauvres, 5 morts ; il a son propre puits. Les maisons voisines ont beaucoup de morts.', s:'Le directeur de l’hospice', attendu:{pour:'eau', contre:'pauvrete', fiab:'temoin'}}]},
+ instituteur: {lignes:['Des enfants viennent à mon école depuis des rues éloignées.','En passant, ils boivent à la pompe de Broad Street.'],
+  indices:[{id:'ecoliers', t:'Des écoliers venus d’autres rues boivent à la pompe en passant.', s:'L’instituteur de Dufour’s Place', attendu:{pour:'eau', fiab:'temoin'}}]},
+ marlborough: {defend:'pauvrete', lignes:['L’eau de notre pompe est si sale que beaucoup l’évitent. Ils vont chercher celle de Broad Street.','Si vous voulez mon avis, ce sont les pauvres qui meurent, parce qu’ils vivent dans la saleté.'],
+  indices:[{id:'marlborough', t:'La pompe de Marlborough Street est très sale : on l’évite et on va chercher l’eau de Broad Street.', s:'Un habitant de Marlborough Street', attendu:{pour:'eau', fiab:'temoin'}},
+           {id:'pauvres', t:'Un habitant pense que les pauvres meurent à cause de la saleté.', s:'Un habitant : son avis', attendu:{pour:'pauvrete', fiab:'opinion'}}]},
+ cafe: {lignes:['Je servais l’eau de la pompe au repas de midi.','Neuf de mes clients sont morts. Des ouvriers, tous.'],
+  indices:[{id:'cafe', t:'Neuf clients du café, qui buvaient l’eau de la pompe au repas, sont morts.', s:'La patronne du café', attendu:{pour:'eau', fiab:'temoin'}}]},
+ tavernier: {defend:'nourriture', lignes:['Ici, on mêle l’eau de la pompe aux alcools, comme dans toutes les tavernes du quartier.','Moi, je dis que ce sont les fruits pas mûrs qu’on vend au marché qui donnent le choléra.'],
+  indices:[{id:'alcools', t:'Les tavernes mêlent l’eau de la pompe aux alcools : on peut en boire sans le savoir.', s:'Le tavernier', attendu:{pour:'eau', fiab:'temoin'}},
+           {id:'fruits', t:'Le tavernier accuse les fruits pas mûrs du marché.', s:'Le tavernier : son avis', attendu:{pour:'nourriture', fiab:'opinion'}}]},
+ whitehead: {defend:'contagion', lignes:['Je connais toutes les familles du quartier. Une femme qui soignait une malade de Marshall Street est morte à son tour.','Je crois que le mal passe d’un malade à ceux qui le soignent. L’eau ? J’en ai bu moi-même, et je suis en bonne santé.'],
+  indices:[{id:'soignante', t:'Une femme qui soignait une malade est morte à son tour.', s:'Le révérend Whitehead', attendu:{pour:'contagion', fiab:'temoin'}},
+           {id:'reverend', t:'Le révérend a bu l’eau de la pompe et n’est pas malade.', s:'Le révérend Whitehead : un seul cas', attendu:{contre:'eau', fiab:'temoin'}}]},
+ egoutier: {defend:'miasme', lignes:['On dit que les travaux d’égout ont remué une vieille fosse de la peste de 1665. Les vapeurs empoisonnent le quartier.','Moi, je n’ai rien vu. Mais tout le monde en parle.'],
+  indices:[{id:'fosse', t:'Rumeur : une fosse de la peste de 1665 aurait été remuée par les égouts.', s:'Un vieil égoutier : il n’a rien vu', attendu:{pour:'miasme', fiab:'opinion'}}]},
+};
+
+const carnet = {indices:[], connues:{eau:true}, rayees:{}, notes:'', vus:{}, methodeVue:false};
+const CLE = 'soho1854-carnet';
+try { const s = JSON.parse(localStorage.getItem(CLE) || 'null'); if (s && Array.isArray(s.indices)) Object.assign(carnet, s); } catch {}
+const sauver = () => { try { localStorage.setItem(CLE, JSON.stringify(carnet)); } catch {} };
+
+// ---------- le coût du temps ----------
+// Marcher : 1 minute pour 40 unités du monde (traverser le quartier, environ 3000 unités, prend une heure).
+// Parler : le « cout » du témoin, la première fois seulement.
+let distanceAccumulee = 0;
+const stepOriginal = step;
+step = function(dt){
+ const x0 = player.px, y0 = player.py;
+ stepOriginal(dt);
+ const d = Math.hypot(player.px - x0, player.py - y0);
+ if (d > 0 && d < 200){ distanceAccumulee += d;
+  if (distanceAccumulee >= 40){ const m = Math.floor(distanceAccumulee / 40); distanceAccumulee -= m * 40; state.minutes += m; updateClock(); } }
+};
+
+// ---------- les dialogues ----------
+const talkOriginal = talk;
+talk = function(p){
+ if (!talkOriginal(p)) return false;
+ const e = ENQUETE[p.id];
+ if (e){
+  ui('speech').replaceChildren();
+  for (const ligne of e.lignes){ const el = document.createElement('p'); el.textContent = ligne; ui('speech').append(el); }
+  let nouveaux = 0;
+  for (const ind of e.indices) if (!carnet.indices.some(i => i.id === ind.id)){
+   carnet.indices.push({id:ind.id, t:ind.t, s:ind.s, pour:'', contre:'', fiab:'', note:''}); nouveaux++; }
+  const decouverte = e.defend && !carnet.connues[e.defend];
+  if (e.defend) carnet.connues[e.defend] = true;
+  if (!carnet.vus[p.id]){ carnet.vus[p.id] = true; state.minutes += Number(p.cout) || 15; updateClock(true); }
+  if (nouveaux || decouverte){
+   const el = document.createElement('p'); el.className = 'carnet-note';
+   el.textContent = (nouveaux ? (nouveaux > 1 ? nouveaux + ' indices notés' : 'Un indice noté') + ' dans votre carnet (critère B iii : recueillir des informations).' : '')
+     + (decouverte ? ' Nouvelle explication dans la grille : ' + EXPLICATIONS.find(x => x.id === e.defend).nom + '.' : '');
+   ui('speech').append(el);
+  }
+  sauver(); majBoutonCarnet();
+ }
+ return true;
+};
+
+// ---------- le carnet ----------
+const choix = (nom, valeur, options, onChange) => {
+ const sel = document.createElement('select'); sel.setAttribute('aria-label', nom);
+ sel.append(new Option('Choisir…', ''));
+ for (const o of options) sel.append(new Option(o.nom, o.id));
+ sel.value = valeur || ''; sel.onchange = () => onChange(sel.value); return sel;
+};
+function majBoutonCarnet(){ const b = ui('carnet-button'); if (b) b.textContent = 'Carnet (' + carnet.indices.length + ')'; }
+function dessinerCarnet(){
+ const connues = EXPLICATIONS.filter(x => carnet.connues[x.id]);
+ // les indices
+ const liste = ui('carnet-indices'); liste.replaceChildren();
+ if (!carnet.indices.length){ const p = document.createElement('p'); p.className = 'vide'; p.textContent = 'Aucun indice pour l’instant. Parlez aux habitants et examinez la pompe.'; liste.append(p); }
+ carnet.indices.forEach((ind, n) => {
+  const art = document.createElement('article'); art.className = 'indice';
+  const h = document.createElement('p'); h.className = 'texte'; h.textContent = (n + 1) + '. ' + ind.t;
+  const s = document.createElement('p'); s.className = 'source'; s.textContent = 'Source : ' + ind.s;
+  const q1 = document.createElement('label'); q1.textContent = 'Quelle explication cet indice soutient-il ?';
+  q1.append(choix('Explication soutenue', ind.pour, [...connues, {id:'aucune', nom:'Aucune'}], v => { ind.pour = v; sauver(); dessinerGrille(); }));
+  const q2 = document.createElement('label'); q2.textContent = 'Quelle explication affaiblit-il ?';
+  q2.append(choix('Explication affaiblie', ind.contre, [...connues, {id:'aucune', nom:'Aucune'}], v => { ind.contre = v; sauver(); dessinerGrille(); }));
+  const q3 = document.createElement('label'); q3.innerHTML = 'Peut-on s’y fier ? <small>(critère D iii : juger une source)</small>';
+  q3.append(choix('Fiabilité', ind.fiab, FIABILITE, v => { ind.fiab = v; sauver(); dessinerGrille(); }));
+  const note = document.createElement('textarea'); note.placeholder = 'Mes notes : que faudrait-il vérifier ?'; note.value = ind.note || '';
+  note.oninput = () => { ind.note = note.value; sauver(); };
+  art.append(h, s, q1, q2, q3, note); liste.append(art);
+ });
+ dessinerGrille();
+}
+function dessinerGrille(){
+ const corps = ui('grille-corps'); corps.replaceChildren();
+ for (const x of EXPLICATIONS){
+  const tr = document.createElement('tr');
+  if (!carnet.connues[x.id]){ tr.className = 'inconnue'; tr.innerHTML = '<td colspan="4">Explication pas encore entendue dans le quartier</td>'; corps.append(tr); continue; }
+  const pour = carnet.indices.filter(i => i.pour === x.id), contre = carnet.indices.filter(i => i.contre === x.id);
+  const solides = l => l.filter(i => i.fiab === 'vu' || i.fiab === 'temoin').length;
+  const td = t => { const c = document.createElement('td'); c.textContent = t; return c; };
+  const nom = td(x.nom); if (carnet.rayees[x.id]) tr.className = 'rayee';
+  const b = document.createElement('button'); b.textContent = carnet.rayees[x.id] ? 'Rétablir' : 'Rayer';
+  b.onclick = () => { carnet.rayees[x.id] = !carnet.rayees[x.id]; sauver(); dessinerGrille(); };
+  const cb = document.createElement('td'); cb.append(b);
+  const compte = l => !l.length ? 'aucun' : l.length + (l.length > 1 ? ' indices' : ' indice') + (solides(l) ? ', ' + solides(l) + ' fiable' + (solides(l) > 1 ? 's' : '') : '');
+  tr.append(nom, td(compte(pour)), td(compte(contre)), cb);
+  corps.append(tr);
+ }
+}
+function ouvrirCarnet(){
+ if (ui('dialogue').open || ui('menu').open) return;
+ keys.clear(); stop(); dessinerCarnet(); ui('carnet').showModal();
+ if (!carnet.methodeVue){ carnet.methodeVue = true; sauver(); }
+}
+ui('carnet-button').onclick = ouvrirCarnet;
+ui('carnet-close').onclick = () => ui('carnet').close();
+ui('carnet').addEventListener('close', () => { keys.clear(); cv.focus({preventScroll:true}); draw(); });
+// le carnet ouvert bloque la marche au clavier ; la touche C l'ouvre
+addEventListener('keydown', e => {
+ if (ui('carnet').open){ if (e.key !== 'Escape' && e.key !== 'Tab') e.stopImmediatePropagation(); return; }
+ if ((e.key === 'c' || e.key === 'C') && !e.ctrlKey && !e.metaKey && !e.altKey && !(e.target instanceof HTMLInputElement) && !(e.target instanceof HTMLTextAreaElement)){ e.preventDefault(); ouvrirCarnet(); }
+}, true);
+ui('carnet-reset').onclick = () => { if (!confirm('Effacer tout le carnet et recommencer l’enquête ?')) return; carnet.indices = []; carnet.connues = {eau:true}; carnet.rayees = {}; carnet.vus = {}; sauver(); dessinerCarnet(); majBoutonCarnet(); };
+majBoutonCarnet();
+window.SOHO_ENQUETE = {carnet, ENQUETE, EXPLICATIONS, ouvrirCarnet};
+
 window.SOHO_TEST={world:WORLD,openMenu,closeMenu,toggleMap,paused,state,player,camera,viewport,canvas:cv,layout:LAYOUT,npcs,DATA,floor,nearest,findPath,blocked,worldToScreen,screenToWorld,pointers,resolveWalkGoal,moveTo,goToPerson,talk,changeTime,reset,draw,step,resize,shouldPaint,placeEntry,layoutLabels,visible:()=>visibleActors,pump,pumps,keys,markerOpacity,layoutStreetLabels,reducedMotion,visualStats:()=>WORLD.decor?.stats()};
 reset();resize();requestAnimationFrame(frame);
 
