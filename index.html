@@ -4,7 +4,7 @@
 :root{color-scheme:dark;--paper:#eadfc8;--ink:#312920;--muted:#bdb09a;--line:#c2a77955}*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#27251e;color:var(--paper);font:14px/1.5 Georgia,"Times New Roman",serif}button,select{font:12px/1.3 system-ui,sans-serif;cursor:pointer}button,select{border:1px solid var(--line);border-radius:5px;background:#302a22e8;color:var(--paper);padding:10px 12px;min-height:40px}button:hover,select:hover{background:#514535}button:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid #e6c88a;outline-offset:3px}canvas:focus-visible{outline:none}button[aria-pressed="true"]{background:#ad9364;color:#201b15}button:disabled{opacity:.5;cursor:default}#viewport{position:fixed;inset:0;background:#27251e}canvas{display:block;width:100%;height:100%;touch-action:none;cursor:crosshair}.hud{position:fixed;z-index:2;pointer-events:none;inset:0}.hud>*{pointer-events:auto}.plate{background:#28231cdd;border:1px solid #c1a77744;box-shadow:0 3px 20px #0004;border-radius:6px;backdrop-filter:blur(8px)}.identity{position:absolute;top:max(16px,env(safe-area-inset-top));left:max(16px,env(safe-area-inset-left));padding:10px 15px;max-width:320px}.identity h1{margin:0;font:18px/1.2 Georgia,serif;letter-spacing:.06em}.identity h1 span{font-size:13px;color:#c5b493}.identity #location{margin:4px 0 6px;color:#e2d0ad;font-style:italic;font-size:12px}.clockline{display:flex;gap:12px;align-items:center;border-top:1px solid #c1a77730;padding-top:6px;font:11px/1.4 system-ui,sans-serif;color:#d5c4a7}#period{color:#ad9f88;font-size:10px}.nav{position:absolute;right:max(16px,env(safe-area-inset-right));top:max(16px,env(safe-area-inset-top));display:flex;gap:7px}.nav button{box-shadow:0 3px 15px #0004;background:#28231ce8}#menu-button{font-weight:600}.toast{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);max-width:min(540px,calc(100vw - 32px));margin:0;padding:9px 15px;text-align:center;font:12px/1.5 system-ui,sans-serif;pointer-events:none}.action{position:absolute;left:50%;bottom:max(28px,env(safe-area-inset-bottom));transform:translateX(-50%);display:flex;gap:11px;align-items:center;max-width:calc(100vw - 32px);white-space:normal;text-align:left;background:#e8dbc1f2;color:#352c20;border-color:#a58c60;box-shadow:0 3px 26px #0005;padding:10px 16px}.action kbd{padding:3px 6px;border:1px solid #947c54;border-radius:3px;font:11px system-ui,sans-serif}.action small{display:block;font-size:10px;color:#746044}.dpad{position:absolute;left:max(18px,env(safe-area-inset-left));bottom:max(20px,env(safe-area-inset-bottom));display:none;grid-template-columns:repeat(3,42px);gap:4px}.dpad button{height:42px;min-height:42px;padding:0;font:20px/1 system-ui,sans-serif;background:#29231cce;touch-action:none;user-select:none}.dpad button:first-child{grid-column:2}.dpad button:nth-child(2){grid-column:1}.dpad.forced{display:grid}dialog{color-scheme:light;background:#e9dfcb;color:var(--ink);border:1px solid #9b835b;border-radius:9px;box-shadow:0 15px 80px #0008;width:calc(100% - 32px);max-width:560px;max-height:calc(100dvh - 48px);padding:25px 28px;overflow:auto;overscroll-behavior:contain}dialog::backdrop{background:#13110d55}dialog h2{font-weight:400;font-size:25px;line-height:1.2;margin:0 0 15px}dialog p{margin:0 0 14px}dialog button,dialog select{background:#f2e7d1;color:#3c3022;border-color:#ae956e}dialog button:hover,dialog select:hover{background:#fff4dd}dialog button[aria-pressed="true"]{background:#6c5839;color:#fff2d9}dialog .badge{color:#8f7251;font:10px/1.5 system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;margin:0 0 6px}#dialogue>button{float:right}#menu{position:fixed;left:auto;right:max(16px,env(safe-area-inset-right));top:max(16px,env(safe-area-inset-top));bottom:auto;margin:0;max-width:355px;padding:21px 23px;font:12px/1.5 system-ui,sans-serif}#menu h2{font:25px Georgia,serif;margin:0}.menuhead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:21px}.menuhead button{font-size:18px;min-height:32px;padding:3px 10px}.group{padding-top:15px;margin-top:15px;border-top:1px solid #b9a17c88}.group-title{font:italic 16px Georgia,serif;margin-bottom:10px;color:#725d41}.row{display:flex;align-items:center;gap:8px;margin:8px 0}.row>label{flex:1}.row select{max-width:150px}.row.buttons{flex-wrap:wrap}.row.buttons button{flex:1;white-space:nowrap}.check{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:12px 0}.check input{accent-color:#6b5538;width:17px;height:17px;margin:0}summary{cursor:pointer;color:#6f573b;padding:6px 0}details p{font:12px/1.6 system-ui,sans-serif;margin:9px 0;color:#715d43}#witnesses{padding:3px 0 0 15px;margin:0;color:#715d43;font-size:11px}#witnesses li{margin:6px 0}.fine{color:#8a7351;font:10px/1.5 system-ui,sans-serif}#menu .fine{margin:8px 0 0}#status:not([hidden])~#action:not([hidden]){bottom:77px}[hidden]{display:none!important}
 @media(pointer:coarse){.dpad{display:grid}.toast{bottom:170px}.action{bottom:25px;left:auto;right:14px;transform:none;max-width:calc(100vw - 180px)}.action kbd{display:none}#status:not([hidden])~#action:not([hidden]){bottom:25px}}
 #carnet{max-width:720px;font:14px/1.5 system-ui,sans-serif}#carnet h2{font:25px Georgia,serif}#carnet h3{font:italic 17px Georgia,serif;color:#5e4a30;margin:20px 0 8px}#carnet .fermer{float:right}.methode{background:#f4ecda;border-left:4px solid #8f7251;padding:10px 14px;border-radius:4px}.methode h3{margin-top:0}.methode ol{margin:0;padding-left:20px}.methode li{margin:3px 0}.reussite{margin:8px 0 0!important;color:#5e4a30;font-style:italic}.grille-wrap{overflow-x:auto}.grille{border-collapse:collapse;width:100%;font-size:13px}.grille th,.grille td{border-bottom:1px solid #b9a17c88;padding:6px 8px;text-align:left}.grille th{font-weight:600;color:#5e4a30}.grille button{min-height:30px;padding:4px 9px}.grille tr.rayee td:first-child{text-decoration:line-through;color:#8a7351}.grille tr.inconnue td{color:#9a8768;font-style:italic}.indice{border:1px solid #c2a779;border-radius:6px;padding:10px 12px;margin:0 0 10px;background:#f6efe0}.indice .texte{margin:0 0 3px;font-weight:600}.indice .source{margin:0 0 8px;color:#715d43;font-size:12px}.indice label{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:5px 0;font-size:13px}.indice label small{color:#8a7351}.indice select{max-width:52%;min-height:34px;padding:5px 8px}.indice textarea{width:100%;min-height:44px;margin-top:6px;font:13px/1.4 system-ui,sans-serif;border:1px solid #c2a779;border-radius:4px;padding:6px;background:#fffaf0;color:#3c3022}.vide{color:#715d43;font-style:italic}.carnet-note{border-top:1px solid #b9a17c88;padding-top:10px;color:#6c5839;font:13px/1.5 system-ui,sans-serif}button.petit{min-height:30px;padding:4px 9px}@media(max-width:650px){.indice label{flex-direction:column;align-items:stretch}.indice select{max-width:100%}}
-#musique,#bruitages{flex:1.4;min-width:0;width:100%;accent-color:#6b5538;min-height:28px;cursor:pointer}#musique-val,#bruitages-val{flex:none;width:44px;white-space:nowrap;font-size:12px;text-align:right;color:#715d43;font-variant-numeric:tabular-nums}.ouverture{position:fixed;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;padding:16px;background:radial-gradient(ellipse at center,#1d1a14b0,#0f0d0af2);backdrop-filter:blur(5px) sepia(.35);-webkit-backdrop-filter:blur(5px) sepia(.35);overflow:auto}.ouverture.titre{background:linear-gradient(#0f0d0a18,#0f0d0a30 60%,#0f0d0aa8),url(images/ouverture/fond-menu.webp) center/cover no-repeat,radial-gradient(ellipse at center,#1d1a14b0,#0f0d0af2)}.ouverture.titre{justify-content:flex-start;padding-left:max(16px,6vw)}@media(max-width:760px){.ouverture.titre{justify-content:center;align-items:flex-end;padding:16px}.ouverture.titre .ouv-carte{padding:18px 20px}.ouverture.titre .ouv-titre{font-size:32px}.ouverture.titre .ouv-sous{margin:6px 0 14px}.ouverture.titre .ouv-boutons{gap:7px}.ouverture.titre button{min-height:42px;padding:8px 14px}}.ouverture.titre .ouv-carte{max-width:460px;background:linear-gradient(160deg,#efe6d2f2,#e2d4b6eb)}.ouv-carte{width:100%;max-width:640px;max-height:calc(100dvh - 32px);overflow:auto;background:linear-gradient(160deg,#efe6d2,#e2d4b6);color:#312920;border:1px solid #9b835b;border-radius:6px;box-shadow:0 20px 90px #000c,inset 0 0 0 6px #e9dfcb,inset 0 0 0 7px #b49a6e;padding:34px 38px;font:15px/1.55 Georgia,"Libre Caslon Text",serif;text-align:center}.ouv-carte h2{font:400 28px/1.2 "Libre Caslon Text",Georgia,serif;margin:4px 0 14px;color:#2a2219}.ouv-sur{font:12px/1 system-ui,sans-serif;letter-spacing:.3em;text-transform:uppercase;color:#8f7251;margin:6px 0 10px}.ouv-titre{font:400 48px/1.05 "Libre Caslon Text",Georgia,serif;margin:0;letter-spacing:.02em;color:#231c14}.ouv-sous{font-style:italic;color:#6c5839;margin:10px 0 26px}.ouv-boutons{display:flex;flex-direction:column;gap:10px;max-width:320px;margin:0 auto}.ouverture button{font:15px/1.3 Georgia,serif;background:#f2e7d1;color:#3c3022;border:1px solid #ae956e;border-radius:5px;padding:11px 16px;min-height:46px;cursor:pointer}.ouverture button:hover{background:#fff4dd}.ouverture button:focus-visible{outline:2px solid #6c5839;outline-offset:3px}.ouverture button:disabled{opacity:.5;cursor:default}.ouverture button.ouv-principal{background:#4b3c28;color:#f6ecd6;border-color:#4b3c28}.ouverture button.ouv-principal:hover{background:#5e4b33}.ouverture button small{display:block;font:12px system-ui,sans-serif;opacity:.8;margin-top:2px}.ouverture button.ouv-discret{background:transparent;border-color:transparent;text-decoration:underline;color:#6c5839}.ouv-etat{font:12px system-ui,sans-serif;color:#8a7351;margin:14px 0 0;min-height:1em}.ouv-etape{font:11px/1.4 system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#8f7251;margin:0}.ouv-intro{text-align:left;margin:0 0 10px}.ouv-consigne{text-align:left;font:14px/1.5 system-ui,sans-serif;color:#5e4a30;margin:10px 0 16px}.ouv-persos{display:grid;grid-template-columns:1fr 1fr;gap:14px}.ouverture button.ouv-perso{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:16px 14px;background:#f6efe0}.ouv-portrait{position:relative;width:96px;height:96px;border-radius:50%;overflow:hidden;background:radial-gradient(circle at 35% 30%,#d9c9a6,#9b835b);border:2px solid #7a6545;display:grid;place-items:center}.ouv-portrait span{font:400 44px "Libre Caslon Text",Georgia,serif;color:#f6ecd6}.ouv-portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.ouv-perso-nom{font:400 20px "Libre Caslon Text",Georgia,serif;color:#2a2219}.ouv-perso-role{font:12px system-ui,sans-serif;color:#8f7251;letter-spacing:.04em}.ouv-perso-texte{font:13px/1.5 system-ui,sans-serif;color:#4a3c2b}.ouv-lignes{text-align:left;margin:0 0 6px;padding-left:20px}.ouv-lignes li{margin:0 0 10px}.ouv-lignes strong{color:#6b3a12}.ouv-points{display:flex;justify-content:center;gap:7px;margin:8px 0 4px}.ouv-points span{width:8px;height:8px;border-radius:50%;background:#c2a779}.ouv-points span.actif{background:#4b3c28}.ouv-nav{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:18px;flex-wrap:wrap}.ouv-nav .ouv-principal{margin-left:auto}.ouv-lettre{text-align:left;background:#fbf5e6;border:1px solid #d3bf98;padding:18px 22px;margin:10px 0 6px;font:italic 15px/1.6 "Libre Caslon Text",Georgia,serif;box-shadow:2px 3px 0 #c9b48b}.ouv-lettre p{margin:0 0 9px}.ouv-adresse{text-align:right;font-size:13px;color:#7a6545}.ouv-signature{text-align:right;margin-top:12px!important}.ouv-credits{text-align:left;font:13px/1.5 system-ui,sans-serif;margin:0}.ouv-credits dt{font:italic 16px Georgia,serif;color:#5e4a30;margin-top:12px}.ouv-credits dd{margin:2px 0 0}@media(max-width:650px){.ouv-carte{padding:24px 20px}.ouv-titre{font-size:36px}.ouv-carte h2{font-size:23px}.ouv-persos{grid-template-columns:1fr}.ouverture button.ouv-perso{flex-direction:row;flex-wrap:wrap;text-align:left;justify-content:flex-start}.ouv-portrait{width:64px;height:64px}.ouv-portrait span{font-size:30px}.ouv-perso-texte{flex-basis:100%}}@media(max-width:650px){.identity{left:10px;top:10px;padding:8px 10px;max-width:calc(100vw - 146px)}.identity h1{font-size:16px}.identity h1 span{font-size:11px}.identity #location{font-size:11px;margin:3px 0 5px}.clockline{display:block;font-size:10px}#period{display:none}.nav{right:10px;top:10px;gap:5px}.nav button{font-size:11px;padding:9px 10px;min-height:37px}.toast{font-size:11px}.action{font-size:11px;padding:9px 11px}#menu{right:10px;top:10px;max-height:calc(100dvh - 20px);max-width:calc(100vw - 20px);padding:20px}dialog{padding:22px}.clockline{max-width:160px}}
+#musique,#bruitages{flex:1.4;min-width:0;width:100%;accent-color:#6b5538;min-height:28px;cursor:pointer}#musique-val,#bruitages-val{flex:none;width:44px;white-space:nowrap;font-size:12px;text-align:right;color:#715d43;font-variant-numeric:tabular-nums}.ouverture{position:fixed;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;padding:16px;overflow:auto;background:radial-gradient(ellipse at center,#1d1a14b0,#0f0d0af2);backdrop-filter:blur(5px) sepia(.35);-webkit-backdrop-filter:blur(5px) sepia(.35)}.ouverture::after{content:"";position:fixed;inset:0;background:#000;opacity:0;pointer-events:none;transition:opacity .7s ease}.ouverture.ouv-noir::after{opacity:1}.ouverture.mode-titre{background:linear-gradient(#0f0d0a40,#0f0d0a08 30%,#0f0d0a60 62%,#0f0d0ae6),url(images/ouverture/fond-menu.webp) center/cover no-repeat #15120e}.ouverture.mode-vide{background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none;pointer-events:none}.ouv-titre-bloc{text-align:center;max-width:620px;margin-top:14vh}.ouv-sur{font:13px/1 system-ui,sans-serif;letter-spacing:.35em;text-transform:uppercase;color:#e3c98f;margin:0 0 14px;text-shadow:0 1px 8px #000}.ouv-titre{font:400 66px/1.05 "Libre Caslon Text",Georgia,serif;margin:0;color:#f6ecd6;letter-spacing:.02em;text-shadow:0 2px 6px #000,0 0 40px #000c}.ouv-sous{font:italic 19px/1.4 Georgia,serif;color:#eadcbc;margin:14px 0 0;text-shadow:0 1px 8px #000}.ouverture button{font:15px/1.3 Georgia,serif;background:#f2e7d1;color:#3c3022;border:1px solid #ae956e;border-radius:5px;padding:11px 16px;min-height:46px;cursor:pointer}.ouverture button:hover{background:#fff4dd}.ouverture button:focus-visible{outline:2px solid #e6c88a;outline-offset:3px}.ouverture button:disabled{opacity:.5;cursor:default}.ouverture button small{display:block;font:13px system-ui,sans-serif;opacity:.75;margin-top:3px}.ouverture button.ouv-grand{display:block;margin:34px auto 8px;min-width:260px;font:22px/1.2 "Libre Caslon Text",Georgia,serif;padding:15px 36px;background:#f1e4c6ee;color:#2a2219;border:1px solid #d4b57a;border-radius:4px;box-shadow:0 8px 34px #000c}.ouverture button.ouv-grand:hover{background:#fff4dd}.ouverture button.ouv-lien{background:none;border:none;min-height:0;padding:6px 4px;font:14px system-ui,sans-serif;color:#eadcbc;text-decoration:underline;text-underline-offset:3px;text-shadow:0 1px 6px #000}.ouv-petits{margin:16px 0 0;color:#bda97f}.ouverture button.ouv-principal{background:#4b3c28;color:#f6ecd6;border-color:#4b3c28}.ouverture button.ouv-principal:hover{background:#5e4b33}.ouv-carte{width:100%;max-width:640px;max-height:calc(100dvh - 32px);overflow:auto;background:linear-gradient(160deg,#efe6d2,#e2d4b6);color:#312920;border:1px solid #9b835b;border-radius:6px;box-shadow:0 20px 90px #000c,inset 0 0 0 6px #e9dfcb,inset 0 0 0 7px #b49a6e;padding:30px 36px;font:16px/1.6 Georgia,serif;text-align:center}.ouv-carte h2{font:400 28px/1.2 "Libre Caslon Text",Georgia,serif;margin:4px 0 14px;color:#2a2219}.ouv-etape{font:11px/1.4 system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#8f7251;margin:0 0 6px}.ouv-tete{display:flex;align-items:center;justify-content:center;gap:16px;margin:6px 0 14px}.ouv-tete h2{margin:0}.ouv-texte{text-align:left}.ouv-texte p{margin:0 0 12px}.ouv-consigne{text-align:left;font:14px/1.5 system-ui,sans-serif;color:#5e4a30;margin:6px 0 16px}.ouv-persos{display:grid;grid-template-columns:1fr 1fr;gap:14px}.ouverture button.ouv-perso{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:16px 14px;background:#f6efe0}.ouv-portrait{position:relative;flex:none;width:96px;height:96px;border-radius:50%;overflow:hidden;background:radial-gradient(circle at 35% 30%,#d9c9a6,#9b835b);border:2px solid #7a6545;display:grid;place-items:center}.ouv-portrait span{font:400 44px "Libre Caslon Text",Georgia,serif;color:#f6ecd6}.ouv-portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.ouv-perso-nom{font:400 20px "Libre Caslon Text",Georgia,serif;color:#2a2219}.ouv-perso-role{font:12px system-ui,sans-serif;color:#8f7251;letter-spacing:.04em}.ouv-perso-texte{font:13px/1.5 system-ui,sans-serif;color:#4a3c2b}.ouv-nav{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:16px;flex-wrap:wrap}.ouv-nav .ouv-principal{margin-left:auto}.ouv-etat{font:12px system-ui,sans-serif;color:#8a7351;margin:10px 0 0;min-height:1em;text-align:right}.ouverture.mode-scene{background:#120f0b;padding:0;overflow:hidden;align-items:flex-end;backdrop-filter:none;-webkit-backdrop-filter:none}.ouv-maison{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 38%,#6a5236,#2a2017 55%,#120d09)}.ouv-maison img{width:100%;height:100%;object-fit:cover}.ouv-bulle{position:relative;width:min(760px,calc(100% - 32px));margin:0 auto max(24px,env(safe-area-inset-bottom));background:#efe6d2f7;color:#2e261c;border:1px solid #9b835b;border-radius:6px;padding:18px 24px;box-shadow:0 10px 50px #000b;font:18px/1.55 Georgia,serif}.ouv-qui{font:12px/1 system-ui,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#8f7251;margin:0 0 8px}.ouv-dit{margin:0}.ouv-pensee .ouv-dit{font-style:italic}.ouv-bulle.ouv-recit{background:#1d1812f0;color:#eadcbc;border-color:#5e4b33;text-align:center;font-style:italic}.ouv-credits{text-align:left;font:13px/1.5 system-ui,sans-serif;margin:0}.ouv-credits dt{font:italic 16px Georgia,serif;color:#5e4a30;margin-top:12px}.ouv-credits dd{margin:2px 0 0}@media(max-width:650px){.ouv-carte{padding:22px 18px;font-size:15px}.ouv-carte h2{font-size:23px}.ouv-titre{font-size:42px}.ouv-sous{font-size:16px}.ouv-titre-bloc{margin-top:auto;margin-bottom:6vh}.ouverture button.ouv-grand{min-width:220px;font-size:20px}.ouv-persos{grid-template-columns:1fr}.ouverture button.ouv-perso{flex-direction:row;flex-wrap:wrap;text-align:left;justify-content:flex-start}.ouv-portrait{width:64px;height:64px}.ouv-portrait span{font-size:30px}.ouv-perso-texte{flex-basis:100%}.ouv-bulle{font-size:16px;padding:16px 18px}}@media(max-width:650px){.identity{left:10px;top:10px;padding:8px 10px;max-width:calc(100vw - 146px)}.identity h1{font-size:16px}.identity h1 span{font-size:11px}.identity #location{font-size:11px;margin:3px 0 5px}.clockline{display:block;font-size:10px}#period{display:none}.nav{right:10px;top:10px;gap:5px}.nav button{font-size:11px;padding:9px 10px;min-height:37px}.toast{font-size:11px}.action{font-size:11px;padding:9px 11px}#menu{right:10px;top:10px;max-height:calc(100dvh - 20px);max-width:calc(100vw - 20px);padding:20px}dialog{padding:22px}.clockline{max-width:160px}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}.plate{backdrop-filter:none}}
 #startup-retry{position:absolute;left:50%;bottom:92px;transform:translateX(-50%)}#status{overflow-wrap:anywhere}noscript .nojs{position:fixed;z-index:10;left:10%;right:10%;top:40%;padding:24px;background:#eadfc8;color:#312920;border:1px solid #947c54}
 
@@ -2217,7 +2217,7 @@ const ENQUETE = {
   indices:[{id:'fosse', t:'Rumeur : une fosse de la peste de 1665 aurait été remuée par les égouts.', s:'Un vieil égoutier : il n’a rien vu', attendu:{pour:'miasme', fiab:'opinion'}}]},
 };
 
-const carnet = {indices:[], connues:{eau:true}, rayees:{}, notes:'', vus:{}, methodeVue:false};
+const carnet = {indices:[], connues:{}, rayees:{}, notes:'', vus:{}, methodeVue:false};
 const CLE = 'soho1854-carnet';
 try { const s = JSON.parse(localStorage.getItem(CLE) || 'null'); if (s && Array.isArray(s.indices)) Object.assign(carnet, s); } catch {}
 const sauver = () => { try { localStorage.setItem(CLE, JSON.stringify(carnet)); } catch {} };
@@ -2319,7 +2319,7 @@ addEventListener('keydown', e => {
  if (ui('carnet').open){ if (e.key !== 'Escape' && e.key !== 'Tab') e.stopImmediatePropagation(); return; }
  if ((e.key === 'c' || e.key === 'C') && !e.ctrlKey && !e.metaKey && !e.altKey && !(e.target instanceof HTMLInputElement) && !(e.target instanceof HTMLTextAreaElement)){ e.preventDefault(); ouvrirCarnet(); }
 }, true);
-ui('carnet-reset').onclick = () => { if (!confirm('Effacer tout le carnet et recommencer l’enquête ?')) return; carnet.indices = []; carnet.connues = {eau:true}; carnet.rayees = {}; carnet.vus = {}; sauver(); dessinerCarnet(); majBoutonCarnet(); };
+ui('carnet-reset').onclick = () => { if (!confirm('Effacer tout le carnet et recommencer l’enquête ?')) return; carnet.indices = []; carnet.connues = {}; carnet.rayees = {}; carnet.vus = {}; sauver(); dessinerCarnet(); majBoutonCarnet(); };
 majBoutonCarnet();
 window.SOHO_ENQUETE = {carnet, ENQUETE, EXPLICATIONS, ouvrirCarnet};
 
@@ -2475,61 +2475,61 @@ if (choixBruits){
 window.SOHO_MUSIQUE = {pistes, voulue, volume:() => volume, demarree:() => demarree, BRUITS, CLOCHE, ECRITURE, jouerBruit};
 
 // ============================================================
-// OUVERTURE · écran titre, choix du personnage, contexte, lettre de Snow, crédits (21 oct. 2026)
+// OUVERTURE · titre, John Snow, le choléra, choix du personnage, matin chez Snow (21 oct. 2026)
 // Injecté par reconstruire-html.pl dans la fermeture de jeu.js, après enquete.js et musique.js.
-// Tant que l'ouverture est affichée, elle couvre le jeu et bloque le clavier ; la ville vit derrière, floutée.
-// Faits : Snow 1855 ; recensement de 1851 ; registre médical britannique (Blackwell, 1859).
+// Tant que l'ouverture est affichée, elle couvre le jeu et bloque le clavier ; la ville vit derrière.
+// Règle d'écriture : on ne dit RIEN de l'eau ni des croyances de l'époque. Le joueur les découvre en jouant.
+// Faits : biographies de Snow (UCL, John Snow Society) ; Snow 1855 pour la nuit du 31 août au 1er septembre
+// et le 40 Broad Street. Choléra en Angleterre : arrivé en 1831, environ 53 000 morts en 1848-1849.
 // ============================================================
 const CLE_PARTIE = 'soho1854-partie';
 let partie = null;
 try { partie = JSON.parse(localStorage.getItem(CLE_PARTIE) || 'null'); } catch {}
 const sauverPartie = () => { try { localStorage.setItem(CLE_PARTIE, JSON.stringify(partie)); } catch {} };
 
-// Les portraits viendront de ChatGPT ; en attendant, un médaillon avec l'initiale.
+// Les portraits et la maison de Snow viendront de ChatGPT ; en attendant, médaillons et fond uni.
+const IMG = {snow:'images/ouverture/portrait-snow.png', maison:'images/ouverture/maison-snow.webp'};
 const PERSONNAGES = {
- thomas: {nom:'Thomas Hale', age:'16 ans', role:'L’apprenti du docteur Snow', portrait:'images/ouverture/portrait-thomas.png',
-  histoire:['Snow vous forme comme on l’a formé lui-même : en le suivant chez les malades.',
-            'Vous savez préparer un remède et tenir une conversation avec un inconnu.',
-            'Vous voulez devenir médecin.']},
- emily: {nom:'Emily Hale', age:'17 ans', role:'L’assistante du docteur Snow', portrait:'images/ouverture/portrait-emily.png',
-  histoire:['Vous tenez les registres de Snow et recopiez ses notes.',
-            'Vous remarquez les détails que les autres oublient.',
-            'Vous voulez devenir médecin, mais en 1854 aucune femme n’en a le droit en Grande-Bretagne.']},
+ thomas: {prenom:'Thomas', nom:'Thomas Hale', age:'16 ans', role:'L’apprenti du docteur', portrait:'images/ouverture/portrait-thomas.png',
+  texte:'Thomas suit le docteur chez ses malades depuis deux ans. Il sait préparer un remède et il n’a pas peur de parler aux inconnus. Plus tard, il veut devenir médecin, comme Snow.'},
+ emily: {prenom:'Emily', nom:'Emily Hale', age:'17 ans', role:'L’assistante du docteur', portrait:'images/ouverture/portrait-emily.png',
+  texte:'Emily tient les registres du docteur et recopie toutes ses notes. Elle remarque les détails que les autres oublient. Elle rêve d’être médecin, mais en 1854, aucune femme n’a le droit de l’être en Grande-Bretagne.'},
 };
-const HISTOIRE_COMMUNE = 'Thomas et Emily sont frère et sœur. Leurs parents sont morts du choléra en 1849, à Londres. Le docteur John Snow, un ami de la famille, les a recueillis chez lui.';
+const autre = id => id === 'emily' ? 'thomas' : 'emily';
 
-// Quatre cartes, une idée chacune. Phrases courtes, mots du cours en gras.
-const CONTEXTE = [
- {titre:'Londres, 1854', lignes:[
-  'Londres compte plus de deux millions d’habitants. C’est la plus grande ville du monde.',
-  'À Soho, les familles pauvres s’entassent dans des maisons étroites, souvent une famille par pièce.',
-  'Il n’y a pas d’eau courante. On va chercher l’eau aux pompes de la rue.']},
- {titre:'Le choléra', lignes:[
-  'Le choléra est une maladie venue d’Inde. Elle provoque des diarrhées et des vomissements très violents.',
-  'Un malade peut mourir en moins d’un jour.',
-  'En 1849, une **épidémie** de choléra a tué plus de 50 000 personnes en Angleterre.']},
- {titre:'Ce que l’on croit en 1854', lignes:[
-  'La plupart des médecins pensent que le choléra vient de l’air vicié : le **miasme**.',
-  'Selon eux, les mauvaises odeurs des égouts et des ordures empoisonnent l’air.',
-  'D’autres croient à la **contagion** : la maladie passerait d’un malade à ceux qui l’approchent.']},
- {titre:'Le docteur John Snow', lignes:[
-  'John Snow est un médecin londonien, né à York en 1813, dans une famille modeste.',
-  'Il est célèbre : en 1853, il a endormi la reine Victoria au chloroforme pour un accouchement.',
-  'Depuis 1849, il défend une idée que presque personne n’accepte : le choléra passe par l’eau.']},
+const SNOW = [
+ 'John Snow a 41 ans. Il est médecin à Londres. Il habite au 18 Sackville Street, à dix minutes à pied du quartier de Soho.',
+ 'Il est né en 1813 à York, dans le nord de l’Angleterre. Son père était un simple ouvrier, et John était l’aîné de neuf enfants. À 14 ans, il est parti apprendre le métier chez un chirurgien de Newcastle.',
+ 'En 1832, encore très jeune, il a soigné des mineurs pendant une terrible épidémie de choléra. Il ne l’a jamais oubliée.',
+ 'Aujourd’hui, il est célèbre. En 1853, il a endormi la reine Victoria avec du chloroforme, pour qu’elle accouche sans douleur.',
+ 'Mais depuis l’an dernier, une chose l’inquiète beaucoup : le choléra est revenu à Londres. Cet été, chaque semaine, les journaux comptent de nouveaux morts.',
 ];
-const LETTRE = perso => [
- (perso === 'emily' ? 'Emily' : 'Thomas') + ',',
- 'Depuis 1849, je répète que le choléra passe par l’eau. On m’écoute poliment, puis on parle d’air vicié.',
- 'Des malades sont signalés autour de Broad Street, à Soho. Si une épidémie éclate, c’est notre chance de comprendre. Et peut-être de sauver des vies.',
- 'Allez dans le quartier. Parlez aux habitants. Notez tout dans votre carnet, même ce qui semble contredire mon idée.',
- 'Une idée ne vaut rien sans preuves. Il en faudra assez pour convaincre les autorités de la paroisse.',
- 'Revenez me voir chaque soir, au 18 Sackville Street.',
- 'John Snow',
+const CHOLERA = [
+ 'Le choléra est une maladie terrible. Elle commence par des diarrhées et des vomissements très violents. Le malade perd toute l’eau de son corps. Sa peau devient grise et froide.',
+ 'Un homme en bonne santé le matin peut être mort le soir.',
+ 'La maladie est arrivée en Angleterre en 1831. Depuis, elle revient de temps en temps. En 1849, elle a tué plus de 50 000 personnes dans le pays.',
+ 'Tout le monde connaît le choléra. Mais en 1854, personne ne sait vraiment ce qui le provoque, ni comment il passe d’une personne à l’autre.',
 ];
+const INTRO_PERSOS = 'Pour cette enquête, vous incarnez un personnage inventé. Thomas et Emily Hale sont frère et sœur. Leurs parents sont morts du choléra en 1849. Le docteur Snow, un vieil ami de la famille, les a recueillis chez lui.';
+
+// La scène du matin, chez Snow. Le frère ou la sœur que l'on n'a pas choisi parle en premier.
+const MATIN = perso => {
+ const moi = PERSONNAGES[perso].prenom, lui = PERSONNAGES[autre(perso)].prenom;
+ return [
+  {qui:'', texte:'Vendredi 1er septembre 1854, 7 heures du matin. 18 Sackville Street, chez le docteur Snow.'},
+  {qui:lui, texte:moi + ', réveille-toi ! Le docteur est déjà levé. Cette nuit, quelqu’un a frappé à la porte plusieurs fois. Je n’ai presque pas dormi.'},
+  {qui:lui, texte:'C’était un voisin de Broad Street, de l’autre côté de Golden Square. Il cherchait un médecin. Il disait que dans sa rue, des familles entières sont tombées malades en quelques heures.'},
+  {qui:'Le docteur Snow', texte:'Bonjour. Votre ' + (perso === 'emily' ? 'frère' : 'sœur') + ' vous a raconté ? On parle de diarrhées terribles, de vomissements, de gens qui s’effondrent dans la rue. Plusieurs sont déjà morts cette nuit.'},
+  {qui:'Le docteur Snow', texte:'Le voisin a aussi parlé du 40 Broad Street. Un bébé de cinq mois y est malade depuis plusieurs jours. Maintenant, les maisons autour sont touchées aussi.'},
+  {qui:'Le docteur Snow', texte:'Je dois voir mes patients ce matin. Je ne peux pas y aller tout de suite. Mais il faut savoir ce qui se passe, et vite.'},
+  {qui:'Le docteur Snow', texte:'Allez dans le quartier. Regardez, écoutez les gens, et notez tout dans votre carnet. Ne cherchez pas encore à comprendre : rapportez-moi des faits. Je serai de retour en fin de matinée.'},
+  {qui:moi, texte:'Je prends mon carnet et mon manteau. Broad Street n’est pas loin. Si quelque chose tue les gens de ce quartier, je veux savoir quoi.', moi:true},
+ ];
+};
 const CREDITS = [
  ['Le jeu', 'Conçu pour le cours d’histoire de 9e année (PEI), Collège Alpin Beau Soleil.'],
  ['L’histoire', 'John Snow, On the Mode of Communication of Cholera, 2e édition, 1855. N. Paneth et al., « A Rivalry of Foulness », American Journal of Public Health, 1998.'],
- ['Les personnages', 'Thomas et Emily Hale sont inventés. Snow, M. Huggins, M. Eley, M. Gould et le révérend Whitehead ont existé ; leurs paroles sont adaptées de Snow.'],
+ ['Les personnages', 'Thomas et Emily Hale sont inventés. John Snow, M. Huggins, M. Eley, M. Gould et le révérend Whitehead ont existé ; leurs paroles sont adaptées de Snow.'],
  ['Le son', 'Musiques : Broad Street et Beneath the Iron Gate. Bruitages : La Sonothèque (lasonotheque.fr).'],
  ['La police', 'Libre Caslon Text, licence SIL Open Font License.'],
 ];
@@ -2545,64 +2545,88 @@ function appliquerCostume(){
 appliquerCostume();
 
 const ouv = ui('ouverture');
-const gras = t => t.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
 const esc = t => t.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const ecran = html => { ouv.classList.remove("titre"); ouv.innerHTML = '<div class="ouv-carte">' + html + '</div>'; const b = ouv.querySelector('[autofocus]') || ouv.querySelector('button'); if (b) b.focus({preventScroll:true}); };
-const medaillon = id => '<div class="ouv-portrait" data-perso="' + id + '"><img alt="" src="' + PERSONNAGES[id].portrait + '" onerror="this.remove()"><span>' + PERSONNAGES[id].nom[0] + '</span></div>';
+const paragraphes = l => l.map(t => '<p>' + esc(t) + '</p>').join('');
+// « mode » donne l'habillage : titre (fond peint, sans cadre), carte (carte de papier), scene (maison de Snow).
+const ecran = (html, mode = 'carte') => {
+ ouv.className = 'ouverture mode-' + mode;
+ ouv.innerHTML = mode === 'carte' ? '<div class="ouv-carte">' + html + '</div>' : html;
+  chargerImages();
+const b = ouv.querySelector('[autofocus]') || ouv.querySelector('button'); if (b) b.focus({preventScroll:true});
+};
+// Une image absente ne doit pas bloquer le jeu : le démarrage de Codex traite toute <img> en erreur comme une panne.
+// On charge donc hors de la page, et on n'insère l'image que si elle existe.
+const medaillon = (src, lettre) => '<div class="ouv-portrait" data-img="' + src + '"><span>' + lettre + '</span></div>';
+function chargerImages(){
+ for (const el of ouv.querySelectorAll('[data-img]')){
+  const im = new Image(); im.alt = '';
+  im.onload = () => { if (el.isConnected) el.append(im); };
+  im.src = el.dataset.img;
+ }
+}
+const etape = (n, t) => '<p class="ouv-etape">' + n + ' sur 3 · ' + t + '</p>';
 
 function ecranTitre(){
  const reprise = !!(partie && partie.perso);
- ecran('<p class="ouv-sur">Londres · été 1854</p><h1 class="ouv-titre">Choléra à Soho</h1>'
-  + '<p class="ouv-sous">Qu’est-ce qui tue les habitants de Soho ?</p>'
-  + '<div class="ouv-boutons">'
-  + (reprise ? '<button class="ouv-principal" data-act="continuer" autofocus>Continuer l’enquête<small>' + esc(PERSONNAGES[partie.perso].nom) + '</small></button>' : '')
-  + '<button class="' + (reprise ? '' : 'ouv-principal') + '" data-act="nouvelle"' + (reprise ? '' : ' autofocus') + '>Nouvelle enquête</button>'
-  + '<button data-act="parametres">Paramètres</button><button data-act="credits">Crédits et sources</button></div>'
-  + '<p class="ouv-etat" id="ouv-etat"></p>');
- majEtat(); ouv.classList.add("titre");
+ ecran('<div class="ouv-titre-bloc"><p class="ouv-sur">Londres · été 1854</p><h1 class="ouv-titre">Enquête à Soho</h1>'
+  + '<p class="ouv-sous">Qu’est-ce qui tue les habitants du quartier ?</p>'
+  + (reprise
+    ? '<button class="ouv-grand" data-act="continuer" autofocus>Continuer l’enquête<small>' + esc(PERSONNAGES[partie.perso].nom) + '</small></button>'
+      + '<button class="ouv-lien" data-act="nouvelle">Recommencer depuis le début</button>'
+    : '<button class="ouv-grand" data-act="nouvelle" autofocus>Commencer</button>')
+  + '<p class="ouv-petits"><button class="ouv-lien" data-act="parametres">Paramètres</button> · <button class="ouv-lien" data-act="credits">Crédits et sources</button></p></div>', 'titre');
 }
-function choixPerso(){
+function ecranSnow(){
+ ecran(etape(1, 'Le docteur') + '<div class="ouv-tete">' + medaillon(IMG.snow, 'S') + '<h2>Le docteur John Snow</h2></div>'
+  + '<div class="ouv-texte">' + paragraphes(SNOW) + '</div>'
+  + '<div class="ouv-nav"><button data-act="titre">Retour</button><button class="ouv-principal" data-act="cholera" autofocus>Suivant</button></div>');
+}
+function ecranCholera(){
+ ecran(etape(2, 'La maladie') + '<h2>Le choléra</h2><div class="ouv-texte">' + paragraphes(CHOLERA) + '</div>'
+  + '<div class="ouv-nav"><button data-act="snow">Retour</button><button class="ouv-principal" data-act="persos" autofocus>Suivant</button></div>');
+}
+function ecranPersos(){
  const carte = id => { const p = PERSONNAGES[id];
-  return '<button class="ouv-perso" data-act="perso" data-id="' + id + '">' + medaillon(id)
+  return '<button class="ouv-perso" data-act="perso" data-id="' + id + '">' + medaillon(p.portrait, p.prenom[0])
    + '<span class="ouv-perso-nom">' + p.nom + '</span><span class="ouv-perso-role">' + p.role + ' · ' + p.age + '</span>'
-   + '<span class="ouv-perso-texte">' + p.histoire.map(esc).join(' ') + '</span></button>'; };
- ecran('<p class="ouv-etape">Étape 1 sur 3</p><h2>Qui êtes-vous ?</h2><p class="ouv-intro">' + esc(HISTOIRE_COMMUNE) + '</p>'
-  + '<p class="ouv-consigne">Choisissez votre personnage. L’enquête est la même ; seules quelques répliques changent.</p>'
+   + '<span class="ouv-perso-texte">' + esc(p.texte) + '</span></button>'; };
+ ecran(etape(3, 'Votre personnage') + '<h2>Qui êtes-vous ?</h2><div class="ouv-texte"><p>' + esc(INTRO_PERSOS) + '</p></div>'
+  + '<p class="ouv-consigne"><strong>Choisissez votre personnage.</strong> Celui que vous ne choisissez pas reste chez Snow pour l’aider. Vous le retrouverez chaque fois que vous rentrerez.</p>'
   + '<div class="ouv-persos">' + carte('thomas') + carte('emily') + '</div>'
-  + '<div class="ouv-nav"><button data-act="titre">Retour</button></div>');
+  + '<div class="ouv-nav"><button data-act="cholera">Retour</button></div>');
 }
-let carteContexte = 0;
-function ecranContexte(){
- const c = CONTEXTE[carteContexte], n = CONTEXTE.length;
- ecran('<p class="ouv-etape">Étape 2 sur 3 · Carte ' + (carteContexte + 1) + ' sur ' + n + '</p><h2>' + esc(c.titre) + '</h2>'
-  + '<ul class="ouv-lignes">' + c.lignes.map(l => '<li>' + gras(esc(l)) + '</li>').join('') + '</ul>'
-  + '<div class="ouv-points">' + CONTEXTE.map((_, i) => '<span' + (i === carteContexte ? ' class="actif"' : '') + '></span>').join('') + '</div>'
-  + '<div class="ouv-nav"><button data-act="ctx-prec">Retour</button><button data-act="passer" class="ouv-discret">Passer</button>'
-  + '<button class="ouv-principal" data-act="ctx-suiv" autofocus>' + (carteContexte < n - 1 ? 'Suivant' : 'Lire la lettre de Snow') + '</button></div>');
-}
-function ecranLettre(){
- const l = LETTRE(partie.perso);
- ecran('<p class="ouv-etape">Étape 3 sur 3 · Pourquoi vous enquêtez</p><div class="ouv-lettre"><p class="ouv-adresse">18 Sackville Street, Londres</p>'
-  + l.map((t, i) => '<p' + (i === l.length - 1 ? ' class="ouv-signature"' : '') + '>' + esc(t) + '</p>').join('') + '</div>'
-  + '<p class="ouv-consigne"><strong>Votre mission :</strong> découvrir ce qui tue les habitants de Soho, avec des preuves solides.</p>'
-  + '<div class="ouv-nav"><button data-act="ctx-retour">Retour</button><button class="ouv-principal" data-act="commencer" autofocus' + (state.ready ? '' : ' disabled') + '>Commencer l’enquête</button></div>'
-  + '<p class="ouv-etat" id="ouv-etat"></p>');
+// La scène du matin : fondu au noir, puis la maison de Snow et une réplique à la fois.
+let replique = 0;
+function scene(){
+ const l = MATIN(partie.perso), r = l[replique], fin = replique === l.length - 1;
+ const fond = '<div class="ouv-maison" data-img="' + IMG.maison + '"></div>';
+ ecran(fond + '<div class="ouv-bulle' + (r.moi ? ' ouv-pensee' : '') + (r.qui ? '' : ' ouv-recit') + '">'
+  + (r.qui ? '<p class="ouv-qui">' + esc(r.qui) + '</p>' : '') + '<p class="ouv-dit">' + esc(r.texte) + '</p>'
+  + '<div class="ouv-nav">' + (replique > 0 ? '<button data-act="sc-prec">Retour</button>' : '<span></span>')
+  + (fin ? '<button class="ouv-principal" data-act="commencer" autofocus' + (state.ready ? '' : ' disabled') + '>Partir enquêter</button>'
+         : '<button class="ouv-principal" data-act="sc-suiv" autofocus>Suite</button>')
+  + '</div>' + (fin ? '<p class="ouv-etat" id="ouv-etat"></p>' : '') + '</div>', 'scene');
  majEtat();
+}
+function fondu(suite){
+ ouv.classList.add('ouv-noir');
+ setTimeout(() => { suite(); ouv.classList.add('ouv-noir'); requestAnimationFrame(() => requestAnimationFrame(() => ouv.classList.remove('ouv-noir'))); }, 700);
 }
 function ecranCredits(){
  ecran('<h2>Crédits et sources</h2><dl class="ouv-credits">' + CREDITS.map(([a, b]) => '<dt>' + esc(a) + '</dt><dd>' + esc(b) + '</dd>').join('') + '</dl>'
   + '<div class="ouv-nav"><button data-act="titre" autofocus>Retour</button></div>');
 }
-// Le quartier se charge pendant qu'on lit : on ne laisse commencer que lorsqu'il est prêt.
+// Le quartier se charge pendant qu'on lit : on ne laisse partir que lorsqu'il est prêt.
 function majEtat(){
- const e = ui('ouv-etat'); if (!e) return;
- e.textContent = state.ready ? '' : 'Préparation du quartier… vous pouvez déjà lire.';
+ const e = ui('ouv-etat'); if (e) e.textContent = state.ready ? '' : 'Préparation du quartier… encore un instant.';
  const b = ouv.querySelector('[data-act="commencer"]'); if (b) b.disabled = !state.ready;
 }
 const attente = setInterval(() => { if (!ouv.hidden) majEtat(); if (state.ready) { majEtat(); clearInterval(attente); } }, 500);
 
 function fermerOuverture(){ ouv.hidden = true; ouv.innerHTML = ''; keys.clear(); cv.focus({preventScroll:true}); draw(); }
 function ouvrirOuverture(){ keys.clear(); stop(); ouv.hidden = false; ecranTitre(); }
+// Le jeu commence le vendredi 1er septembre à 7 h : l'épidémie a éclaté dans la nuit.
+const DEPART = 7 * 60;
 
 ouv.addEventListener('click', e => {
  const b = e.target.closest('button[data-act]'); if (!b || b.disabled) return;
@@ -2612,23 +2636,25 @@ ouv.addEventListener('click', e => {
  else if (act === 'parametres') openMenu();
  else if (act === 'continuer') fermerOuverture();
  else if (act === 'nouvelle'){
-  if (partie && partie.perso && !confirm('Commencer une nouvelle enquête ? Votre carnet actuel sera effacé.')) return;
-  choixPerso();
+  if (partie && partie.perso && !confirm('Recommencer depuis le début ? Votre carnet actuel sera effacé.')) return;
+  ecranSnow();
  }
- else if (act === 'perso'){ partie = {perso:b.dataset.id, debut:Date.now()}; carteContexte = 0; ecranContexte(); }
- else if (act === 'ctx-prec'){ if (carteContexte > 0){ carteContexte--; ecranContexte(); } else choixPerso(); }
- else if (act === 'ctx-suiv'){ if (carteContexte < CONTEXTE.length - 1){ carteContexte++; ecranContexte(); } else ecranLettre(); }
- else if (act === 'passer') ecranLettre();
- else if (act === 'ctx-retour'){ carteContexte = CONTEXTE.length - 1; ecranContexte(); }
+ else if (act === 'snow') ecranSnow();
+ else if (act === 'cholera') ecranCholera();
+ else if (act === 'persos') ecranPersos();
+ else if (act === 'perso'){ partie = {perso:b.dataset.id, debut:Date.now()}; replique = 0; fondu(scene); }
+ else if (act === 'sc-suiv'){ replique++; scene(); }
+ else if (act === 'sc-prec'){ replique--; scene(); }
  else if (act === 'commencer'){
-  // nouvelle partie : carnet vide, horloge et position remises à zéro
+  // nouvelle partie : carnet vide (aucune explication connue), horloge à 7 h, joueur au point de départ
   const c = window.SOHO_ENQUETE && window.SOHO_ENQUETE.carnet;
-  if (c){ c.indices = []; c.connues = {eau:true}; c.rayees = {}; c.vus = {}; c.notes = ''; try { localStorage.setItem('soho1854-carnet', JSON.stringify(c)); } catch {} }
-  reset(); sauverPartie(); appliquerCostume(); majBoutonCarnet(); fermerOuverture();
-  say('Parlez aux habitants : approchez-vous et appuyez sur Espace, ou touchez-les. Le carnet s’ouvre avec C.');
+  if (c){ c.indices = []; c.connues = {}; c.rayees = {}; c.vus = {}; c.notes = ''; try { localStorage.setItem('soho1854-carnet', JSON.stringify(c)); } catch {} }
+  reset(); state.minutes = DEPART; npcs.reset(state.minutes); visibleActors = npcs.visible(); updateClock(true);
+  sauverPartie(); appliquerCostume(); majBoutonCarnet();
+  fondu(() => { fermerOuverture(); ouv.hidden = false; ouv.className = 'ouverture mode-vide'; setTimeout(() => { ouv.hidden = true; ouv.className = 'ouverture'; }, 900); });
+  say('Il est 7 heures. Les rues sont encore calmes. Approchez-vous des gens et appuyez sur Espace (ou touchez-les) pour leur parler.');
  }
 });
-// L'ouverture bloque les touches du jeu (sauf dans le menu des paramètres, qui passe au-dessus).
 // Entrée et Espace activent quand même le bouton qui a le focus : c'est l'action par défaut du navigateur.
 addEventListener('keydown', e => { if (!ouv.hidden && !ui('menu').open) e.stopImmediatePropagation(); }, true);
 const boutonTitre = ui('retour-titre');
