@@ -2386,13 +2386,27 @@ if (choixSon){
 // pris à un endroit au hasard du fichier, avec un fondu au début et à la fin.
 // Pour en ajouter un : déposer le mp3 dans audio/ et ajouter une ligne ici.
 const BRUITS = [
- {id:'corneilles', fichier:'audio/bruit-corneilles.mp3', quand:'jour', min:45, max:110, duree:9},
+ {id:'corneilles', fichier:'audio/bruit-corneilles.mp3', quand:'jour', min:25, max:60, duree:10},
 ];
 const CLE_BRUITS = 'soho1854-bruitages';
 let volumeBruits = 0.5;
 try { const v = parseFloat(localStorage.getItem(CLE_BRUITS)); if (v >= 0 && v <= 1) volumeBruits = v; } catch {}
 const prochains = {};
+// Avec Web Audio, le fichier est décodé une fois en mémoire : on peut partir de n'importe quel endroit,
+// même quand le serveur ne permet pas de « sauter » dans un mp3 (le petit serveur local, par exemple).
 const jouerBruit = b => {
+ if (contexte){
+  if (!b.tampon) b.tampon = fetch(b.fichier).then(r => r.arrayBuffer()).then(d => new Promise((ok, ko) => contexte.decodeAudioData(d, ok, ko)));
+  b.tampon.then(buf => {
+   const src = contexte.createBufferSource(), g = contexte.createGain(), t = contexte.currentTime, d = Math.min(b.duree, buf.duration);
+   src.buffer = buf; src.connect(g).connect(contexte.destination);
+   g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(volumeBruits, t + 1.5);
+   g.gain.setValueAtTime(volumeBruits, t + d - 2); g.gain.linearRampToValueAtTime(0, t + d);
+   const offset = Math.random() * Math.max(0, buf.duration - d);
+   src.start(t, offset, d); b.dernier = {offset, d};
+  }).catch(() => {});
+  return;
+ }
  if (!b.a){ b.a = new Audio(b.fichier); b.a.preload = 'auto';
   if (contexte){ b.gain = contexte.createGain(); b.gain.gain.value = 0; contexte.createMediaElementSource(b.a).connect(b.gain).connect(contexte.destination); } }
  const a = b.a, fin = Math.max(0, (a.duration || 0) - b.duree);
