@@ -2346,7 +2346,7 @@ const regler = (p, v) => { p.niveau = v; if (p.gain) p.gain.gain.value = v * vol
 const voulue = () => { const h = (state.minutes / 60) % 24; return h >= 20 || h < 6 ? 'nuit' : 'jour'; };
 function demarrerMusique(){
  if (demarree || (volume === 0 && volumeBruits === 0)) return; demarree = true;
- try { const AC = window.AudioContext || window.webkitAudioContext; if (AC) contexte = new AC(); } catch { contexte = null; }
+ try { const AC = window.AudioContext || window.webkitAudioContext; if (AC && !contexte) contexte = new AC(); } catch { contexte = null; }
  if (contexte && contexte.state === 'suspended') contexte.resume().catch(() => {});
  actuelle = voulue(); const p = piste(actuelle); regler(p, 0); p.a.play().catch(() => { demarree = false; });
 }
@@ -2392,7 +2392,10 @@ const BRUITS = [
  {id:'vent', fichier:'audio/bruit-vent.mp3', quand:'toujours', min:70, max:160, duree:16, force:0.8},
  {id:'chiens', fichier:'audio/bruit-chiens.mp3', quand:'nuit', min:35, max:85, entier:true, force:0.6},
  {id:'malade', fichier:'audio/bruit-malade.mp3', quand:'toujours', min:100, max:220, entier:true, force:0.55},
+ {id:'brouette', fichier:'audio/bruit-brouette.mp3', quand:'jour', min:60, max:140, duree:9, force:0.7},
 ];
+// Le crayon : un court extrait (2 s, fondus brefs) chaque fois qu'un indice entre dans le carnet.
+const ECRITURE = {id:'ecriture', fichier:'audio/bruit-ecriture.mp3', duree:2, fondu:[0.15, 0.6], force:0.9};
 const CLOCHE = {id:'cloche', fichier:'audio/bruit-cloche.mp3', entier:true, force:0.7};
 const CLE_BRUITS = 'soho1854-bruitages';
 let volumeBruits = 0.5;
@@ -2408,7 +2411,8 @@ const jouerBruit = (b, retard = 0) => {
    const d = b.entier ? buf.duration : Math.min(b.duree, buf.duration), v = volumeBruits * (b.force || 1);
    src.buffer = buf; src.connect(g).connect(contexte.destination);
    if (b.entier) g.gain.setValueAtTime(v, t);
-   else { g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(v, t + 1.5); g.gain.setValueAtTime(v, t + d - 2); g.gain.linearRampToValueAtTime(0, t + d); }
+   else { const fi = b.fondu ? b.fondu[0] : 1.5, fo = b.fondu ? b.fondu[1] : 2;
+    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(v, t + fi); g.gain.setValueAtTime(v, t + d - fo); g.gain.linearRampToValueAtTime(0, t + d); }
    const offset = b.entier ? 0 : Math.random() * Math.max(0, buf.duration - d);
    src.start(t, offset, d); b.dernier = {offset, d, quand:t};
   }).catch(() => {});
@@ -2450,6 +2454,12 @@ setInterval(() => {
  const coups = (h % 12) || 12;
  for (let i = 0; i < coups; i++) jouerBruit(CLOCHE, i * 2.5);
 }, 500);
+const talkSansCrayon = talk;
+talk = function(p){
+ const avant = carnet.indices.length, ok = talkSansCrayon(p);
+ if (ok && carnet.indices.length > avant && demarree && volumeBruits > 0) jouerBruit(ECRITURE, 0.4);
+ return ok;
+};
 const choixBruits = ui('bruitages');
 if (choixBruits){
  choixBruits.value = String(volumeBruits);
@@ -2459,7 +2469,7 @@ if (choixBruits){
   if (volumeBruits > 0 && !demarree) demarrerMusique();
  };
 }
-window.SOHO_MUSIQUE = {pistes, voulue, volume:() => volume, demarree:() => demarree, BRUITS, CLOCHE, jouerBruit};
+window.SOHO_MUSIQUE = {pistes, voulue, volume:() => volume, demarree:() => demarree, BRUITS, CLOCHE, ECRITURE, jouerBruit};
 
 window.SOHO_TEST={world:WORLD,openMenu,closeMenu,toggleMap,paused,state,player,camera,viewport,canvas:cv,layout:LAYOUT,npcs,DATA,floor,nearest,findPath,blocked,worldToScreen,screenToWorld,pointers,resolveWalkGoal,moveTo,goToPerson,talk,changeTime,reset,draw,step,resize,shouldPaint,placeEntry,layoutLabels,visible:()=>visibleActors,pump,pumps,keys,markerOpacity,layoutStreetLabels,reducedMotion,visualStats:()=>WORLD.decor?.stats()};
 reset();resize();requestAnimationFrame(frame);
