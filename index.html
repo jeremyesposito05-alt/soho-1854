@@ -3216,6 +3216,9 @@ ouv.addEventListener('click', e => {
   setTimeout(() => pensee('En sortant, je lève les yeux vers le réverbère à la lanterne rouge, devant la maison. Le docteur l’a installée pour que les malades trouvent plus facilement son cabinet, même la nuit. Je la reconnaîtrai de loin quand je rentrerai.'), 1200);
   setTimeout(() => pensee('Il est 7 heures. Les rues sont encore calmes. Pour marcher, je touche les pavés là où je veux aller, ou j’utilise les flèches du clavier. Pour parler à quelqu’un, je m’approche et je le touche, ou j’appuie sur Espace.'), 1200);
   // le tutoriel guidé (guide.js) commence dès que ces deux pensées sont lues
+  // une nouvelle partie remet à zéro les conseils déjà vus : le tutoriel avec Jimmy se rejoue
+  // (sauf si le joueur a coupé les conseils dans les Paramètres)
+  reglages.vus = {}; sauverReglages();
   lancerGuide();
  }
 });
@@ -3998,6 +4001,11 @@ async function lancerGuide(){
  // le conseil sur le temps reste celui déjà en place
  setTimeout(() => coach('horloge', 'Attention au temps : il passe quand je marche et quand je parle. Le soir, je devrai rentrer chez le docteur **Snow** pour lui faire mon rapport.', ui('clock')), 700);
 }
+// « Continuer » sur une partie où le tutoriel n'a jamais été fait (carnet vide) : on le propose aussi.
+ouv.addEventListener('click', e => {
+ const b = e.target.closest('button[data-act="continuer"]'); if (!b) return;
+ if (reglages.tutos && !reglages.vus.guide && !carnet.indices.length && !carnet.conversations.length) setTimeout(lancerGuide, 600);
+});
 window.SOHO_GUIDE = {lancerGuide, JIMMY};
 
 // ============================================================
