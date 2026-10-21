@@ -414,7 +414,7 @@ window.SOHO_PROP_ASSETS['lampadaire-eteint']={"id":"lampadaire-eteint","file":"i
       const record={asset,item,image:null,cache:null,anchorX:id==='pompe-victorienne' ? .56 : .5};
       info.push(item);records.set(id,record);
       let settled=false;
-      const timer=setTimeout(()=>fail('Le chargement a dépassé 30 secondes.'),30000);
+      const timer=setTimeout(()=>fail('Le chargement a dépassé 3 minutes.'),180000);
       function fail(reason){
         if(settled)return;settled=true;clearTimeout(timer);
         item.error='Impossible de charger l’objet « '+id+' » ('+String(asset.file||'fichier absent')+'). '+reason;
@@ -700,7 +700,7 @@ window.SOHO_ATMOSPHERE_ASSETS={"fumee-01":{"id":"fumee-01","kind":"fumee","file"
       const item={id,kind:asset.kind,file:asset.file,loaded:false,nativeWidth:0,nativeHeight:0,cacheWidth:0,cacheHeight:0,sourceReleased:false,charcoal:false,error:null};
       const record={asset,item,cache:null,ratio:1};info.push(item);records.set(id,record);
       let image=null,settled=false;
-      const timer=setTimeout(()=>fail('Le chargement a dépassé 30 secondes.'),30000);
+      const timer=setTimeout(()=>fail('Le chargement a dépassé 3 minutes.'),180000);
       function release(){if(image){image.onload=null;image.onerror=null;image=null;}}
       function fail(reason){
         if(settled)return;settled=true;clearTimeout(timer);release();
@@ -1047,7 +1047,7 @@ window.SOHO_ATMOSPHERE_ASSETS={"fumee-01":{"id":"fumee-01","kind":"fumee","file"
       let settled=false;
       const fail=reason=>{if(settled)return;settled=true;clearTimeout(timeout);image.onload=null;image.onerror=null;
         const message=record.file+' : '+reason;record.error=message;info.error=info.error?info.error+'\n'+message:message;reject(new Error(message));};
-      const timeout=setTimeout(()=>fail('le chargement ne répond pas'),30000);
+      const timeout=setTimeout(()=>fail('le chargement ne répond pas'),180000);
       image.onload=()=>{if(settled)return;try{
         record.nativeWidth=image.naturalWidth||image.width;record.nativeHeight=image.naturalHeight||image.height;
         if(!(record.nativeWidth>0&&record.nativeHeight>0))throw new Error('image vide ou invalide');
