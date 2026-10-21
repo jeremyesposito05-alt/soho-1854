@@ -1742,6 +1742,9 @@ window.SOHO_ATMOSPHERE_ASSETS={"fumee-01":{"id":"fumee-01","kind":"fumee","file"
  for (const p of D.people) if (HORAIRES[p.id]) p.plages = HORAIRES[p.id];
  const snow = D.people.find(p => p.id === 'snow');
  if (snow){ snow.nom = 'Chez le docteur Snow, 18 Sackville Street'; snow.cout = 0; }
+ // La porte de Snow et le point de départ : devant la lampe rouge, sur le trottoir de Vigo Street.
+ L.anchors.snow = [728, 1958];
+ L.anchors.start = [728, 1918];
 
  // Les nouveaux habitants. Positions prises dans les rues du plan de Codex (rectangles de layout.roads).
  const T = {
@@ -2517,13 +2520,14 @@ talk = function(p){
   const r = rumeurPour(p);
   ui('speaker').textContent = NOM_PASSANT[p.type] || 'Un passant';
   if (!r){ afficherRepliques(['La personne presse le pas sans vous répondre.']); return true; }
-  afficherRepliques([r.l], noter({defend:r.d, indices:[]}, p.id + ':' + jour, 5));
+  afficherRepliques([r.l], () => { const f = noter({defend:r.d, indices:[]}, p.id + ':' + jour, 5); if (f) f(); });
   return true;
  }
  const e0 = ENQUETE[p.id];
  if (e0){
   const e = e0.matin && h < 12 ? Object.assign({}, e0, e0.matin) : e0;
-  afficherRepliques(e.lignes, noter(e, p.id + (e0.matin && h < 12 ? ':matin' : ''), Number(p.cout) || 15));
+  // Rien n'est noté tant que le joueur n'a pas lu la dernière bulle.
+  afficherRepliques(e.lignes, () => { const f = noter(e, p.id + (e0.matin && h < 12 ? ':matin' : ''), Number(p.cout) || 15); if (f) f(); });
  }
  return true;
 };
@@ -3036,6 +3040,38 @@ setInterval(() => {
  say('« Il est ' + heure + ' heures passées. Le docteur doit être rentré. Je devrais aller lui raconter ce que j’ai vu, au 18 Sackville Street. »');
 }, 1000);
 window.SOHO_MAISON = {ouvrirMaison, maladesDepuisJeudi};
+
+// ---------- le repère : la lampe rouge du docteur ----------
+// Dans l'Angleterre victorienne, une lampe rouge au-dessus de la porte signalait la maison d'un médecin.
+// C'est le repère du joueur : il part d'ici le matin et revient ici. Si ChatGPT fournit un dessin
+// (images/objets/lampe-rouge.png, vue de dessus comme le décor), il remplace le dessin fait ici.
+const REPERE = {x:728, y:1990};
+let imageRepere = null;
+{ const im = new Image(); im.onload = () => { imageRepere = im; }; im.src = 'images/objets/lampe-rouge.png'; }
+function dessinerRepere(c, s){
+ const {x, y} = REPERE, h = ((s.minutes % 1440) + 1440) % 1440 / 60, nuit = h >= 20 || h < 6;
+ const pulse = reducedMotion() ? 1 : 1 + Math.sin(performance.now() / 600) * .06;
+ c.save();
+ // halo rouge : discret le jour, fort la nuit
+ const r = (nuit ? 70 : 34) * pulse, g = c.createRadialGradient(x, y - 26, 2, x, y - 26, r);
+ g.addColorStop(0, nuit ? 'rgba(255,70,40,.55)' : 'rgba(255,80,50,.28)'); g.addColorStop(1, 'rgba(255,60,30,0)');
+ c.fillStyle = g; c.beginPath(); c.arc(x, y - 26, r, 0, Math.PI * 2); c.fill();
+ if (imageRepere){ const w = 40, hh = w * imageRepere.height / imageRepere.width; c.drawImage(imageRepere, x - w / 2, y - hh, w, hh); c.restore(); return; }
+ // potence de fer forgé, lanterne de verre rouge, petit toit
+ c.strokeStyle = '#1d1a17'; c.lineWidth = 1.6; c.beginPath(); c.moveTo(x - 9, y - 38); c.lineTo(x, y - 38); c.lineTo(x, y - 34); c.stroke();
+ c.fillStyle = '#1d1a17'; c.beginPath(); c.moveTo(x - 6, y - 33); c.lineTo(x + 6, y - 33); c.lineTo(x, y - 37); c.closePath(); c.fill();
+ c.fillStyle = nuit ? '#ff4a2e' : '#c8321f'; c.strokeStyle = '#2a1410'; c.lineWidth = 1;
+ c.beginPath(); c.moveTo(x - 4.5, y - 33); c.lineTo(x + 4.5, y - 33); c.lineTo(x + 3.5, y - 21); c.lineTo(x - 3.5, y - 21); c.closePath(); c.fill(); c.stroke();
+ c.fillStyle = 'rgba(255,220,180,.7)'; c.fillRect(x - 1.2, y - 31, 2.4, 7);
+ c.fillStyle = '#1d1a17'; c.fillRect(x - 4, y - 21, 8, 1.6);
+ c.restore();
+}
+const renderSansRepere = WORLD.render;
+WORLD.render = function(c, vue, s, o){
+ const r = renderSansRepere.apply(this, arguments);
+ if (vue && REPERE.x > vue.x - 80 && REPERE.x < vue.x + vue.w + 80 && REPERE.y > vue.y - 80 && REPERE.y < vue.y + vue.h + 120) dessinerRepere(c, s || state);
+ return r;
+};
 
 // ============================================================
 // PORTRAITS · le personnage qui parle apparaît, détouré, au-dessus de sa bulle, comme dans un visual novel (21 oct. 2026)
