@@ -3332,22 +3332,40 @@ let imageRepere = null;
 { const im = new Image(), essais = ['images/objets/lampe-rouge.png']; im.onload = () => { imageRepere = im; }; im.onerror = () => { if (essais.length) im.src = essais.shift(); }; im.src = 'images/objets/lampe-rouge.webp'; }
 // Taille dans le monde : la lanterne mesure à peu près la hauteur d'une tête et d'un buste de passant.
 const LARGEUR_LAMPE = 44;
-// 22 oct. : Jeremy remplace la lanterne murale par un réverbère à lanterne rouge (images/objets/reverbere-rouge.webp,
-// 1024 × 1536, fond transparent). Son pied est planté sur le trottoir, contre la façade ; la lanterne pend au-dessus
-// de la porte. Mesures relevées sur l'image : pied à 32 % de la largeur, centre du verre à (68 %, 37 %).
-const REVERBERE = {piedX:698, piedY:1982, hauteur:104};
+// 22 oct. (Jeremy) : le repère est le réverbère du décor de Codex (images/objets/lampadaire.png), planté sur le
+// trottoir devant la porte, mais avec un verre ROUGE luisant au lieu du jaune. On recolore une copie en mémoire :
+// le fichier d'origine n'est pas touché. Mesures prises dans SOHO_PROP_ASSETS (cadrage et hauteur des autres réverbères).
+const REVERBERE = {piedX:700, piedY:1957};
 let imageReverbere = null;
-{ const im = new Image(); im.onload = () => { imageReverbere = im; }; im.src = 'images/objets/reverbere-rouge.webp'; }
+{
+ const a = (window.SOHO_PROP_ASSETS || {}).lampadaire || {file:'images/objets/lampadaire.png', sourceBounds:{x:500, y:22, w:254, h:1208}, heightWorld:76};
+ const im = new Image();
+ im.onload = () => {
+  const b = a.sourceBounds, cv2 = document.createElement('canvas'); cv2.width = b.w; cv2.height = b.h;
+  const c2 = cv2.getContext('2d'); c2.drawImage(im, b.x, b.y, b.w, b.h, 0, 0, b.w, b.h);
+  try {
+   // seulement le verre de la lanterne (le haut du réverbère) : les reflets dorés du fût restent intacts
+   const zone = c2.getImageData(0, Math.round(b.h * .14), b.w, Math.round(b.h * .22)), d = zone.data;
+   for (let i = 0; i < d.length; i += 4){
+    const r = d[i], g = d[i + 1], bl = d[i + 2], lum = (r + g + bl) / 3;
+    if (d[i + 3] > 20 && lum > 95 && r > bl + 30){ d[i] = Math.min(255, lum * 1.25 + 45); d[i + 1] = lum * .3; d[i + 2] = lum * .22; }
+   }
+   c2.putImageData(zone, 0, Math.round(b.h * .14));
+  } catch { /* image d'une autre origine : on garde le verre jaune */ }
+  imageReverbere = {canvas:cv2, hauteur:a.heightWorld || 76, verre:.25};
+ };
+ im.src = a.file;
+}
 function dessinerRepere(c, s){
  const {x, y} = REPERE, h = ((s.minutes % 1440) + 1440) % 1440 / 60, nuit = h >= 20 || h < 6;
  const pulse = reducedMotion() ? 1 : 1 + Math.sin(performance.now() / 600) * .06;
  if (imageReverbere){
-  const H = REVERBERE.hauteur, W = H * imageReverbere.width / imageReverbere.height;
-  const gauche = REVERBERE.piedX - W * .32, haut = REVERBERE.piedY - H, gx = gauche + W * .68, gy = haut + H * .37;
+  const H = imageReverbere.hauteur, W = H * imageReverbere.canvas.width / imageReverbere.canvas.height;
+  const gauche = REVERBERE.piedX - W / 2, haut = REVERBERE.piedY - H, gx = REVERBERE.piedX, gy = haut + H * imageReverbere.verre;
   c.save();
   // une petite ombre au pied, pour poser le réverbère sur le trottoir
-  c.fillStyle = 'rgba(0,0,0,.28)'; c.beginPath(); c.ellipse(REVERBERE.piedX, REVERBERE.piedY - 1, W * .16, 3, 0, 0, Math.PI * 2); c.fill();
-  c.drawImage(imageReverbere, gauche, haut, W, H);
+  c.fillStyle = 'rgba(0,0,0,.28)'; c.beginPath(); c.ellipse(REVERBERE.piedX, REVERBERE.piedY - 1, W * .45, 3, 0, 0, Math.PI * 2); c.fill();
+  c.drawImage(imageReverbere.canvas, gauche, haut, W, H);
   const r = (nuit ? 95 : 42) * pulse, g = c.createRadialGradient(gx, gy, 2, gx, gy, r);
   g.addColorStop(0, nuit ? 'rgba(255,70,40,.62)' : 'rgba(255,80,50,.26)'); g.addColorStop(1, 'rgba(255,60,30,0)');
   c.globalCompositeOperation = 'lighter'; c.fillStyle = g; c.beginPath(); c.arc(gx, gy, r, 0, Math.PI * 2); c.fill();
