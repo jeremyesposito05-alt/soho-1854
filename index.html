@@ -2543,6 +2543,8 @@ step = function(dt){
  if (ui('carnet').open) return;
  const x0 = player.px, y0 = player.py, m0 = state.minutes;
  stepOriginal(dt);
+ // pendant le tutoriel guidé, le personnage reste sur place (guide.js)
+ if (mouvementBloque()){ player.px = player.gx = x0; player.py = player.gy = y0; stop(); keys.clear(); state.minutes = m0; return; }
  const d = Math.hypot(player.px - x0, player.py - y0);
  if (state.minutes !== m0 && d < 200){ state.minutes = m0 + d / PAS_MINUTE; updateClock(); }
 };
@@ -3886,8 +3888,12 @@ async function reponse(lire, juste, effacer, correction){
  }
 }
 
+// Jeremy (22 oct.) : le joueur ne peut pas bouger tant que le tutoriel n'est pas entièrement fini.
+let guidePrevu = false;
+function mouvementBloque(){ return guidePrevu || guideActif; }
 async function lancerGuide(){
  if (!partie || !reglages.tutos || reglages.vus.guide) return;
+ guidePrevu = true;
  await attendre(() => ouv.hidden && !boiteDialogue.open && !penseesEnAttente.length && !ui('carnet').open && state.ready);
  guideActif = true;
  const minutesAvant = state.minutes;
@@ -3988,7 +3994,7 @@ async function lancerGuide(){
  await attendre(() => !ui('carnet').open); fermerCoach();
  state.minutes = minutesAvant; updateClock(true);
  reglages.vus.guide = true; sauverReglages();
- guideActif = false;
+ guideActif = false; guidePrevu = false;
  // le conseil sur le temps reste celui déjà en place
  setTimeout(() => coach('horloge', 'Attention au temps : il passe quand je marche et quand je parle. Le soir, je devrai rentrer chez le docteur **Snow** pour lui faire mon rapport.', ui('clock')), 700);
 }
@@ -4028,14 +4034,20 @@ const JOURNAL = {
 const QUI_JOURNAL = 'Le Courrier de Soho';
 function afficherJournal(jour){
  const j = JOURNAL[jour]; if (!j) return;
- boiteDialogue.classList.remove('pensee', 'avec-portrait');
- if (badgeDialogue) badgeDialogue.textContent = 'Le journal du matin · ' + NOMS_JOURS[jour];
+ const titre = 'Le journal du matin · ' + NOMS_JOURS[jour];
+ boiteDialogue.classList.remove('pensee', 'avec-portrait'); boiteDialogue.classList.add('journal');
+ if (badgeDialogue) badgeDialogue.textContent = titre;
  ui('speaker').textContent = QUI_JOURNAL;
  keys.clear(); stop(); boiteDialogue.showModal();
  const ctx = {qui:QUI_JOURNAL + ' (journal)', quand:quandMaintenant(), source:'journal-' + jour};
  afficherRepliques(j.l, () => finDeLecture({defend:j.defend}, 'journal-' + jour, 0, ctx, j.l), ctx);
- boiteDialogue.addEventListener('close', () => { if (badgeDialogue) badgeDialogue.textContent = badgeTemoignage; }, {once:true});
+ // l'en-tête est réaffirmé juste après l'ouverture (un événement « close » en retard pouvait le remettre à zéro)
+ setTimeout(() => { if (boiteDialogue.classList.contains('journal') && badgeDialogue) badgeDialogue.textContent = titre; }, 60);
 }
+boiteDialogue.addEventListener('close', () => {
+ if (boiteDialogue.open || !boiteDialogue.classList.contains('journal')) return;   // un « close » en retard ne compte pas
+ boiteDialogue.classList.remove('journal'); if (badgeDialogue) badgeDialogue.textContent = badgeTemoignage;
+});
 
 // Le matin : la ville se réveille, le joueur sort devant chez Snow.
 function nouveauMatin(minutes, recit){
