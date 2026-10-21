@@ -4,7 +4,7 @@
 :root{color-scheme:dark;--paper:#eadfc8;--ink:#312920;--muted:#bdb09a;--line:#c2a77955}*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#27251e;color:var(--paper);font:14px/1.5 Georgia,"Times New Roman",serif}button,select{font:12px/1.3 system-ui,sans-serif;cursor:pointer}button,select{border:1px solid var(--line);border-radius:5px;background:#302a22e8;color:var(--paper);padding:10px 12px;min-height:40px}button:hover,select:hover{background:#514535}button:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid #e6c88a;outline-offset:3px}canvas:focus-visible{outline:none}button[aria-pressed="true"]{background:#ad9364;color:#201b15}button:disabled{opacity:.5;cursor:default}#viewport{position:fixed;inset:0;background:#27251e}canvas{display:block;width:100%;height:100%;touch-action:none;cursor:crosshair}.hud{position:fixed;z-index:2;pointer-events:none;inset:0}.hud>*{pointer-events:auto}.plate{background:#28231cdd;border:1px solid #c1a77744;box-shadow:0 3px 20px #0004;border-radius:6px;backdrop-filter:blur(8px)}.identity{position:absolute;top:max(16px,env(safe-area-inset-top));left:max(16px,env(safe-area-inset-left));padding:10px 15px;max-width:320px}.identity h1{margin:0;font:18px/1.2 Georgia,serif;letter-spacing:.06em}.identity h1 span{font-size:13px;color:#c5b493}.identity #location{margin:4px 0 6px;color:#e2d0ad;font-style:italic;font-size:12px}.clockline{display:flex;gap:12px;align-items:center;border-top:1px solid #c1a77730;padding-top:6px;font:11px/1.4 system-ui,sans-serif;color:#d5c4a7}#period{color:#ad9f88;font-size:10px}.nav{position:absolute;right:max(16px,env(safe-area-inset-right));top:max(16px,env(safe-area-inset-top));display:flex;gap:7px}.nav button{box-shadow:0 3px 15px #0004;background:#28231ce8}#menu-button{font-weight:600}.toast{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);max-width:min(540px,calc(100vw - 32px));margin:0;padding:9px 15px;text-align:center;font:12px/1.5 system-ui,sans-serif;pointer-events:none}.action{position:absolute;left:50%;bottom:max(28px,env(safe-area-inset-bottom));transform:translateX(-50%);display:flex;gap:11px;align-items:center;max-width:calc(100vw - 32px);white-space:normal;text-align:left;background:#e8dbc1f2;color:#352c20;border-color:#a58c60;box-shadow:0 3px 26px #0005;padding:10px 16px}.action kbd{padding:3px 6px;border:1px solid #947c54;border-radius:3px;font:11px system-ui,sans-serif}.action small{display:block;font-size:10px;color:#746044}.dpad{position:absolute;left:max(18px,env(safe-area-inset-left));bottom:max(20px,env(safe-area-inset-bottom));display:none;grid-template-columns:repeat(3,42px);gap:4px}.dpad button{height:42px;min-height:42px;padding:0;font:20px/1 system-ui,sans-serif;background:#29231cce;touch-action:none;user-select:none}.dpad button:first-child{grid-column:2}.dpad button:nth-child(2){grid-column:1}.dpad.forced{display:grid}dialog{color-scheme:light;background:#e9dfcb;color:var(--ink);border:1px solid #9b835b;border-radius:9px;box-shadow:0 15px 80px #0008;width:calc(100% - 32px);max-width:560px;max-height:calc(100dvh - 48px);padding:25px 28px;overflow:auto;overscroll-behavior:contain}dialog::backdrop{background:#13110d55}dialog h2{font-weight:400;font-size:25px;line-height:1.2;margin:0 0 15px}dialog p{margin:0 0 14px}dialog button,dialog select{background:#f2e7d1;color:#3c3022;border-color:#ae956e}dialog button:hover,dialog select:hover{background:#fff4dd}dialog button[aria-pressed="true"]{background:#6c5839;color:#fff2d9}dialog .badge{color:#8f7251;font:10px/1.5 system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;margin:0 0 6px}#dialogue>button{float:right}#menu{position:fixed;left:auto;right:max(16px,env(safe-area-inset-right));top:max(16px,env(safe-area-inset-top));bottom:auto;margin:0;max-width:355px;padding:21px 23px;font:12px/1.5 system-ui,sans-serif}#menu h2{font:25px Georgia,serif;margin:0}.menuhead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:21px}.menuhead button{font-size:18px;min-height:32px;padding:3px 10px}.group{padding-top:15px;margin-top:15px;border-top:1px solid #b9a17c88}.group-title{font:italic 16px Georgia,serif;margin-bottom:10px;color:#725d41}.row{display:flex;align-items:center;gap:8px;margin:8px 0}.row>label{flex:1}.row select{max-width:150px}.row.buttons{flex-wrap:wrap}.row.buttons button{flex:1;white-space:nowrap}.check{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:12px 0}.check input{accent-color:#6b5538;width:17px;height:17px;margin:0}summary{cursor:pointer;color:#6f573b;padding:6px 0}details p{font:12px/1.6 system-ui,sans-serif;margin:9px 0;color:#715d43}#witnesses{padding:3px 0 0 15px;margin:0;color:#715d43;font-size:11px}#witnesses li{margin:6px 0}.fine{color:#8a7351;font:10px/1.5 system-ui,sans-serif}#menu .fine{margin:8px 0 0}#status:not([hidden])~#action:not([hidden]){bottom:77px}[hidden]{display:none!important}
 @media(pointer:coarse){.dpad{display:grid}.toast{bottom:170px}.action{bottom:25px;left:auto;right:14px;transform:none;max-width:calc(100vw - 180px)}.action kbd{display:none}#status:not([hidden])~#action:not([hidden]){bottom:25px}}
 #carnet{max-width:720px;font:14px/1.5 system-ui,sans-serif}#carnet h2{font:25px Georgia,serif}#carnet h3{font:italic 17px Georgia,serif;color:#5e4a30;margin:20px 0 8px}#carnet .fermer{float:right}.methode{background:#f4ecda;border-left:4px solid #8f7251;padding:10px 14px;border-radius:4px}.methode h3{margin-top:0}.methode ol{margin:0;padding-left:20px}.methode li{margin:3px 0}.reussite{margin:8px 0 0!important;color:#5e4a30;font-style:italic}.grille-wrap{overflow-x:auto}.grille{border-collapse:collapse;width:100%;font-size:13px}.grille th,.grille td{border-bottom:1px solid #b9a17c88;padding:6px 8px;text-align:left}.grille th{font-weight:600;color:#5e4a30}.grille button{min-height:30px;padding:4px 9px}.grille tr.rayee td:first-child{text-decoration:line-through;color:#8a7351}.grille tr.inconnue td{color:#9a8768;font-style:italic}.indice{border:1px solid #c2a779;border-radius:6px;padding:10px 12px;margin:0 0 10px;background:#f6efe0}.indice .texte{margin:0 0 3px;font-weight:600}.indice .source{margin:0 0 8px;color:#715d43;font-size:12px}.indice label{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:5px 0;font-size:13px}.indice label small{color:#8a7351}.indice select{max-width:52%;min-height:34px;padding:5px 8px}.indice textarea{width:100%;min-height:44px;margin-top:6px;font:13px/1.4 system-ui,sans-serif;border:1px solid #c2a779;border-radius:4px;padding:6px;background:#fffaf0;color:#3c3022}.vide{color:#715d43;font-style:italic}.carnet-note{border-top:1px solid #b9a17c88;padding-top:10px;color:#6c5839;font:13px/1.5 system-ui,sans-serif}button.petit{min-height:30px;padding:4px 9px}@media(max-width:650px){.indice label{flex-direction:column;align-items:stretch}.indice select{max-width:100%}}
-#musique,#bruitages{flex:1.4;min-width:0;width:100%;accent-color:#6b5538;min-height:28px;cursor:pointer}#musique-val,#bruitages-val{flex:none;width:44px;white-space:nowrap;font-size:12px;text-align:right;color:#715d43;font-variant-numeric:tabular-nums}.ouverture{position:fixed;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;padding:16px;overflow:auto;background:radial-gradient(ellipse at center,#1d1a14b0,#0f0d0af2);backdrop-filter:blur(5px) sepia(.35);-webkit-backdrop-filter:blur(5px) sepia(.35)}.ouverture::after{content:"";position:fixed;inset:0;background:#000;opacity:0;pointer-events:none;transition:opacity .7s ease}.ouverture.ouv-noir::after{opacity:1}.ouverture.mode-titre{background:linear-gradient(#0f0d0a40,#0f0d0a08 30%,#0f0d0a60 62%,#0f0d0ae6),url(images/ouverture/fond-menu.webp) center/cover no-repeat #15120e}.ouverture.mode-vide{background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none;pointer-events:none}.ouv-titre-bloc{text-align:center;max-width:620px;margin-top:14vh}.ouv-sur{font:13px/1 system-ui,sans-serif;letter-spacing:.35em;text-transform:uppercase;color:#e3c98f;margin:0 0 14px;text-shadow:0 1px 8px #000}.ouv-titre{font:400 66px/1.05 "Libre Caslon Text",Georgia,serif;margin:0;color:#f6ecd6;letter-spacing:.02em;text-shadow:0 2px 6px #000,0 0 40px #000c}.ouv-sous{font:italic 19px/1.4 Georgia,serif;color:#eadcbc;margin:14px 0 0;text-shadow:0 1px 8px #000}.ouverture button{font:15px/1.3 Georgia,serif;background:#f2e7d1;color:#3c3022;border:1px solid #ae956e;border-radius:5px;padding:11px 16px;min-height:46px;cursor:pointer}.ouverture button:hover{background:#fff4dd}.ouverture button:focus-visible{outline:2px solid #e6c88a;outline-offset:3px}.ouverture button:disabled{opacity:.5;cursor:default}.ouverture button small{display:block;font:13px system-ui,sans-serif;opacity:.75;margin-top:3px}.ouverture button.ouv-grand{display:block;margin:34px auto 8px;min-width:260px;font:22px/1.2 "Libre Caslon Text",Georgia,serif;padding:15px 36px;background:#f1e4c6ee;color:#2a2219;border:1px solid #d4b57a;border-radius:4px;box-shadow:0 8px 34px #000c}.ouverture button.ouv-grand:hover{background:#fff4dd}.ouverture button.ouv-lien{background:none;border:none;min-height:0;padding:6px 4px;font:14px system-ui,sans-serif;color:#eadcbc;text-decoration:underline;text-underline-offset:3px;text-shadow:0 1px 6px #000}.ouv-petits{margin:16px 0 0;color:#bda97f}.ouverture button.ouv-principal{background:#4b3c28;color:#f6ecd6;border-color:#4b3c28}.ouverture button.ouv-principal:hover{background:#5e4b33}.ouv-carte{width:100%;max-width:640px;max-height:calc(100dvh - 32px);overflow:auto;background:linear-gradient(160deg,#efe6d2,#e2d4b6);color:#312920;border:1px solid #9b835b;border-radius:6px;box-shadow:0 20px 90px #000c,inset 0 0 0 6px #e9dfcb,inset 0 0 0 7px #b49a6e;padding:30px 36px;font:16px/1.6 Georgia,serif;text-align:center}.ouv-carte h2{font:400 28px/1.2 "Libre Caslon Text",Georgia,serif;margin:4px 0 14px;color:#2a2219}.ouv-etape{font:11px/1.4 system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#8f7251;margin:0 0 6px}.ouv-tete{display:flex;align-items:center;justify-content:center;gap:16px;margin:6px 0 14px}.ouv-tete h2{margin:0}.ouv-texte{text-align:left}.ouv-texte p{margin:0 0 12px}.ouv-consigne{text-align:left;font:14px/1.5 system-ui,sans-serif;color:#5e4a30;margin:6px 0 16px}.ouv-persos{display:grid;grid-template-columns:1fr 1fr;gap:14px}.ouverture button.ouv-perso{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:16px 14px;background:#f6efe0}.ouv-portrait{position:relative;flex:none;width:96px;height:96px;border-radius:50%;overflow:hidden;background:radial-gradient(circle at 35% 30%,#d9c9a6,#9b835b);border:2px solid #7a6545;display:grid;place-items:center}.ouv-portrait span{font:400 44px "Libre Caslon Text",Georgia,serif;color:#f6ecd6}.ouv-portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.ouv-perso-nom{font:400 20px "Libre Caslon Text",Georgia,serif;color:#2a2219}.ouv-perso-role{font:12px system-ui,sans-serif;color:#8f7251;letter-spacing:.04em}.ouv-perso-texte{font:13px/1.5 system-ui,sans-serif;color:#4a3c2b}.ouv-nav{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:16px;flex-wrap:wrap}.ouv-nav .ouv-principal{margin-left:auto}.ouv-etat{font:12px system-ui,sans-serif;color:#8a7351;margin:10px 0 0;min-height:1em;text-align:right}.ouverture.mode-scene{background:#120f0b;padding:0;overflow:hidden;align-items:flex-end;backdrop-filter:none;-webkit-backdrop-filter:none}.ouv-maison{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 38%,#6a5236,#2a2017 55%,#120d09)}.ouv-maison img{width:100%;height:100%;object-fit:cover}.ouv-bulle{position:relative;width:min(760px,calc(100% - 32px));margin:0 auto max(24px,env(safe-area-inset-bottom));background:#efe6d2f7;color:#2e261c;border:1px solid #9b835b;border-radius:6px;padding:18px 24px;box-shadow:0 10px 50px #000b;font:18px/1.55 Georgia,serif}.ouv-qui{font:12px/1 system-ui,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#8f7251;margin:0 0 8px}.ouv-dit{margin:0}.ouv-pensee .ouv-dit{font-style:italic}.ouv-bulle.ouv-recit{background:#1d1812f0;color:#eadcbc;border-color:#5e4b33;text-align:center;font-style:italic}.ouv-credits{text-align:left;font:13px/1.5 system-ui,sans-serif;margin:0}.ouv-credits dt{font:italic 16px Georgia,serif;color:#5e4a30;margin-top:12px}.ouv-credits dd{margin:2px 0 0}@media(max-width:650px){.ouv-carte{padding:22px 18px;font-size:15px}.ouv-carte h2{font-size:23px}.ouv-titre{font-size:42px}.ouv-sous{font-size:16px}.ouv-titre-bloc{margin-top:auto;margin-bottom:6vh}.ouverture button.ouv-grand{min-width:220px;font-size:20px}.ouv-persos{grid-template-columns:1fr}.ouverture button.ouv-perso{flex-direction:row;flex-wrap:wrap;text-align:left;justify-content:flex-start}.ouv-portrait{width:64px;height:64px}.ouv-portrait span{font-size:30px}.ouv-perso-texte{flex-basis:100%}.ouv-bulle{font-size:16px;padding:16px 18px}}@media(max-width:650px){.identity{left:10px;top:10px;padding:8px 10px;max-width:calc(100vw - 146px)}.identity h1{font-size:16px}.identity h1 span{font-size:11px}.identity #location{font-size:11px;margin:3px 0 5px}.clockline{display:block;font-size:10px}#period{display:none}.nav{right:10px;top:10px;gap:5px}.nav button{font-size:11px;padding:9px 10px;min-height:37px}.toast{font-size:11px}.action{font-size:11px;padding:9px 11px}#menu{right:10px;top:10px;max-height:calc(100dvh - 20px);max-width:calc(100vw - 20px);padding:20px}dialog{padding:22px}.clockline{max-width:160px}}
+#musique,#bruitages{flex:1.4;min-width:0;width:100%;accent-color:#6b5538;min-height:28px;cursor:pointer}#musique-val,#bruitages-val{flex:none;width:44px;white-space:nowrap;font-size:12px;text-align:right;color:#715d43;font-variant-numeric:tabular-nums}.ouverture{position:fixed;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;padding:16px;overflow:auto;background:radial-gradient(ellipse at center,#1d1a14b0,#0f0d0af2);backdrop-filter:blur(5px) sepia(.35);-webkit-backdrop-filter:blur(5px) sepia(.35)}.ouverture::after{content:"";position:fixed;inset:0;background:#000;opacity:0;pointer-events:none;transition:opacity .7s ease}.ouverture.ouv-noir::after{opacity:1}.ouverture.mode-titre{background:linear-gradient(#0f0d0a40,#0f0d0a08 30%,#0f0d0a60 62%,#0f0d0ae6),url(images/ouverture/fond-menu.webp) center/cover no-repeat #15120e}.ouverture.mode-vide{background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none;pointer-events:none}.ouv-titre-bloc{text-align:center;max-width:620px;margin-top:14vh}.ouv-sur{font:13px/1 system-ui,sans-serif;letter-spacing:.35em;text-transform:uppercase;color:#e3c98f;margin:0 0 14px;text-shadow:0 1px 8px #000}.ouv-titre{font:400 66px/1.05 "Libre Caslon Text",Georgia,serif;margin:0;color:#f6ecd6;letter-spacing:.02em;text-shadow:0 2px 6px #000,0 0 40px #000c}.ouv-sous{font:italic 19px/1.4 Georgia,serif;color:#eadcbc;margin:14px 0 0;text-shadow:0 1px 8px #000}.ouverture button{font:15px/1.3 Georgia,serif;background:#f2e7d1;color:#3c3022;border:1px solid #ae956e;border-radius:5px;padding:11px 16px;min-height:46px;cursor:pointer}.ouverture button:hover{background:#fff4dd}.ouverture button:focus-visible{outline:2px solid #e6c88a;outline-offset:3px}.ouverture button:disabled{opacity:.5;cursor:default}.ouverture button small{display:block;font:13px system-ui,sans-serif;opacity:.75;margin-top:3px}.ouverture button.ouv-grand{display:block;margin:34px auto 8px;min-width:260px;font:22px/1.2 "Libre Caslon Text",Georgia,serif;padding:15px 36px;background:#f1e4c6ee;color:#2a2219;border:1px solid #d4b57a;border-radius:4px;box-shadow:0 8px 34px #000c}.ouverture button.ouv-grand:hover{background:#fff4dd}.ouverture button.ouv-lien{background:none;border:none;min-height:0;padding:6px 4px;font:14px system-ui,sans-serif;color:#eadcbc;text-decoration:underline;text-underline-offset:3px;text-shadow:0 1px 6px #000}.ouv-petits{margin:16px 0 0;color:#bda97f}.ouverture button.ouv-principal{background:#4b3c28;color:#f6ecd6;border-color:#4b3c28}.ouverture button.ouv-principal:hover{background:#5e4b33}.ouv-carte{width:100%;max-width:640px;max-height:calc(100dvh - 32px);overflow:auto;background:linear-gradient(160deg,#efe6d2,#e2d4b6);color:#312920;border:1px solid #9b835b;border-radius:6px;box-shadow:0 20px 90px #000c,inset 0 0 0 6px #e9dfcb,inset 0 0 0 7px #b49a6e;padding:30px 36px;font:16px/1.6 Georgia,serif;text-align:center}.ouv-carte h2{font:400 28px/1.2 "Libre Caslon Text",Georgia,serif;margin:4px 0 14px;color:#2a2219}.ouv-etape{font:11px/1.4 system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#8f7251;margin:0 0 6px}.ouv-tete{display:flex;align-items:center;justify-content:center;gap:16px;margin:6px 0 14px}.ouv-tete h2{margin:0}.ouv-texte{text-align:left}.ouv-texte p{margin:0 0 12px}.ouv-consigne{text-align:left;font:14px/1.5 system-ui,sans-serif;color:#5e4a30;margin:6px 0 16px}.ouv-persos{display:grid;grid-template-columns:1fr 1fr;gap:14px}.ouverture button.ouv-perso{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:16px 14px;background:#f6efe0}.ouv-portrait{position:relative;flex:none;width:96px;height:96px;border-radius:50%;overflow:hidden;background:radial-gradient(circle at 35% 30%,#d9c9a6,#9b835b);border:2px solid #7a6545;display:grid;place-items:center}.ouv-portrait span{font:400 44px "Libre Caslon Text",Georgia,serif;color:#f6ecd6}.ouv-portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.ouv-perso-nom{font:400 20px "Libre Caslon Text",Georgia,serif;color:#2a2219}.ouv-perso-role{font:12px system-ui,sans-serif;color:#8f7251;letter-spacing:.04em}.ouv-perso-texte{font:13px/1.5 system-ui,sans-serif;color:#4a3c2b}.ouv-nav{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:16px;flex-wrap:wrap}.ouv-nav .ouv-principal{margin-left:auto}.ouv-etat{font:12px system-ui,sans-serif;color:#8a7351;margin:10px 0 0;min-height:1em;text-align:right}.ouverture.mode-scene{background:#120f0b;padding:0;overflow:hidden;align-items:flex-end;backdrop-filter:none;-webkit-backdrop-filter:none}.ouv-maison{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 38%,#6a5236,#2a2017 55%,#120d09)}.ouv-maison img{width:100%;height:100%;object-fit:cover}.ouv-bulle{position:relative;width:min(760px,calc(100% - 32px));margin:0 auto max(24px,env(safe-area-inset-bottom));background:#efe6d2f7;color:#2e261c;border:1px solid #9b835b;border-radius:6px;padding:18px 24px;box-shadow:0 10px 50px #000b;font:18px/1.55 Georgia,serif}.ouv-qui{font:12px/1 system-ui,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#8f7251;margin:0 0 8px}.ouv-dit{margin:0}.ouv-pensee .ouv-dit{font-style:italic}.ouv-bulle.ouv-recit{background:#1d1812f0;color:#eadcbc;border-color:#5e4b33;text-align:center;font-style:italic}.ouv-note{font:13px/1.4 system-ui,sans-serif;color:#6c5839;border-top:1px solid #b9a17c88;padding-top:8px;margin:10px 0 0}#speech button.suite{display:block;margin:4px 0 12px auto;min-height:36px;padding:6px 16px}.ouv-credits{text-align:left;font:13px/1.5 system-ui,sans-serif;margin:0}.ouv-credits dt{font:italic 16px Georgia,serif;color:#5e4a30;margin-top:12px}.ouv-credits dd{margin:2px 0 0}@media(max-width:650px){.ouv-carte{padding:22px 18px;font-size:15px}.ouv-carte h2{font-size:23px}.ouv-titre{font-size:42px}.ouv-sous{font-size:16px}.ouv-titre-bloc{margin-top:auto;margin-bottom:6vh}.ouverture button.ouv-grand{min-width:220px;font-size:20px}.ouv-persos{grid-template-columns:1fr}.ouverture button.ouv-perso{flex-direction:row;flex-wrap:wrap;text-align:left;justify-content:flex-start}.ouv-portrait{width:64px;height:64px}.ouv-portrait span{font-size:30px}.ouv-perso-texte{flex-basis:100%}.ouv-bulle{font-size:16px;padding:16px 18px}}@media(max-width:650px){.identity{left:10px;top:10px;padding:8px 10px;max-width:calc(100vw - 146px)}.identity h1{font-size:16px}.identity h1 span{font-size:11px}.identity #location{font-size:11px;margin:3px 0 5px}.clockline{display:block;font-size:10px}#period{display:none}.nav{right:10px;top:10px;gap:5px}.nav button{font-size:11px;padding:9px 10px;min-height:37px}.toast{font-size:11px}.action{font-size:11px;padding:9px 11px}#menu{right:10px;top:10px;max-height:calc(100dvh - 20px);max-width:calc(100vw - 20px);padding:20px}dialog{padding:22px}.clockline{max-width:160px}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}.plate{backdrop-filter:none}}
 #startup-retry{position:absolute;left:50%;bottom:92px;transform:translateX(-50%)}#status{overflow-wrap:anywhere}noscript .nojs{position:fixed;z-index:10;left:10%;right:10%;top:40%;padding:24px;background:#eadfc8;color:#312920;border:1px solid #947c54}
 
@@ -1297,6 +1297,8 @@ window.SOHO_ATMOSPHERE_ASSETS={"fumee-01":{"id":"fumee-01","kind":"fumee","file"
 
     function isPresent(entity, minutes) {
       const h = hour(minutes);
+      // Horaires précis (ajout Claude, 21 oct.) : [premier jour, dernier jour, heure de début, heure de fin], jour 0 = vendredi 1er sept.
+      if (Array.isArray(entity.plages)) { const day = Math.floor(minutes / DAY); return entity.plages.some(([j0, j1, h0, h1]) => day >= j0 && day <= j1 && (h0 <= h1 ? h >= h0 && h < h1 : h >= h0 || h < h1)); }
       if (entity.quand === 'toujours') return true;
       if (entity.quand === 'soir') return h >= 19 || h < 1;
       return h >= 7 && h < 19;
@@ -1365,7 +1367,7 @@ window.SOHO_ATMOSPHERE_ASSETS={"fumee-01":{"id":"fumee-01","kind":"fumee","file"
       const point = snap([base[0]+Math.cos(angle)*radius,base[1]+Math.sin(angle)*radius])||base.slice();
       entities.push({
         id: 'passant-' + i, nom: 'Une passante ou un passant', type: costumes[i%costumes.length], variant:i%12,
-        quand: 'toujours', lignes: [], indices: [], cout: 0, ambient: true,
+        quand: 'toujours', lignes: [], indices: [], cout: 0, ambient: true, bavard: i % 3 === 0,
         px: point[0], py: point[1], phase: i * .7, interactable: false,
         activity: 'Traverse le quartier', path: [], goal: point.slice(), moving: false,
         speed: speeds[(i*3+2)%speeds.length], radius: body, direction: {x:0,y:1}, _anchor: point.slice(),
@@ -1376,6 +1378,7 @@ window.SOHO_ATMOSPHERE_ASSETS={"fumee-01":{"id":"fumee-01","kind":"fumee","file"
     }
 
     function crowdCount(minutes) {
+      if (typeof global.SOHO_FOULE === 'function') return Math.max(0, Math.min(maxCrowd, Math.round(maxCrowd * global.SOHO_FOULE(minutes))));
       const h = hour(minutes), day = Math.floor(minutes / DAY);
       if (h < 6 || h >= 23) return nightCrowd;
       if (h < 7 || h >= 19) return Math.min(maxCrowd, Math.max(nightCrowd, Math.round(maxCrowd * .33)));
@@ -1442,7 +1445,7 @@ window.SOHO_ATMOSPHERE_ASSETS={"fumee-01":{"id":"fumee-01","kind":"fumee","file"
       for (const e of entities) {
         const wanted = e.ambient ? e._index < wantedCrowd : isPresent(e, lastMinutes);
         e._wantVisible = wanted;
-        e.interactable = wanted && !e.ambient;
+        e.interactable = wanted && (!e.ambient || e.bavard);
         e.departing = false;
         e._blockedFor = 0;
         e._nextDepartureAt = 0;
@@ -1466,7 +1469,7 @@ window.SOHO_ATMOSPHERE_ASSETS={"fumee-01":{"id":"fumee-01","kind":"fumee","file"
       for (const e of entities) {
         const wanted = e.ambient ? e._index < wantedCrowd : isPresent(e, minutes);
         e._wantVisible = wanted;
-        e.interactable = !!(wanted && !e.ambient && e._visible);
+        e.interactable = !!(wanted && (!e.ambient || e.bavard) && e._visible);
         if (!wanted) {
           if (e._visible && !e.departing) route(e, e._exit, 'Quitte le quartier', true);
           continue;
@@ -1478,7 +1481,7 @@ window.SOHO_ATMOSPHERE_ASSETS={"fumee-01":{"id":"fumee-01","kind":"fumee","file"
           e.px = e._exit[0]; e.py = e._exit[1];
           e._visible = true; e.departing = false; e._slot = '';
           indexEntity(e);
-          e.interactable = !e.ambient;
+          e.interactable = !e.ambient || !!e.bavard;
           if (e.ambient) nextCircuit(e);
         }
         if (e.ambient) {
@@ -1710,6 +1713,70 @@ window.SOHO_ATMOSPHERE_ASSETS={"fumee-01":{"id":"fumee-01","kind":"fumee","file"
 
 </script>
 <script data-soho="game">
+// ============================================================
+// TÉMOINS · qui est où, et quand (étape 2, 21 oct. 2026)
+// Injecté par reconstruire-html.pl au DÉBUT de la section du jeu, avant que le moteur crée les personnages.
+// Jour 0 = vendredi 1er septembre 1854 (l'épidémie a éclaté dans la nuit). Jour 6 = jeudi 7 septembre.
+// « plages » : [premier jour, dernier jour, heure de début, heure de fin] ; une plage 19 → 2 passe minuit.
+// Les répliques sont dans enquete.js ; ici, seulement la place, l'horaire, la tenue et le temps d'une conversation.
+// ============================================================
+(function(){
+ const D = window.SOHO_DATA, L = window.SOHO_LAYOUT;
+ if (!D || !L) return;
+ const TOUS = 6;
+ // Horaires des témoins déjà placés par Codex.
+ const HORAIRES = {
+  habitante:   [[0, TOUS, 6, 12], [0, TOUS, 16, 19]],
+  huggins:     [[0, TOUS, 9, 18]],
+  eley:        [[1, TOUS, 9, 18]],          // il ne parle qu'à partir du samedi (conception, partie 2)
+  gould:       [[1, TOUS, 9, 18]],          // rentré de voyage le samedi [Snow]
+  hospice:     [[0, TOUS, 9, 17]],
+  instituteur: [[0, 0, 8, 13]],             // l'école ferme après le vendredi
+  marlborough: [[0, TOUS, 8, 18]],
+  cafe:        [[5, 5, 18, 23]],            // la patronne ne parle que le mercredi soir [Snow : 6 septembre]
+  tavernier:   [[0, TOUS, 18, 2]],
+  whitehead:   [[0, TOUS, 7, 10], [0, TOUS, 17, 22]],
+  egoutier:    [[0, TOUS, 20, 2]],
+  snow:        [[0, TOUS, 0, 24]],          // la porte du 18 Sackville Street : on peut toujours rentrer
+ };
+ for (const p of D.people) if (HORAIRES[p.id]) p.plages = HORAIRES[p.id];
+ const snow = D.people.find(p => p.id === 'snow');
+ if (snow){ snow.nom = 'Chez le docteur Snow, 18 Sackville Street'; snow.cout = 0; }
+
+ // Les nouveaux habitants. Positions prises dans les rues du plan de Codex (rectangles de layout.roads).
+ const T = {
+  manteau:(m, chapeau, extra) => Object.assign({manteau:m, chapeau}, extra || {}),
+ };
+ const NOUVEAUX = [
+  {id:'allumeur', nom:'L’allumeur de réverbères', at:[1350, 936], plages:[[0, TOUS, 5, 9], [0, TOUS, 19, 21]], cout:15, costume:T.manteau('#4a4038', 'casquette')},
+  {id:'vidangeur', nom:'Un vidangeur, sa tournée de nuit finie', at:[1592, 700], plages:[[0, TOUS, 4, 9]], cout:15, costume:T.manteau('#5a4a38', 'casquette', {tablier:true})},
+  {id:'agent', nom:'L’agent Turner, de la police', at:[1000, 936], plages:[[0, TOUS, 6, 20]], cout:15, costume:T.manteau('#1f2433', 'haut', {col:true})},
+  {id:'balayeur', nom:'Un enfant qui balaie la rue', at:[1592, 1150], plages:[[0, TOUS, 7, 18]], cout:10, costume:T.manteau('#5e5246', 'casquette')},
+  {id:'facteur', nom:'Le facteur', at:[2248, 600], plages:[[0, 1, 8, 12], [3, TOUS, 8, 12]], cout:10, costume:T.manteau('#7a2222', 'haut')},
+  {id:'ramasseur', nom:'Le ramasseur d’ordures', at:[776, 1100], plages:[[0, TOUS, 6, 12]], cout:15, costume:T.manteau('#4f4a40', 'casquette', {tablier:true})},
+  {id:'paroissien', nom:'Un membre du conseil de la paroisse', at:[1968, 1480], plages:[[0, TOUS, 10, 17]], cout:15, costume:T.manteau('#2f2c2a', 'haut')},
+  {id:'pieuse', nom:'Une vieille dame, devant St Luke', at:[2248, 960], plages:[[0, TOUS, 8, 12], [0, TOUS, 17, 20]], cout:10, costume:T.manteau('#3a3036', 'bonnet', {robe:true})},
+  {id:'voisine', nom:'La voisine du 38 Broad Street', at:[1720, 950], plages:[[0, TOUS, 11, 18]], cout:15, costume:T.manteau('#58606a', 'bonnet', {robe:true})},
+  {id:'porteuse', nom:'Une femme à la pompe de Brewer Street', at:[2690, 1712], plages:[[0, TOUS, 6, 11], [0, TOUS, 16, 19]], cout:15, costume:T.manteau('#6b5a4a', 'bonnet', {robe:true, seau:true})},
+  {id:'mendiant', nom:'Un mendiant, sous un porche', at:[2500, 1256], plages:[[0, TOUS, 19, 3]], cout:10, costume:T.manteau('#4a4238', 'casquette')},
+  {id:'ouvriere', nom:'Une couturière qui rentre tard', at:[1500, 1720], plages:[[0, TOUS, 21, 1]], cout:15, costume:T.manteau('#58606a', 'bonnet', {robe:true})},
+ ];
+ for (const n of NOUVEAUX){
+  if (D.people.some(p => p.id === n.id)) continue;
+  D.people.push({id:n.id, nom:n.nom, x:n.at[0], y:n.at[1], type:'temoin', quand:'jour', plages:n.plages, cout:n.cout, lignes:[], indices:[], costume:n.costume});
+  L.anchors[n.id] = n.at.slice();
+ }
+
+ // La foule. Vendredi à 7 h, les rues sont presque vides ; puis elles se remplissent. Ensuite, chaque jour,
+ // les habitants fuient [Snow : plus des trois quarts partis le mercredi].
+ const PAR_JOUR = [1, .85, .6, .42, .32, .25, .3];
+ const PAR_HEURE = h => h < 5 ? .08 : h < 7 ? .12 : h < 8 ? .2 : h < 9 ? .35 : h < 10 ? .6 : h < 18 ? 1 : h < 20 ? .6 : h < 23 ? .3 : .12;
+ window.SOHO_FOULE = minutes => {
+  const j = Math.max(0, Math.min(6, Math.floor(minutes / 1440))), h = ((minutes % 1440) + 1440) % 1440 / 60;
+  return PAR_JOUR[j] * PAR_HEURE(h);
+ };
+})();
+
 "use strict";
 (function(){try{
 if(!window.SOHO_WORLD||!window.SOHO_LAYOUT||!window.SOHO_DATA||!window.SohoNpcs)throw new Error('Les données de démarrage du quartier sont absentes.');
@@ -2164,19 +2231,25 @@ function shouldPaint(now){
 function frame(now){const dt=previous?Math.min((now-previous)/1000,.05):0;previous=now;step(dt);if(shouldPaint(now))draw();requestAnimationFrame(frame);}
 if(typeof ResizeObserver!=='undefined')new ResizeObserver(resize).observe(view);else addEventListener('resize',resize);
 // ============================================================
-// ENQUÊTE · carnet, indices, grille des explications, coût du temps (étape 2, 20 oct. 2026)
+// ENQUÊTE · répliques, indices, rumeurs, carnet, coût du temps (refonte du 21 oct. 2026)
 // Injecté par reconstruire-html.pl dans la fermeture de jeu.js, juste avant window.SOHO_TEST :
 // il voit donc talk, step, state, ui, say, DATA, keys, stop, draw, updateClock.
-// Faits : John Snow, On the Mode of Communication of Cholera, 2e éd., 1855.
+// Règles d'écriture (Jeremy, 21 oct.) : mots simples, mais de vraies répliques. Le personnage se présente,
+// parle de sa vie et de son époque, puis dit ce qu'il croit ou ce qu'il a vu. 3 à 5 phrases courtes par bulle.
+// Faits : John Snow, On the Mode of Communication of Cholera, 2e éd., 1855 ; Paneth et al., 1998.
+// Personnages inventés : allumeur, vidangeur, agent Turner, balayeur, facteur, ramasseur, paroissien, vieille dame,
+// voisine, porteuse, mendiant, couturière, et tous les passants. Leurs croyances sont celles de l'époque.
 // ============================================================
 
-// Les cinq explications que l'on donnait en 1854. « eau » est connue dès le départ : c'est l'hypothèse de Snow.
+// Les explications que l'on donnait en 1854. Aucune n'est connue au départ : on les découvre en écoutant.
+// L'eau n'entre dans la grille que lorsque Snow explique son idée (maison.js).
 const EXPLICATIONS = [
  {id:'miasme', nom:'L’air vicié (le miasme)'},
  {id:'contagion', nom:'La contagion de personne à personne'},
- {id:'eau', nom:'L’eau de la pompe de Broad Street'},
+ {id:'eau', nom:'L’eau que l’on boit'},
  {id:'nourriture', nom:'La nourriture'},
- {id:'pauvrete', nom:'La pauvreté et la saleté'},
+ {id:'pauvrete', nom:'La saleté et la misère'},
+ {id:'peche', nom:'Une punition de Dieu'},
 ];
 const FIABILITE = [
  {id:'vu', nom:'Je l’ai vu moi-même'},
@@ -2184,38 +2257,187 @@ const FIABILITE = [
  {id:'opinion', nom:'Une opinion ou une rumeur'},
 ];
 
-// Contenu pédagogique de chaque témoin. « attendu » sert à la note finale (étape 4), jamais montré au joueur.
+// Contenu de chaque témoin. « attendu » sert à la note finale (étape 4), jamais montré au joueur.
+// « matin » : ce que dit le témoin avant midi, s'il dit autre chose le soir.
 const ENQUETE = {
- pompe: {lignes:['Vous remplissez un verre à la pompe.','En regardant de près, l’eau contient de minuscules particules blanches.'],
-  indices:[{id:'particules', t:'L’eau de la pompe contient de minuscules particules blanches.', s:'Observé par vous, à la pompe', attendu:{pour:'eau', fiab:'vu'}}]},
- habitante: {defend:'miasme', lignes:['Toute la rue boit à cette pompe. On trouve son eau meilleure que celle des autres pompes.','Moi, je crois que c’est l’air. Les rues sentent la pourriture. C’est le miasme, tout le monde le dit.'],
-  indices:[{id:'preferee', t:'Beaucoup d’habitants préfèrent l’eau de la pompe de Broad Street.', s:'Une habitante, à la pompe', attendu:{pour:'eau', fiab:'temoin'}},
-           {id:'accuse-air', t:'Une habitante accuse l’air vicié, le miasme.', s:'Une habitante : « tout le monde le dit »', attendu:{pour:'miasme', fiab:'opinion'}}]},
- huggins: {lignes:['Plus de soixante-dix ouvriers travaillent dans ma brasserie, à deux pas de la pompe. Aucun n’a été gravement malade.','Mes hommes ont droit à de la bière. Je crois qu’ils ne boivent jamais d’eau. Et la brasserie a son propre puits.'],
-  indices:[{id:'brasserie', t:'Brasserie : plus de 70 ouvriers, aucun gravement malade. Ils respirent l’air de Broad Street.', s:'M. Huggins, propriétaire', attendu:{pour:'eau', contre:'miasme', fiab:'temoin'}},
-           {id:'biere', t:'Les ouvriers de la brasserie boivent de la bière et l’eau de leur propre puits, pas celle de la pompe.', s:'M. Huggins : il « croit » qu’ils ne boivent pas d’eau', attendu:{pour:'eau', fiab:'temoin'}}]},
- eley: {lignes:['J’emploie environ deux cents ouvriers. Deux bacs sont toujours remplis à la pompe pour qu’ils puissent boire.','Dix-huit sont morts. Et l’eau de la pompe sent mauvais quand on la garde deux jours.'],
-  indices:[{id:'capsules', t:'Atelier de capsules : deux bacs d’eau de la pompe, 18 ouvriers morts.', s:'M. Eley, fabricant', attendu:{pour:'eau', fiab:'temoin'}}]},
- gould: {lignes:['J’ai fait chercher de l’eau à la pompe. Elle était parfaitement claire.','Mais elle sentait mauvais. Je ne l’ai pas bue.'],
-  indices:[{id:'odeur', t:'L’eau de la pompe est claire, mais elle sent mauvais.', s:'M. Gould, savant, voisin de la pompe', attendu:{pour:'eau', fiab:'temoin'}}]},
- hospice: {lignes:['Nous avons 535 pensionnaires, parmi les plus pauvres du quartier. Seuls 5 sont morts du choléra.','L’hospice a son propre puits. Nous n’envoyons jamais chercher l’eau de Broad Street. Pourtant, les maisons autour de nous comptent beaucoup de morts.'],
-  indices:[{id:'hospice', t:'Hospice : 535 pensionnaires très pauvres, 5 morts ; il a son propre puits. Les maisons voisines ont beaucoup de morts.', s:'Le directeur de l’hospice', attendu:{pour:'eau', contre:'pauvrete', fiab:'temoin'}}]},
- instituteur: {lignes:['Des enfants viennent à mon école depuis des rues éloignées.','En passant, ils boivent à la pompe de Broad Street.'],
-  indices:[{id:'ecoliers', t:'Des écoliers venus d’autres rues boivent à la pompe en passant.', s:'L’instituteur de Dufour’s Place', attendu:{pour:'eau', fiab:'temoin'}}]},
- marlborough: {defend:'pauvrete', lignes:['L’eau de notre pompe est si sale que beaucoup l’évitent. Ils vont chercher celle de Broad Street.','Si vous voulez mon avis, ce sont les pauvres qui meurent, parce qu’ils vivent dans la saleté.'],
-  indices:[{id:'marlborough', t:'La pompe de Marlborough Street est très sale : on l’évite et on va chercher l’eau de Broad Street.', s:'Un habitant de Marlborough Street', attendu:{pour:'eau', fiab:'temoin'}},
+ pompe: {lignes:[
+   'Vous pompez un peu d’eau dans vos mains. Elle est fraîche, et elle paraît claire.',
+   'En regardant de très près, vous voyez flotter de toutes petites particules blanches.'],
+  indices:[{id:'particules', t:'L’eau de la pompe de Broad Street contient de minuscules particules blanches.', s:'Observé par vous, à la pompe', attendu:{pour:'eau', fiab:'vu'}}]},
+
+ // ---------- les témoins du matin ----------
+ allumeur: {lignes:[
+   'Bonjour. Je suis l’allumeur de réverbères du quartier. Le soir, j’allume les lampes à gaz avec ma longue perche. Le matin, je les éteins une par une, avant le lever du soleil.',
+   'Cette nuit, j’ai vu des choses que je n’avais jamais vues. Des fenêtres restées allumées jusqu’à l’aube. Des gens en chemise de nuit qui couraient chercher un médecin. Et tout ça en même temps, dans les mêmes rues autour de Broad Street.',
+   'Je repasse ce soir vers sept heures pour allumer les lampes. Si vous voulez savoir ce que j’aurai vu dans la journée, venez me trouver.'],
+  indices:[{id:'nuit', t:'Dans la nuit du 31 août au 1er septembre, beaucoup de gens sont tombés malades en même temps, dans les mêmes rues autour de Broad Street.', s:'L’allumeur de réverbères, qui l’a vu pendant sa tournée', attendu:{contre:'contagion', fiab:'temoin'}}]},
+
+ vidangeur: {defend:'miasme', lignes:[
+   'Je suis vidangeur. La nuit, avec mon équipe, nous vidons les fosses d’aisance. Ce sont des trous creusés sous les maisons, où vont les toilettes. On remplit nos tonneaux et on les emporte hors de la ville avant le jour.',
+   'C’est un sale métier, mais il faut bien que quelqu’un le fasse. Certaines fosses débordent depuis des semaines. Dans les caves de Broad Street, ça suinte à travers les murs.',
+   'Les médecins disent que l’odeur des fosses empoisonne l’air. C’est peut-être vrai. Mais moi, je respire ça toutes les nuits depuis vingt ans, et je suis toujours debout.'],
+  indices:[{id:'fosses', t:'Sous les maisons de Broad Street, des fosses d’aisance débordent : le liquide suinte à travers les murs des caves.', s:'Un vidangeur, qui vide ces fosses la nuit', attendu:{pour:['miasme', 'eau'], fiab:'temoin'}},
+           {id:'vidangeur', t:'Le vidangeur respire l’odeur des fosses toutes les nuits depuis vingt ans, et il n’est pas malade.', s:'Le vidangeur, sur lui-même', attendu:{contre:'miasme', fiab:'temoin'}}]},
+
+ agent: {defend:'pauvrete', lignes:[
+   'Agent Turner, de la police de Londres. Je fais ma ronde dans ces rues tous les jours, du matin au soir. Je connais chaque coin, chaque taverne, et chaque voleur.',
+   'Soho est un quartier pauvre, et très peuplé. Dans certaines maisons, il y a une famille par pièce. Dix ou quinze personnes sous le même toit, avec une seule fosse pour tout le monde.',
+   'Quand je vois toute cette saleté, ça ne m’étonne pas que les gens tombent malades. Les ordures restent dans la rue, les cours sont pleines de fumier. Si vous voulez mon avis, c’est la saleté qui tue.'],
+  indices:[{id:'entasses', t:'À Soho, des familles entières vivent dans une seule pièce, à dix ou quinze par maison, avec une seule fosse d’aisance.', s:'L’agent Turner, de la police', attendu:{pour:'pauvrete', fiab:'temoin'}}]},
+
+ balayeur: {lignes:[
+   'Un penny, s’il vous plaît ? Je balaie la boue et le crottin des chevaux, pour que les gens traversent sans se salir. C’est mon travail.',
+   'J’ai dix ans. Je travaille ici depuis l’hiver. Ma mère lave le linge des autres, et mon père est parti. Avec ce que je gagne, on achète du pain.',
+   'Ce matin, tout le monde parle des morts de cette nuit. Ma mère dit que ce n’est pas le choléra : c’est juste la diarrhée d’été, comme chaque année quand il fait chaud. Mais d’habitude, on n’en meurt pas en une nuit.'],
+  indices:[]},
+
+ facteur: {defend:'miasme', lignes:[
+   'Bonjour ! Je suis le facteur. Je porte les lettres dans tout le quartier, deux tournées par jour. Vous voyez mon manteau rouge ? C’est l’uniforme de la Poste.',
+   'Ce matin, dans Broad Street, certaines portes ne s’ouvrent plus. Dans une maison, on m’a crié de laisser les lettres sur le seuil. Les gens ont peur.',
+   'On raconte que tout vient d’une vieille fosse de la peste, quelque part sous le quartier. On y aurait jeté des centaines de morts en 1665. Les travaux des égouts l’auraient ouverte, et l’air en serait empoisonné.'],
+  indices:[]},
+
+ ramasseur: {defend:'pauvrete', lignes:[
+   'Je ramasse les cendres et les ordures dans ces rues depuis douze ans. Je commence avant le lever du soleil et je finis vers midi. Avec mon cheval et ma charrette, je fais tout le quartier.',
+   'Les cendres, on les revend pour faire des briques. Le reste pourrit sur des tas, derrière les maisons. En été, avec la chaleur, l’odeur est terrible.',
+   'Moi, j’ai toujours pensé que les maladies venaient de là : de ces tas d’ordures qui pourrissent au soleil. Les gens se plaignent parfois du goût de l’eau. Mais l’eau, au moins, on ne la voit pas pourrir.'],
+  indices:[]},
+
+ paroissien: {defend:'miasme', lignes:[
+   'Je suis membre du conseil de la paroisse de Saint-James. C’est nous qui gérons le quartier : les rues, l’aide aux pauvres, les enterrements.',
+   'Le conseil va se réunir. Il faut rassurer les gens. Nous allons faire nettoyer les rues et répandre de la chaux. La chaux, c’est une poudre blanche qui chasse les mauvaises odeurs.',
+   'Le choléra vient de l’air vicié : tous les médecins sérieux le disent. Supprimez les odeurs, et vous supprimez la maladie. Si quelqu’un vient me dire autre chose, il devra m’apporter des preuves solides.'],
+  indices:[]},
+
+ pieuse: {defend:'peche', lignes:[
+   'Je viens prier à St Luke tous les matins et tous les soirs. J’ai soixante-dix ans, mon petit. J’ai connu le choléra de 1832, et celui de 1849.',
+   'Chaque fois, c’est la même chose. Les gens boivent du gin, ils ne vont plus à l’église, ils vivent dans le péché. Et le Seigneur les punit.',
+   'En 1832, tout le pays a fait une journée de jeûne et de prière contre le choléra. Vous voyez bien que c’est une affaire de Dieu, pas de médecins.'],
+  indices:[]},
+
+ voisine: {defend:'contagion', lignes:[
+   'N’approchez pas trop ! Vous venez d’une maison de malades ? Je suis la voisine du 38 Broad Street. Depuis ce matin, je ne sors plus que pour l’eau.',
+   'Au 40, juste à côté, il y a un bébé malade depuis plusieurs jours. Sa mère lave ses langes toute la journée. Et cette nuit, les voisins sont tombés malades à leur tour.',
+   'Pour moi, c’est clair : la maladie passe d’une personne à l’autre, comme la peste. Le bébé l’a donnée aux voisins. Il ne faut toucher personne.'],
+  indices:[{id:'bebe', t:'Au 40 Broad Street, un bébé est malade depuis plusieurs jours, avant tout le monde. Sa mère lave ses langes toute la journée.', s:'La voisine du 38 Broad Street', attendu:{fiab:'temoin'}}]},
+
+ porteuse: {lignes:[
+   'Bonjour. Moi, je prends l’eau ici, à la pompe de Brewer Street. C’est plus près de chez moi. Je fais trois voyages le matin, et deux le soir.',
+   'Son eau n’est pas la meilleure, c’est vrai. Mais elle fait l’affaire. Sans pompe, on ne pourrait ni boire, ni cuisiner, ni laver les petits. Il n’y a pas d’eau dans nos maisons.',
+   'Dans ma rue, on va bien, Dieu merci. Personne n’est malade. Mais il paraît que vers Broad Street, c’est terrible.'],
+  indices:[{id:'brewer', t:'Près de la pompe de Brewer Street, dans la rue de cette femme, personne n’est malade.', s:'Une femme qui boit l’eau de la pompe de Brewer Street', attendu:{pour:'eau', fiab:'temoin'}}]},
+
+ mendiant: {lignes:[
+   'Une pièce, par pitié… Je dors sous les porches depuis que l’atelier m’a renvoyé. Avant, j’étais tailleur, comme beaucoup d’hommes du quartier.',
+   'La nuit, on voit tout. Ce soir, des charrettes passaient avec des malles. Ce sont des familles qui partent à la campagne. Ceux qui ont de l’argent s’en vont. Nous, on reste.',
+   'On dit que les pauvres meurent parce qu’ils sont sales. Moi, je suis sale, et je ne suis pas malade. Et on raconte qu’un monsieur très bien habillé est mort dans une belle maison, près de Golden Square.'],
+  indices:[{id:'riches', t:'On raconte que des gens riches meurent aussi, dans les belles maisons près de Golden Square.', s:'Un mendiant : « on raconte »', attendu:{contre:'pauvrete', fiab:'opinion'}}]},
+
+ ouvriere: {defend:'contagion', lignes:[
+   'Je rentre de l’atelier. Je suis couturière : je couds des chemises pour une boutique de Regent Street. Quatorze heures par jour, pour presque rien.',
+   'Dans mon immeuble, au troisième étage, toute une famille est malade depuis ce matin. La mère, le père, deux enfants. Plus personne n’ose monter l’escalier.',
+   'Ma voisine dit qu’il ne faut pas les approcher : la maladie s’attraperait en touchant les malades. Moi, je leur ai monté de l’eau quand même. Je ne pouvais pas les laisser comme ça.'],
+  indices:[]},
+
+ // ---------- les témoins de Snow ----------
+ habitante: {defend:'miasme', lignes:[
+   'Bonjour. Je viens remplir mes seaux ici tous les matins, comme toutes les femmes de la rue. Il faut faire la queue, puis tout monter au troisième étage. C’est épuisant.',
+   'Mais au moins, on a cette pompe. Son eau est fraîche et claire. Tout le monde la préfère à celle des autres pompes. Certains viennent même de loin pour en remplir une cruche.',
+   'Vous avez entendu ? Des gens sont morts cette nuit, dans les maisons d’à côté. Moi, je crois que c’est l’air. Sentez cette odeur : elle vient des égouts. Tout le monde le dit, c’est le miasme.'],
+  indices:[{id:'preferee', t:'Beaucoup d’habitants préfèrent l’eau de la pompe de Broad Street ; certains viennent de loin pour en prendre.', s:'Une habitante, à la pompe', attendu:{pour:'eau', fiab:'temoin'}},
+           {id:'accuse-air', t:'Une habitante accuse l’air vicié qui viendrait des égouts.', s:'Une habitante : « tout le monde le dit »', attendu:{pour:'miasme', fiab:'opinion'}}]},
+ huggins: {lignes:[
+   'Bonjour ! Je suis M. Huggins, le propriétaire de la brasserie Lion, ici dans Broad Street. Nous brassons notre bière à deux pas de la pompe.',
+   'J’ai plus de soixante-dix ouvriers. Ils travaillent ici toute la journée, dans l’air de Broad Street, comme tout le monde. Et pourtant, aucun n’est gravement malade. Pas un seul !',
+   'Mes hommes ont droit à de la bière tous les jours : c’est la tradition. Je crois qu’ils ne boivent jamais d’eau. Et s’ils ont soif, la brasserie a son propre puits. Moi, je pense que la bière les protège.'],
+  indices:[{id:'brasserie', t:'Brasserie : plus de 70 ouvriers, aucun gravement malade. Ils respirent pourtant l’air de Broad Street toute la journée.', s:'M. Huggins, propriétaire de la brasserie', attendu:{pour:'eau', contre:'miasme', fiab:'temoin'}},
+           {id:'biere', t:'Les ouvriers de la brasserie boivent de la bière, ou l’eau du puits de la brasserie. Pas l’eau de la pompe.', s:'M. Huggins : il « croit » qu’ils ne boivent pas d’eau', attendu:{pour:'eau', fiab:'temoin'}}]},
+ eley: {lignes:[
+   'Je suis M. Eley. Avec mon frère, je dirige la fabrique du 37 Broad Street. Nous fabriquons des capsules : ce sont les petites amorces qui font partir le coup des fusils. Environ deux cents ouvriers travaillent pour nous.',
+   'Il fait chaud dans l’atelier. Alors nous gardons toujours deux grands bacs remplis d’eau de la pompe, pour que les ouvriers puissent boire.',
+   'Dix-huit de mes ouvriers sont morts. Dix-huit ! Et j’ai remarqué une chose : quand on garde cette eau deux jours, elle se met à sentir mauvais.'],
+  indices:[{id:'capsules', t:'Fabrique de capsules : deux bacs d’eau de la pompe pour les ouvriers, et 18 ouvriers morts.', s:'M. Eley, fabricant', attendu:{pour:'eau', fiab:'temoin'}}]},
+ gould: {lignes:[
+   'Je suis John Gould. J’étudie les oiseaux : je les dessine et je les décris dans de grands livres. J’habite ici, dans Broad Street, mais je rentre tout juste de voyage.',
+   'En arrivant, j’ai envoyé chercher de l’eau à la pompe, comme d’habitude. Elle était parfaitement claire. Mais elle sentait mauvais, alors je ne l’ai pas bue.',
+   'Ma servante, elle, en a beaucoup bu jeudi. Elle est tombée malade vendredi. Heureusement, elle s’en est remise.'],
+  indices:[{id:'odeur', t:'L’eau de la pompe est parfaitement claire, mais elle sent mauvais.', s:'M. Gould, savant, voisin de la pompe', attendu:{pour:'eau', fiab:'temoin'}},
+           {id:'servante', t:'La servante de M. Gould a bu beaucoup d’eau de la pompe jeudi, et elle est tombée malade vendredi.', s:'M. Gould', attendu:{pour:'eau', fiab:'temoin'}}]},
+ hospice: {lignes:[
+   'Je dirige l’hospice de Poland Street. C’est la maison où la paroisse loge les plus pauvres : les vieillards, les orphelins, ceux qui n’ont plus rien.',
+   'Nous avons cinq cent trente-cinq pensionnaires. Ils vivent les uns sur les autres, dans le même air que tout le quartier. Avec ce qui se passe dehors, je m’attendais au pire.',
+   'Et pourtant, seuls cinq sont morts. L’hospice a son propre puits, vous savez. Nous n’envoyons jamais personne chercher l’eau de Broad Street. Pendant ce temps, les maisons autour de nous comptent beaucoup de morts.'],
+  indices:[{id:'hospice', t:'Hospice : 535 pensionnaires très pauvres, 5 morts seulement. Il a son propre puits. Les maisons voisines ont beaucoup de morts.', s:'Le directeur de l’hospice', attendu:{pour:'eau', contre:['pauvrete', 'miasme'], fiab:'temoin'}}]},
+ instituteur: {lignes:[
+   'Je suis l’instituteur de l’école de Dufour’s Place. J’apprends à lire et à compter à une soixantaine d’enfants du quartier.',
+   'Beaucoup viennent de rues assez éloignées. En chemin, ils passent par Broad Street, et ils s’arrêtent boire à la pompe. Les enfants ont toujours soif.',
+   'Ce matin, il manque plusieurs élèves. Leurs parents les gardent à la maison. On parle de fermer l’école quelques jours.'],
+  indices:[{id:'ecoliers', t:'Des écoliers qui habitent d’autres rues boivent à la pompe de Broad Street en allant à l’école.', s:'L’instituteur de Dufour’s Place', attendu:{pour:'eau', fiab:'temoin'}}]},
+ marlborough: {defend:'pauvrete', lignes:[
+   'J’habite Great Marlborough Street. Notre pompe est juste là, regardez. Mais son eau est si sale que beaucoup de gens l’évitent. Elle sent l’égout.',
+   'Alors on fait le chemin jusqu’à Broad Street. C’est plus loin, mais là-bas, l’eau est claire et bonne.',
+   'Si vous voulez mon avis, ce sont les pauvres qui meurent, parce qu’ils vivent dans la saleté. Chez nous, on se lave, on balaie.'],
+  indices:[{id:'marlborough', t:'L’eau de la pompe de Marlborough Street est très sale : on l’évite, et on va chercher l’eau de Broad Street.', s:'Un habitant de Great Marlborough Street', attendu:{pour:'eau', fiab:'temoin'}},
            {id:'pauvres', t:'Un habitant pense que les pauvres meurent à cause de la saleté.', s:'Un habitant : son avis', attendu:{pour:'pauvrete', fiab:'opinion'}}]},
- cafe: {lignes:['Je servais l’eau de la pompe au repas de midi.','Neuf de mes clients sont morts. Des ouvriers, tous.'],
-  indices:[{id:'cafe', t:'Neuf clients du café, qui buvaient l’eau de la pompe au repas, sont morts.', s:'La patronne du café', attendu:{pour:'eau', fiab:'temoin'}}]},
- tavernier: {defend:'nourriture', lignes:['Ici, on mêle l’eau de la pompe aux alcools, comme dans toutes les tavernes du quartier.','Moi, je dis que ce sont les fruits pas mûrs qu’on vend au marché qui donnent le choléra.'],
-  indices:[{id:'alcools', t:'Les tavernes mêlent l’eau de la pompe aux alcools : on peut en boire sans le savoir.', s:'Le tavernier', attendu:{pour:'eau', fiab:'temoin'}},
-           {id:'fruits', t:'Le tavernier accuse les fruits pas mûrs du marché.', s:'Le tavernier : son avis', attendu:{pour:'nourriture', fiab:'opinion'}}]},
- whitehead: {defend:'contagion', lignes:['Je connais toutes les familles du quartier. Une femme qui soignait une malade de Marshall Street est morte à son tour.','Je crois que le mal passe d’un malade à ceux qui le soignent. L’eau ? J’en ai bu moi-même, et je suis en bonne santé.'],
-  indices:[{id:'soignante', t:'Une femme qui soignait une malade est morte à son tour.', s:'Le révérend Whitehead', attendu:{pour:'contagion', fiab:'temoin'}},
-           {id:'reverend', t:'Le révérend a bu l’eau de la pompe et n’est pas malade.', s:'Le révérend Whitehead : un seul cas', attendu:{contre:'eau', fiab:'temoin'}}]},
- egoutier: {defend:'miasme', lignes:['On dit que les travaux d’égout ont remué une vieille fosse de la peste de 1665. Les vapeurs empoisonnent le quartier.','Moi, je n’ai rien vu. Mais tout le monde en parle.'],
-  indices:[{id:'fosse', t:'Rumeur : une fosse de la peste de 1665 aurait été remuée par les égouts.', s:'Un vieil égoutier : il n’a rien vu', attendu:{pour:'miasme', fiab:'opinion'}}]},
+ cafe: {lignes:[
+   'Entrez, entrez, mais je ferme bientôt. Je tiens un café du quartier. Le midi, je sers à manger aux ouvriers des ateliers.',
+   'Avec le repas, je donne un verre d’eau de la pompe de Broad Street. C’est l’eau la plus fraîche du quartier : mes clients la réclament.',
+   'Neuf de mes clients sont morts. Neuf ! Des hommes jeunes, des ouvriers. Je les voyais tous les jours.'],
+  indices:[{id:'cafe', t:'Neuf clients du café, qui buvaient l’eau de la pompe au repas de midi, sont morts.', s:'La patronne du café', attendu:{pour:'eau', fiab:'temoin'}}]},
+ tavernier: {defend:'nourriture', lignes:[
+   'Bonsoir. Ici, c’est la taverne de Noel Street. Le soir, les ouvriers viennent boire un verre après leur journée. Je vends de la bière, du gin, un peu de tout.',
+   'Le gin, on le coupe avec de l’eau, comme dans toutes les tavernes. Et l’eau, je vais la chercher à la pompe de Broad Street. C’est la meilleure, mes clients le disent.',
+   'Le choléra ? Ce sont les fruits. Au marché, on vend des prunes pas mûres et des concombres. Ça vous retourne le ventre. Moi, je ne mange que du pain et de la viande, et je suis en pleine forme.'],
+  indices:[{id:'alcools', t:'Dans les tavernes, on coupe le gin avec l’eau de la pompe : on peut en boire sans le savoir.', s:'Le tavernier de Noel Street', attendu:{pour:'eau', fiab:'temoin'}},
+           {id:'fruits', t:'Le tavernier accuse les fruits pas mûrs et les concombres du marché.', s:'Le tavernier : son avis', attendu:{pour:'nourriture', fiab:'opinion'}}]},
+ whitehead: {
+  matin:{defend:'peche', lignes:[
+   'Je suis Henry Whitehead, le vicaire de l’église St Luke, ici dans Berwick Street. Je connais presque toutes les familles du quartier. Je baptise leurs enfants, je marie les jeunes, j’enterre les morts.',
+   'Je n’ai pas dormi cette nuit. On est venu me chercher trois fois pour donner les derniers sacrements, c’est-à-dire la dernière prière pour un mourant. Trois maisons différentes, toutes près de Broad Street.',
+   'Certains disent déjà que c’est une punition de Dieu. Je ne le crois pas : ces gens n’étaient ni meilleurs ni pires que les autres. Je dis l’office du soir à St Luke. Venez me voir après six heures : j’en saurai plus.'],
+   indices:[]},
+  defend:'contagion', lignes:[
+   'Bonsoir. Vous êtes revenu me voir ? Je sors de l’office. Il y avait peu de monde : les gens ont peur de sortir.',
+   'Aujourd’hui, j’ai encore visité des familles. Une femme qui soignait une malade de Marshall Street est morte à son tour. Je me demande si le mal ne passe pas d’un malade à ceux qui le soignent.',
+   'On m’a dit que certains accusent l’eau de la pompe. J’en ai bu moi-même, plusieurs fois, et je suis en bonne santé. Alors je reste prudent.'],
+  indices:[{id:'soignante', t:'Une femme qui soignait une malade de Marshall Street est morte à son tour.', s:'Le révérend Whitehead', attendu:{pour:'contagion', fiab:'temoin'}},
+           {id:'reverend', t:'Le révérend Whitehead a bu l’eau de la pompe, et il n’est pas malade.', s:'Le révérend Whitehead : un seul cas', attendu:{contre:'eau', fiab:'temoin'}}]},
+ egoutier: {defend:'miasme', lignes:[
+   'Je travaille dans les égouts depuis trente ans. Les égouts, ce sont les grands tuyaux sous les rues, qui emportent les eaux sales vers la Tamise.',
+   'Ces derniers mois, on a creusé de nouveaux égouts dans le quartier. On raconte qu’en creusant, les ouvriers ont touché une vieille fosse où l’on avait jeté les morts de la peste, en 1665.',
+   'Depuis, des vapeurs empoisonnées sortiraient de la terre. Moi, je n’ai rien vu de mes yeux. Mais tout le monde en parle, ici, à la taverne.'],
+  indices:[{id:'fosse', t:'Rumeur : des travaux d’égout auraient ouvert une fosse de la peste de 1665, d’où sortiraient des vapeurs.', s:'Un vieil égoutier : il n’a rien vu lui-même', attendu:{pour:'miasme', fiab:'opinion'}}]},
 };
+
+// ---------- ce que disent les passants ----------
+// Un passant sur trois accepte de parler. Chacun garde sa réplique pour la journée.
+// h : [heure de début, heure de fin] ; j : [premier jour, dernier jour]. Une rumeur peut faire découvrir une explication.
+const RUMEURS = [
+ {h:[5, 12], j:[0, 0], l:'Bonjour ! Belle journée, n’est-ce pas ? Je vais au marché de Berwick Street acheter des légumes. Il paraît qu’il y a eu du bruit cette nuit vers Broad Street. Moi, je n’ai rien entendu : je dormais comme une souche.'},
+ {h:[5, 12], j:[0, 0], l:'Je vais à l’atelier. Je suis tailleur : je couds des costumes pour les messieurs riches de Regent Street. Nous, on dort à six dans une chambre. Des malades ? Il y en a toujours, en été.'},
+ {h:[6, 12], j:[0, 1], l:'Je vais travailler à la brasserie. Il paraît qu’il y a eu des morts cette nuit. Mais le patron dit qu’avec une bonne bière, on ne craint rien !'},
+ {h:[6, 22], j:[0, 6], l:'Vous savez ce qu’on dit ? Que ce n’est pas le choléra. C’est la diarrhée d’été, comme chaque année quand il fait chaud. Les journaux exagèrent toujours.'},
+ {h:[7, 20], j:[0, 6], d:'miasme', l:'Sentez-moi cette odeur ! Les égouts de Londres se jettent tous dans la Tamise, et la Tamise pue comme jamais. Avec un air pareil, comment voulez-vous ne pas tomber malade ?'},
+ {h:[7, 20], j:[0, 6], d:'peche', l:'Ma grand-mère dit que c’est une punition. Les gens boivent trop, ils se battent, ils ne vont plus à l’église. Elle prie tous les soirs pour nous.'},
+ {h:[7, 19], j:[0, 6], l:'Moi, je suis porteur d’eau. Je remplis des tonneaux aux pompes et je les livre aux maisons qui paient. Le travail ne manque pas : à Soho, il n’y a pas d’eau dans les maisons.'},
+ {h:[9, 19], j:[0, 6], l:'Quelle chaleur ! Je viens de boire à la pompe de Broad Street. Rien de tel qu’un bon verre d’eau fraîche. L’eau des autres pompes a un goût de vase.'},
+ {h:[7, 20], j:[0, 6], l:'Parfois, l’eau de la pompe a un goût bizarre. Mais bon, il faut bien boire. On n’a pas le choix, nous. On n’a pas de quoi acheter de la bière toute la journée.'},
+ {h:[10, 20], j:[0, 6], l:'Moi, je ne crois pas à toutes ces histoires d’air. C’est la peur qui rend malade ! Ma mère le disait : celui qui a peur du choléra finit par l’attraper.'},
+ {h:[12, 20], j:[0, 6], d:'pauvrete', l:'C’est la faute des Irlandais de Peter Street. Ils vivent entassés, dans la saleté. C’est de chez eux que vient la maladie, tout le monde le sait.'},
+ {h:[12, 20], j:[0, 6], l:'Je viens de Golden Square. Là-bas, ce sont de belles maisons, des familles aisées. Et figurez-vous qu’il y a aussi des malades. Ce n’est donc pas seulement chez les pauvres !'},
+ {h:[8, 20], j:[1, 6], l:'Nous partons à la campagne, chez ma sœur. Tout le monde s’en va. Le propriétaire de notre immeuble est déjà parti hier soir, avec toutes ses malles.'},
+ {h:[8, 20], j:[1, 6], d:'miasme', l:'On brûle du goudron au coin des rues, vous avez vu ? La fumée doit chasser le mauvais air. Ça pique les yeux, mais si ça protège…'},
+ {h:[18, 3], j:[0, 6], d:'miasme', l:'Je rentre vite chez moi. On dit que l’air du soir est le plus dangereux. Ma femme a mis du vinaigre sur un mouchoir, pour que je le respire en marchant.'},
+ {h:[19, 3], j:[1, 6], l:'Vous n’avez pas peur, à cette heure-ci ? Des charrettes ont emporté des cercueils toute la soirée. Je n’avais jamais vu ça de ma vie.'},
+];
+const NOM_PASSANT = {femme2:'Une passante', bourgeois:'Un monsieur bien habillé', brasseur:'Un ouvrier', passant:'Un passant'};
+const dansPlage = (h, [a, b]) => a <= b ? h >= a && h < b : h >= a || h < b;
+function rumeurPour(p){
+ const minutes = state.minutes, j = Math.max(0, Math.min(6, Math.floor(minutes / 1440))), h = ((minutes % 1440) + 1440) % 1440 / 60;
+ const possibles = RUMEURS.filter(r => dansPlage(h, r.h) && j >= r.j[0] && j <= r.j[1]);
+ if (!possibles.length) return null;
+ return possibles[((p._index || 0) * 7 + j * 3) % possibles.length];
+}
 
 const carnet = {indices:[], connues:{}, rayees:{}, notes:'', vus:{}, methodeVue:false};
 const CLE = 'soho1854-carnet';
@@ -2236,28 +2458,62 @@ step = function(dt){
 };
 
 // ---------- les dialogues ----------
+// Une bulle à la fois : le bouton « Suite » ajoute la bulle suivante sous les précédentes.
+function afficherRepliques(lignes, fin){
+ const zone = ui('speech'); zone.replaceChildren();
+ let n = 0;
+ const montrer = () => {
+  const el = document.createElement('p'); el.textContent = lignes[n]; zone.append(el);
+  if (n < lignes.length - 1){
+   const b = document.createElement('button'); b.className = 'suite'; b.textContent = 'Suite';
+   b.onclick = () => { b.remove(); n++; montrer(); };
+   zone.append(b); b.focus({preventScroll:true});
+  } else { if (fin) fin(); ui('close').focus({preventScroll:true}); }
+  zone.scrollTop = zone.scrollHeight;
+ };
+ montrer();
+}
+function noter(e, cle, cout){
+ let nouveaux = 0;
+ for (const ind of e.indices || []) if (!carnet.indices.some(i => i.id === ind.id)){
+  carnet.indices.push({id:ind.id, t:ind.t, s:ind.s, pour:'', contre:'', fiab:'', note:''}); nouveaux++; }
+ const decouverte = e.defend && !carnet.connues[e.defend];
+ if (e.defend) carnet.connues[e.defend] = true;
+ if (!carnet.vus[cle]){ carnet.vus[cle] = true; state.minutes += cout; updateClock(true); }
+ sauver(); majBoutonCarnet();
+ if (!nouveaux && !decouverte) return null;
+ return () => {
+  const el = document.createElement('p'); el.className = 'carnet-note';
+  el.textContent = (nouveaux ? (nouveaux > 1 ? nouveaux + ' indices notés' : 'Un indice noté') + ' dans votre carnet (critère B iii : recueillir des informations).' : '')
+    + (decouverte ? (nouveaux ? ' ' : '') + 'Nouvelle explication dans la grille : ' + EXPLICATIONS.find(x => x.id === e.defend).nom + '.' : '');
+  ui('speech').append(el);
+ };
+}
 const talkOriginal = talk;
 talk = function(p){
  if (!talkOriginal(p)) return false;
- const e = ENQUETE[p.id];
- if (e){
-  ui('speech').replaceChildren();
-  for (const ligne of e.lignes){ const el = document.createElement('p'); el.textContent = ligne; ui('speech').append(el); }
-  let nouveaux = 0;
-  for (const ind of e.indices) if (!carnet.indices.some(i => i.id === ind.id)){
-   carnet.indices.push({id:ind.id, t:ind.t, s:ind.s, pour:'', contre:'', fiab:'', note:''}); nouveaux++; }
-  const decouverte = e.defend && !carnet.connues[e.defend];
-  if (e.defend) carnet.connues[e.defend] = true;
-  if (!carnet.vus[p.id]){ carnet.vus[p.id] = true; state.minutes += Number(p.cout) || 15; updateClock(true); }
-  if (nouveaux || decouverte){
-   const el = document.createElement('p'); el.className = 'carnet-note';
-   el.textContent = (nouveaux ? (nouveaux > 1 ? nouveaux + ' indices notés' : 'Un indice noté') + ' dans votre carnet (critère B iii : recueillir des informations).' : '')
-     + (decouverte ? ' Nouvelle explication dans la grille : ' + EXPLICATIONS.find(x => x.id === e.defend).nom + '.' : '');
-   ui('speech').append(el);
-  }
-  sauver(); majBoutonCarnet();
+ const h = ((state.minutes % 1440) + 1440) % 1440 / 60, jour = Math.floor(state.minutes / 1440);
+ if (p.ambient){
+  const r = rumeurPour(p);
+  ui('speaker').textContent = NOM_PASSANT[p.type] || 'Un passant';
+  if (!r){ afficherRepliques(['La personne presse le pas sans vous répondre.']); return true; }
+  afficherRepliques([r.l], noter({defend:r.d, indices:[]}, p.id + ':' + jour, 5));
+  return true;
+ }
+ const e0 = ENQUETE[p.id];
+ if (e0){
+  const e = e0.matin && h < 12 ? Object.assign({}, e0, e0.matin) : e0;
+  afficherRepliques(e.lignes, noter(e, p.id + (e0.matin && h < 12 ? ':matin' : ''), Number(p.cout) || 15));
  }
  return true;
+};
+// Les passants qui acceptent de parler ont un petit « ? » discret, visible seulement de tout près.
+const markerOpacityOriginal = markerOpacity;
+markerOpacity = function(a){
+ if (!a || !a.ambient) return markerOpacityOriginal(a);
+ if (!a.interactable) return 0;
+ const d = Math.hypot(a.px - player.px, a.py - player.py);
+ return d <= 60 ? .75 : d >= 90 ? 0 : .75 * (90 - d) / 30;
 };
 
 // ---------- le carnet ----------
@@ -2664,6 +2920,102 @@ const boutonTitre = ui('retour-titre');
 if (boutonTitre) boutonTitre.onclick = () => { closeMenu(); ouvrirOuverture(); };
 ouvrirOuverture();
 window.SOHO_OUVERTURE = {ouvrirOuverture, partie:() => partie, PERSONNAGES};
+
+// ============================================================
+// MAISON · retours chez Snow, au 18 Sackville Street, et voix intérieure (étape 2, 21 oct. 2026)
+// Injecté après ouverture.js, dont il réutilise l'écran (ouv, ecran, esc, fondu, partie, PERSONNAGES, autre).
+// Premier retour à partir de 11 h : Snow expose son idée de l'eau, sans rien dire de la pompe. L'eau entre dans la grille.
+// Chiffres des malades : tableau I de Snow (1855), cumulés depuis le jeudi 31 août au soir.
+// Le sommeil et l'effondrement de fatigue viennent à l'étape 3.
+// ============================================================
+const MALADES_PAR_JOUR = [143, 116, 54, 46, 36, 20, 28];   // vendredi 1er → jeudi 7 septembre
+function maladesDepuisJeudi(minutes){
+ const j = Math.max(0, Math.min(6, Math.floor(minutes / 1440))), part = ((minutes % 1440) + 1440) % 1440 / 1440;
+ let n = 56;   // jeudi 31 août, surtout le soir
+ for (let k = 0; k < j; k++) n += MALADES_PAR_JOUR[k];
+ return n + Math.round(MALADES_PAR_JOUR[j] * part);
+}
+const environ = n => n < 100 ? 'des dizaines de' : 'plus de ' + Math.floor(n / 50) * 50;
+
+function repliquesMaison(){
+ const moi = PERSONNAGES[partie.perso].prenom, lui = PERSONNAGES[autre(partie.perso)].prenom;
+ const m = state.minutes, h = ((m % 1440) + 1440) % 1440 / 60, n = carnet.indices.length;
+ const notes = n === 0 ? 'rien encore dans ton carnet' : n === 1 ? 'une seule chose dans ton carnet' : n + ' choses dans ton carnet';
+ const tuAs = n === 0 ? 'Tu n’as encore rien dans ton carnet' : 'Tu as ' + notes;
+ if (!partie.snowTheorie && (Math.floor(m / 1440) > 0 || h >= 11)) return {theorie:true, l:[
+  {qui:'', texte:'18 Sackville Street, chez le docteur Snow.'},
+  {qui:'Le docteur Snow', texte:'Ah, vous voilà. Asseyez-vous. ' + lui + ' m’a dit que vous étiez parti' + (partie.perso === 'emily' ? 'e' : '') + ' tôt. Racontez-moi ce que vous avez vu.'},
+  {qui:moi, texte:(n === 0 ? 'Je n’ai encore rien noté, mais je lui raconte ce que j’ai vu dans les rues.' : 'Je lui raconte tout. J’ai ' + notes.replace('ton carnet', 'mon carnet') + '.') + ' Il écoute sans m’interrompre, en prenant des notes.', moi:true},
+  {qui:'Le docteur Snow', texte:'Bien. Maintenant, je vais vous dire ce que je pense. Mais retenez une chose : ce n’est qu’une idée. Une idée sans preuves ne vaut rien.'},
+  {qui:'Le docteur Snow', texte:'Depuis 1849, je pense que le choléra ne passe pas par l’air. Je crois qu’il passe par l’eau que l’on boit. Le malade rejette quelque chose dans ses selles. Si ces saletés arrivent dans l’eau, ceux qui la boivent tombent malades à leur tour.'},
+  {qui:'Le docteur Snow', texte:'Cet été, j’étudie le sud de Londres. Là-bas, deux compagnies vendent l’eau aux maisons. L’une la puise dans la Tamise, au milieu des égouts de la ville. L’autre la prend plus haut, là où le fleuve est propre. Les maisons de la première ont beaucoup plus de morts.'},
+  {qui:'Le docteur Snow', texte:'Presque personne ne me croit. Les médecins du conseil de santé disent que c’est l’air vicié, le miasme. Ils ont peut-être raison. C’est à vous de le vérifier.'},
+  {qui:'Le docteur Snow', texte:'Retournez dans le quartier. Écoutez ce que les gens croient, mais cherchez des faits. Qui tombe malade ? Qui ne tombe pas malade ? Que boivent-ils ? Que respirent-ils ? Revenez me voir ce soir.'},
+ ]};
+ if (!partie.snowTheorie) return {l:[
+  {qui:'', texte:'18 Sackville Street, chez le docteur Snow.'},
+  {qui:lui, texte:'Déjà rentré' + (partie.perso === 'emily' ? 'e' : '') + ' ? Le docteur n’est pas encore là. Il est chez ses patients toute la matinée. Il a dit qu’il serait de retour vers 11 heures.'},
+  {qui:lui, texte:'Ici, des voisins sont passés. Tout le monde parle de Broad Street. On dit qu’il y a déjà ' + environ(maladesDepuisJeudi(m)) + ' malades depuis hier soir.'},
+  {qui:lui, texte:tuAs + '. Repars et écoute encore les gens. Le docteur voudra des faits.'},
+ ]};
+ return {l:[
+  {qui:'', texte:'18 Sackville Street, chez le docteur Snow.'},
+  {qui:lui, texte:'Te voilà ! Le docteur est ressorti voir des malades. Il m’a demandé de tenir le registre de tout ce qu’on apprend.'},
+  {qui:lui, texte:'D’après ce qu’on raconte, ' + environ(maladesDepuisJeudi(m)) + ' personnes sont tombées malades depuis jeudi soir. Et ça continue. Il faut comprendre ce qui se passe !'},
+  {qui:lui, texte:tuAs + '. ' + (n < 4 ? 'C’est encore peu. Retourne écouter les gens : les témoins ne sont pas tous dehors aux mêmes heures.' : 'C’est bien. Regarde bien qui tombe malade, et qui ne tombe pas malade.')},
+ ]};
+}
+let maisonLignes = [], maisonN = 0, maisonTheorie = false;
+function sceneMaison(){
+ const r = maisonLignes[maisonN], fin = maisonN === maisonLignes.length - 1;
+ ecran('<div class="ouv-maison" data-img="' + IMG.maison + '"></div><div class="ouv-bulle' + (r.moi ? ' ouv-pensee' : '') + (r.qui ? '' : ' ouv-recit') + '">'
+  + (r.qui ? '<p class="ouv-qui">' + esc(r.qui) + '</p>' : '') + '<p class="ouv-dit">' + esc(r.texte) + '</p>'
+  + (fin && maisonTheorie ? '<p class="ouv-note">Nouvelle explication dans votre carnet : l’eau que l’on boit.</p>' : '')
+  + '<div class="ouv-nav">' + (maisonN > 0 ? '<button data-act="m-prec">Retour</button>' : '<span></span>')
+  + (fin ? '<button class="ouv-principal" data-act="m-sortir" autofocus>Repartir dans le quartier</button>'
+         : '<button class="ouv-principal" data-act="m-suiv" autofocus>Suite</button>') + '</div></div>', 'scene');
+}
+function ouvrirMaison(){
+ const r = repliquesMaison();
+ maisonLignes = r.l; maisonN = 0; maisonTheorie = !!r.theorie;
+ if (maisonTheorie){
+  partie.snowTheorie = true; sauverPartie();
+  carnet.connues.eau = true; sauver(); majBoutonCarnet();
+  state.minutes += 30; updateClock(true);   // une vraie conversation avec Snow prend une demi-heure
+ }
+ keys.clear(); stop(); ouv.hidden = false; ouv.className = 'ouverture';
+ fondu(sceneMaison);
+}
+ouv.addEventListener('click', e => {
+ const b = e.target.closest('button[data-act]'); if (!b) return;
+ const act = b.dataset.act;
+ if (act === 'm-suiv'){ maisonN++; sceneMaison(); }
+ else if (act === 'm-prec'){ maisonN--; sceneMaison(); }
+ else if (act === 'm-sortir'){ fondu(() => { fermerOuverture(); ouv.hidden = false; ouv.className = 'ouverture mode-vide'; setTimeout(() => { ouv.hidden = true; ouv.className = 'ouverture'; }, 900); }); }
+});
+// Parler à la « porte » de Snow ouvre la maison au lieu d'une bulle.
+const talkSansMaison = talk;
+talk = function(p){
+ if (p && p.id === 'snow'){
+  if (paused() || !canTalk(p) || !partie) return false;
+  ouvrirMaison(); return true;
+ }
+ return talkSansMaison(p);
+};
+
+// ---------- la voix intérieure ----------
+// Tant que le joueur n'a pas entendu Snow, elle le lui rappelle à partir de 11 h, toutes les 40 minutes de jeu.
+let dernierRappel = -Infinity;
+setInterval(() => {
+ if (!partie || !ouv.hidden || paused() || partie.snowTheorie) return;
+ const m = state.minutes, h = ((m % 1440) + 1440) % 1440 / 60;
+ if (Math.floor(m / 1440) === 0 && h < 11) return;
+ if (m - dernierRappel < 40) return;
+ dernierRappel = m;
+ const heure = Math.floor(h);
+ say('« Il est ' + heure + ' heures passées. Le docteur doit être rentré. Je devrais aller lui raconter ce que j’ai vu, au 18 Sackville Street. »');
+}, 1000);
+window.SOHO_MAISON = {ouvrirMaison, maladesDepuisJeudi};
 
 window.SOHO_TEST={world:WORLD,openMenu,closeMenu,toggleMap,paused,state,player,camera,viewport,canvas:cv,layout:LAYOUT,npcs,DATA,floor,nearest,findPath,blocked,worldToScreen,screenToWorld,pointers,resolveWalkGoal,moveTo,goToPerson,talk,changeTime,reset,draw,step,resize,shouldPaint,placeEntry,layoutLabels,visible:()=>visibleActors,pump,pumps,keys,markerOpacity,layoutStreetLabels,reducedMotion,visualStats:()=>WORLD.decor?.stats()};
 reset();resize();requestAnimationFrame(frame);
