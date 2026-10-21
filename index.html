@@ -2578,6 +2578,8 @@ function paragrapheCliquable(texte, ctx){
  return el;
 }
 // Une bulle à la fois : le bouton « Suite » ajoute la bulle suivante sous les précédentes.
+// Le tutoriel guidé peut bloquer « Suite » tant que le joueur n'a pas fait le geste demandé.
+let suiteBloquee = false;
 function afficherRepliques(lignes, fin, ctx){
  const zone = ui('speech'); zone.replaceChildren();
  let n = 0;
@@ -2586,7 +2588,8 @@ function afficherRepliques(lignes, fin, ctx){
   zone.append(el);
   if (n < lignes.length - 1){
    const b = document.createElement('button'); b.className = 'suite'; b.textContent = 'Suite';
-   b.onclick = () => { b.remove(); n++; montrer(); };
+   b.disabled = suiteBloquee;
+   b.onclick = () => { if (suiteBloquee) return; b.remove(); n++; montrer(); };
    zone.append(b); b.focus({preventScroll:true});
   } else { if (fin) fin(); ui('close').focus({preventScroll:true}); }
   zone.scrollTop = zone.scrollHeight;
@@ -3181,6 +3184,8 @@ ouv.addEventListener('click', e => {
   fondu(() => { fermerOuverture(); ouv.hidden = false; ouv.className = 'ouverture mode-vide'; setTimeout(() => { ouv.hidden = true; ouv.className = 'ouverture'; }, 900); });
   setTimeout(() => pensee('En sortant, je lève les yeux vers le réverbère à la lanterne rouge, devant la maison. Le docteur l’a installée pour que les malades trouvent plus facilement son cabinet, même la nuit. Je la reconnaîtrai de loin quand je rentrerai.'), 1200);
   setTimeout(() => pensee('Il est 7 heures. Les rues sont encore calmes. Pour marcher, je touche les pavés là où je veux aller, ou j’utilise les flèches du clavier. Pour parler à quelqu’un, je m’approche et je le touche, ou j’appuie sur Espace.'), 1200);
+  // le tutoriel guidé (guide.js) commence dès que ces deux pensées sont lues
+  lancerGuide();
  }
 });
 // Entrée et Espace activent quand même le bouton qui a le focus : c'est l'action par défaut du navigateur.
@@ -3573,6 +3578,8 @@ let coachActuel = null;
 const coachsEnAttente = [];
 function boiteOuverte(){ for (const id of ['carnet', 'dialogue', 'menu']){ const d = ui(id); if (d && d.open) return d; } return null; }
 function placerCoach(c){
+ // une cible donnée par une fonction est recherchée à chaque fois : le carnet se redessine souvent
+ if (c.trouver){ const el = c.trouver(); if (el !== c.cible){ if (c.cible) c.cible.classList.remove('tuto-cible'); c.cible = el; if (el) el.classList.add('tuto-cible'); } }
  const {bulle, cible, doigt} = c, r = cible && cible.isConnected ? cible.getBoundingClientRect() : null;
  const w = Math.min(330, innerWidth - 24), h = bulle.offsetHeight || 120;
  bulle.classList.remove('dessous', 'dessus', 'centre');
@@ -3590,15 +3597,19 @@ function fermerCoach(){
  const c = coachActuel; coachActuel = null;
  c.bulle.remove(); if (c.doigt) c.doigt.remove(); if (c.cible) c.cible.classList.remove('tuto-cible');
  removeEventListener('resize', c.replacer); if (c.conteneur) c.conteneur.removeEventListener('scroll', c.replacer, true);
+ clearInterval(c.suivi);
+ if (c.fini) c.fini();
  if (c.apres) setTimeout(c.apres, 250);
  setTimeout(() => { if (!coachActuel && coachsEnAttente.length) coach(...coachsEnAttente.shift()); }, 300);
 }
-// Affiche un conseil une seule fois. cible : un élément ou une fonction qui le trouve. options : {doigt, apres}
+// Affiche un conseil une seule fois. cible : un élément ou une fonction qui le trouve.
+// options : {doigt, apres, force (le tutoriel guidé : ignore « déjà vu »), sansBouton (attend un geste), fini}
 function coach(id, texte, cible, options = {}){
- if (!reglages.tutos || reglages.vus[id] || !partie) return false;
+ if (!options.force && (!reglages.tutos || reglages.vus[id])) return false;
+ if (!partie) return false;
  if (coachActuel){ if (coachActuel.id !== id && !coachsEnAttente.some(a => a[0] === id)) coachsEnAttente.push([id, texte, cible, options]); return true; }
  const el = typeof cible === 'function' ? cible() : cible;
- reglages.vus[id] = true; sauverReglages();
+ if (!options.force){ reglages.vus[id] = true; sauverReglages(); }
  const conteneur = boiteOuverte() || document.body;
  const bulle = document.createElement('div'); bulle.className = 'coach'; bulle.setAttribute('role', 'note');
  const img = document.createElement('img'); img.className = 'coach-portrait'; img.alt = '';
@@ -3606,19 +3617,22 @@ function coach(id, texte, cible, options = {}){
  bulle.append(img);
  const qui = document.createElement('p'); qui.className = 'coach-qui'; qui.textContent = PERSONNAGES[partie.perso].prenom + ' se dit';
  const p = document.createElement('p'); p.innerHTML = '« ' + enGras(texte).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>') + ' »';
- const ok = document.createElement('button'); ok.type = 'button'; ok.textContent = 'Compris'; ok.onclick = fermerCoach;
- bulle.append(qui, p, ok);
+ bulle.append(qui, p);
+ if (!options.sansBouton){ const ok = document.createElement('button'); ok.type = 'button'; ok.textContent = options.bouton || 'Compris'; ok.onclick = fermerCoach; bulle.append(ok); }
  let doigt = null;
  if (options.doigt && el){ doigt = document.createElement('div'); doigt.className = 'doigt'; doigt.textContent = '👆'; doigt.setAttribute('aria-hidden', 'true'); conteneur.append(doigt); }
  conteneur.append(bulle);
  if (el) el.classList.add('tuto-cible');
- const c = {id, bulle, cible:el, doigt, conteneur, apres:options.apres};
+ const c = {id, bulle, cible:el, doigt, conteneur, apres:options.apres, fini:options.fini, texte:p, trouver:typeof cible === 'function' ? cible : null};
  c.replacer = () => placerCoach(c);
  coachActuel = c;
  requestAnimationFrame(c.replacer);
  addEventListener('resize', c.replacer); conteneur.addEventListener('scroll', c.replacer, true);
+ c.suivi = setInterval(c.replacer, 250);
  return true;
 }
+// Change le texte de la bulle affichée (le tutoriel guidé corrige ainsi une mauvaise réponse).
+function texteCoach(texte){ if (coachActuel) coachActuel.texte.innerHTML = '« ' + enGras(texte).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>') + ' »'; }
 // Un conseil disparaît si sa boîte se ferme (on ferme le dialogue sans toucher « Compris »).
 for (const id of ['carnet', 'dialogue']) ui(id).addEventListener('close', () => { if (coachActuel && coachActuel.conteneur === ui(id)) fermerCoach(); });
 
@@ -3691,6 +3705,185 @@ openMenu = function(){ const r = openMenuSansVerrous.apply(this, arguments); app
 ui('menu-button').onclick = openMenu;
 appliquerVerrous();
 window.SOHO_TUTO = {coach, reglages, appliquerVerrous};
+
+// ============================================================
+// GUIDE · le tutoriel complet de la première sortie (22 oct. 2026, demande de Jeremy)
+// Le joueur sort de chez Snow ; Jimmy, un garçon de Cambridge Street (inventé), accourt pour lui parler.
+// Avec ce dialogue, le personnage joué guide chaque geste, que le joueur fait lui-même :
+// écouter (Suite), noter (toucher deux phrases), ouvrir le carnet, classer les deux extraits avec les deux questions
+// (quelle explication ? peut-on s'y fier ?), voir les dossiers, les arguments, « J'ai entendu », refermer.
+// Une mauvaise réponse est corrigée avec douceur et le geste est redemandé.
+// Le tutoriel ne coûte pas de temps : l'horloge revient à son heure de départ à la fin.
+// Il ne se lance qu'une fois, en nouvelle partie, si les conseils sont activés.
+// Injecté après tuto.js.
+// ============================================================
+const attendre = (condition, pas = 150) => new Promise(ok => { const t = setInterval(() => { if (condition()){ clearInterval(t); ok(); } }, pas); });
+const dire = (id, texte, cible, options = {}) => new Promise(ok => { fermerCoach(); coach(id, texte, cible, Object.assign({}, options, {force:true, fini:ok})); });
+
+// ---------- Jimmy, dessiné dans la rue ----------
+const JIMMY = {x:0, y:0, visible:false, phase:0, direction:{x:-1, y:0}, moving:false};
+const COSTUME_JIMMY = {manteau:'#6a4a2c', chapeau:'casquette'};
+const renderSansJimmy = WORLD.render;
+WORLD.render = function(c){
+ const r = renderSansJimmy.apply(this, arguments);
+ if (JIMMY.visible) silhouette(c, JIMMY.x, JIMMY.y, COSTUME_JIMMY, reducedMotion() ? 0 : JIMMY.phase, JIMMY);
+ return r;
+};
+function courir(x1, y1, duree){
+ return new Promise(ok => {
+  const x0 = JIMMY.x, y0 = JIMMY.y, t0 = performance.now();
+  JIMMY.direction = {x:Math.sign(x1 - x0) || 0, y:Math.sign(y1 - y0) || 0}; JIMMY.moving = true;
+  // un minuteur plutôt que requestAnimationFrame : la course se termine même si l'onglet ne se redessine pas
+  const minuteur = setInterval(() => {
+   const k = Math.min(1, (performance.now() - t0) / duree);
+   JIMMY.x = x0 + (x1 - x0) * k; JIMMY.y = y0 + (y1 - y0) * k; JIMMY.phase += .35;
+   draw();
+   if (k >= 1){ clearInterval(minuteur); JIMMY.moving = false; ok(); }
+  }, 30);
+ });
+}
+
+// ---------- le scénario ----------
+const QUI_JIMMY = 'Jimmy, un garçon de Cambridge Street';
+const PHRASE_A = 'Cette nuit, mon voisin, le cordonnier, est tombé malade d’un coup.';
+const PHRASE_B = 'Ma mère dit que l’odeur des égouts empoisonne la rue.';
+function lignesJimmy(){
+ const appel = partie.perso === 'emily' ? 'Mam’zelle' : 'M’sieur';
+ return [
+  appel + ' ! ' + appel + ' ! Vous êtes bien de chez le docteur Snow ? Je cours depuis Broad Street ! Je m’appelle Jimmy, j’habite Cambridge Street.',
+  PHRASE_A + ' Il vomissait sans arrêt, et sa peau est devenue toute grise. Ce matin, il était mort. Je l’ai vu de mes yeux, quand on l’a sorti de chez lui.',
+  PHRASE_B + ' Elle a bouché toutes nos fenêtres avec des chiffons. Mais il fait si chaud à l’intérieur qu’on étouffe.',
+  'Le docteur peut venir ? Non ? Alors dites-lui, hein ! Il faut que quelqu’un nous aide. Moi, je retourne vite là-bas, avant que ma mère s’inquiète.',
+ ];
+}
+const phraseVue = debut => [...ui('speech').querySelectorAll('.phrase')].find(s => s.textContent.startsWith(debut.slice(0, 25)));
+const bulles = () => ui('speech').querySelectorAll('p.cliquable').length;
+const boutonSuite = () => ui('speech').querySelector('.suite');
+const extrait = phrase => carnet.indices.find(x => x.k === cleExtrait('jimmy', phrase));
+const carte = debut => [...document.querySelectorAll('#onglet-classer .indice')].find(a => a.textContent.includes(debut));
+const bloquerSuite = oui => { suiteBloquee = oui; const b = boutonSuite(); if (b) b.disabled = oui; };
+let guideActif = false;
+// Pendant le tutoriel, le joueur ne peut pas fermer le dialogue ni le carnet avant qu'on le lui demande.
+let fermetureAutorisee = true;
+for (const id of ['dialogue', 'carnet']) ui(id).addEventListener('cancel', e => { if (guideActif && !fermetureAutorisee) e.preventDefault(); });
+const autoriserFermeture = oui => { fermetureAutorisee = oui; ui('close').disabled = !oui; ui('carnet-close').disabled = !oui; };
+
+// Attend une réponse ; si elle est fausse, l'efface, corrige avec douceur et redemande.
+async function reponse(lire, juste, effacer, correction){
+ for (;;){
+  await attendre(lire);
+  if (juste()) return;
+  effacer(); sauver(); dessinerCarnet(); texteCoach(correction);
+ }
+}
+
+async function lancerGuide(){
+ if (!partie || !reglages.tutos || reglages.vus.guide) return;
+ await attendre(() => ouv.hidden && !boiteDialogue.open && !penseesEnAttente.length && !ui('carnet').open && state.ready);
+ guideActif = true;
+ const minutesAvant = state.minutes;
+ // les petits conseils de la première fois sont remplacés par ce tutoriel
+ for (const k of ['dialogue', 'copie', 'onglet-classer', 'onglet-dossiers', 'onglet-sacoche', 'onglet-entendu']) reglages.vus[k] = true;
+ sauverReglages();
+
+ // 1. Jimmy accourt depuis l'est de Vigo Street
+ keys.clear(); stop();
+ Object.assign(JIMMY, {x:player.px + 330, y:player.py + 4, visible:true});
+ await courir(player.px + 34, player.py + 4, 2600);
+
+ // 2. le dialogue
+ boiteDialogue.classList.remove('pensee', 'avec-portrait'); if (badgeDialogue) badgeDialogue.textContent = badgeTemoignage;
+ ui('speaker').textContent = QUI_JIMMY;
+ autoriserFermeture(false);
+ boiteDialogue.showModal();
+ const lignes = lignesJimmy(), ctx = {qui:QUI_JIMMY, quand:quandMaintenant(), source:'jimmy'};
+ afficherRepliques(lignes, () => finDeLecture({defend:'miasme'}, 'jimmy', 0, ctx, lignes), ctx);
+
+ dire('g-ecouter', 'Un garçon accourt vers moi ! D’abord, **j’écoute** : je lis ce qu’il dit jusqu’au bout. Quand j’ai fini une bulle, je touche « Suite » pour lire la suivante.', boutonSuite, {sansBouton:true});
+ await attendre(() => bulles() >= 2); fermerCoach();
+
+ bloquerSuite(true);
+ dire('g-noter1', 'Voilà un fait important : quelqu’un est tombé malade cette nuit. Je veux le garder. Je **touche cette phrase** pour la copier dans mon carnet.', () => phraseVue(PHRASE_A), {sansBouton:true, doigt:true});
+ await attendre(() => extrait(PHRASE_A)); fermerCoach();
+ await dire('g-noter1b', 'La phrase est surlignée en jaune : elle est copiée dans mon carnet. Si je me trompe, je la touche encore et elle s’en va. Je ne garde que ce qui me paraît utile.', () => phraseVue(PHRASE_A));
+ bloquerSuite(false);
+ dire('g-suite2', 'Je continue : « Suite ».', boutonSuite, {sansBouton:true});
+ await attendre(() => bulles() >= 3); fermerCoach();
+
+ bloquerSuite(true);
+ dire('g-noter2', 'Cette phrase m’intéresse aussi, mais pour une autre raison : c’est une **explication** que les gens donnent à la maladie. Je la note aussi.', () => phraseVue(PHRASE_B), {sansBouton:true, doigt:true});
+ await attendre(() => extrait(PHRASE_B)); fermerCoach();
+ bloquerSuite(false);
+ dire('g-suite3', 'Je lis la fin.', boutonSuite, {sansBouton:true});
+ await attendre(() => bulles() >= 4); fermerCoach();
+
+ autoriserFermeture(true);
+ dire('g-fermer', 'Une nouvelle explication est entrée dans mon carnet : **l’air vicié**. Je ferme cette conversation pour ranger mes notes tout de suite.', ui('close'), {sansBouton:true});
+ await attendre(() => !boiteDialogue.open); fermerCoach();
+ courir(player.px + 420, player.py + 4, 2200).then(() => { JIMMY.visible = false; draw(); });
+
+ // 3. le carnet
+ dire('g-ouvrir', 'J’ouvre mon **carnet**.', ui('carnet-button'), {sansBouton:true, doigt:true});
+ await attendre(() => ui('carnet').open); fermerCoach();
+ autoriserFermeture(false);
+ ui('carnet-methode').open = false; afficherOnglet('classer');
+ await dire('g-classer', 'Mes deux phrases sont ici, dans « À classer ». Pour chacune, je me pose **deux questions** : quelle explication accuse-t-elle ? Et puis-je m’y fier ?', () => document.querySelector('#carnet [data-onglet="classer"]'));
+
+ // la phrase A : un fait, vu par un témoin, qui n'accuse rien
+ const a = () => extrait(PHRASE_A);
+ dire('g-a1', 'Question 1, pour « Mon voisin est tombé malade » : cette phrase dit qu’il est malade, mais pas **pourquoi**. Elle n’accuse aucune explication. Je touche « Aucune ».', () => carte('le cordonnier') && carte('le cordonnier').querySelector('.pastille.aucune'), {sansBouton:true, doigt:true});
+ await reponse(() => a().aucune || a().pour.length || a().contre.length, () => a().aucune,
+  () => { a().pour = []; a().contre = []; a().aucune = false; },
+  'Pas tout à fait : cette phrase ne dit pas pourquoi le cordonnier est tombé malade. Elle n’accuse rien. Je touche « Aucune ».');
+ fermerCoach();
+ dire('g-a2', 'Question 2 : puis-je m’y fier ? Jimmy l’a **vu de ses yeux**, quand on a sorti son voisin. C’est un témoin. Je touche « 💬 Un témoin l’a vu ».', () => carte('le cordonnier') && carte('le cordonnier').querySelectorAll('.pastille.fiab')[1], {sansBouton:true, doigt:true});
+ await reponse(() => a().fiab, () => a().fiab === 'temoin', () => { a().fiab = ''; },
+  'Pas tout à fait : ce n’est pas moi qui l’ai vu, c’est Jimmy. Et ce n’est pas une rumeur : il était là. Je touche « 💬 Un témoin l’a vu ».');
+ fermerCoach();
+ await dire('g-a3', 'Rangée ! La phrase a quitté « À classer » : elle est maintenant dans son dossier. Il reste la deuxième.', null);
+
+ // la phrase B : une opinion qui accuse le miasme
+ const b = () => extrait(PHRASE_B);
+ const pastilleMiasme = () => carte('odeur des égouts') && [...carte('odeur des égouts').querySelectorAll('.pastille')].find(x => x.textContent.includes('L’air vicié'));
+ dire('g-b1', '« Ma mère dit que l’odeur des égouts empoisonne la rue » : cette phrase accuse l’air vicié, le **miasme**. Je touche **une fois** « L’air vicié » : le + veut dire « accuse ». Deux touches voudraient dire « disculpe ».', pastilleMiasme, {sansBouton:true, doigt:true});
+ await reponse(() => b().aucune || b().pour.length || b().contre.length, () => b().pour.includes('miasme') && !b().contre.length && !b().aucune,
+  () => { b().pour = []; b().contre = []; b().aucune = false; },
+  'Pas tout à fait : la mère de Jimmy accuse l’odeur, donc l’air vicié. Je touche **une seule fois** « L’air vicié » pour avoir le +.');
+ fermerCoach();
+ dire('g-b2', 'Puis-je m’y fier ? Jimmy n’a rien vu : il répète ce que **croit** sa mère. C’est une opinion. Je touche « 👂 Une rumeur ou une opinion ».', () => carte('odeur des égouts') && carte('odeur des égouts').querySelectorAll('.pastille.fiab')[2], {sansBouton:true, doigt:true});
+ await reponse(() => b().fiab, () => b().fiab === 'opinion', () => { b().fiab = ''; },
+  'Pas tout à fait : personne n’a vu l’air rendre quelqu’un malade. C’est ce que croit sa mère. Je touche « 👂 Une rumeur ou une opinion ».');
+ fermerCoach();
+
+ // 4. les dossiers
+ dire('g-d1', 'Tout est rangé. Maintenant, je regarde mes **dossiers**.', () => document.querySelector('#carnet [data-onglet="dossiers"]'), {sansBouton:true, doigt:true});
+ await attendre(() => ongletActif === 'dossiers'); fermerCoach();
+ const tuileMiasme = () => [...document.querySelectorAll('#onglet-dossiers .dossier .tete')].find(x => x.textContent.includes('L’air vicié'));
+ dire('g-d2', 'J’ouvre le dossier de l’air vicié.', tuileMiasme, {sansBouton:true, doigt:true});
+ await attendre(() => dossierOuvert === 'miasme'); fermerCoach();
+ await dire('g-d3', 'La phrase de Jimmy est ici, pâle, avec l’oreille 👂 : c’est une rumeur, alors elle pèse peu dans la balance. Quand j’aurai des faits vus par des témoins, la balance penchera vraiment. Et si des faits fiables contredisent une explication, je pourrai l’**écarter** avec ce bouton.', () => document.querySelector('#onglet-dossiers .ecarter'));
+
+ // 5. les arguments
+ dire('g-s1', 'Ici, ce sont **mes arguments**.', () => document.querySelector('#carnet [data-onglet="sacoche"]'), {sansBouton:true, doigt:true});
+ await attendre(() => ongletActif === 'sacoche'); fermerCoach();
+ await dire('g-s2', 'Ce sont les six extraits que je présenterai aux autorités pour les convaincre. Une rumeur ferait un mauvais argument : je garderai des **faits solides**. Pour en ajouter un, je touche l’étoile ☆ dans un dossier.', () => document.querySelector('#onglet-sacoche .sacoche'));
+
+ // 6. tout ce que j'ai entendu
+ dire('g-e1', 'Dernière page : **tout ce que j’ai entendu**.', () => document.querySelector('#carnet [data-onglet="entendu"]'), {sansBouton:true, doigt:true});
+ await attendre(() => ongletActif === 'entendu'); fermerCoach();
+ await dire('g-e2', 'Ici, je retrouve chaque conversation, rangée par personne. Si j’ai oublié de noter une phrase, je peux encore la toucher ici. Je peux aussi chercher un mot, comme « odeur ».', () => document.querySelector('#onglet-entendu .recherche'));
+
+ // 7. la fin : le carnet se referme, l'heure revient à son point de départ
+ autoriserFermeture(true);
+ dire('g-fin', 'Mon carnet est prêt. Je le referme et je pars enquêter. Je pourrai l’ouvrir à tout moment avec ce bouton, ou avec la touche C.', ui('carnet-close'), {sansBouton:true});
+ await attendre(() => !ui('carnet').open); fermerCoach();
+ state.minutes = minutesAvant; updateClock(true);
+ reglages.vus.guide = true; sauverReglages();
+ guideActif = false;
+ // le conseil sur le temps reste celui déjà en place
+ setTimeout(() => coach('horloge', 'Attention au temps : il passe quand je marche et quand je parle. Le soir, je devrai rentrer chez le docteur **Snow** pour lui faire mon rapport.', ui('clock')), 700);
+}
+window.SOHO_GUIDE = {lancerGuide, JIMMY};
 
 window.SOHO_TEST={world:WORLD,openMenu,closeMenu,toggleMap,paused,state,player,camera,viewport,canvas:cv,layout:LAYOUT,npcs,DATA,floor,nearest,findPath,blocked,worldToScreen,screenToWorld,pointers,resolveWalkGoal,moveTo,goToPerson,talk,changeTime,reset,draw,step,resize,shouldPaint,placeEntry,layoutLabels,visible:()=>visibleActors,pump,pumps,keys,markerOpacity,layoutStreetLabels,reducedMotion,visualStats:()=>WORLD.decor?.stats()};
 reset();resize();requestAnimationFrame(frame);
