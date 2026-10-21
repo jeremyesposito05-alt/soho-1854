@@ -4,7 +4,7 @@
 :root{color-scheme:dark;--paper:#eadfc8;--ink:#312920;--muted:#bdb09a;--line:#c2a77955}*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#27251e;color:var(--paper);font:14px/1.5 Georgia,"Times New Roman",serif}button,select{font:12px/1.3 system-ui,sans-serif;cursor:pointer}button,select{border:1px solid var(--line);border-radius:5px;background:#302a22e8;color:var(--paper);padding:10px 12px;min-height:40px}button:hover,select:hover{background:#514535}button:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid #e6c88a;outline-offset:3px}canvas:focus-visible{outline:none}button[aria-pressed="true"]{background:#ad9364;color:#201b15}button:disabled{opacity:.5;cursor:default}#viewport{position:fixed;inset:0;background:#27251e}canvas{display:block;width:100%;height:100%;touch-action:none;cursor:crosshair}.hud{position:fixed;z-index:2;pointer-events:none;inset:0}.hud>*{pointer-events:auto}.plate{background:#28231cdd;border:1px solid #c1a77744;box-shadow:0 3px 20px #0004;border-radius:6px;backdrop-filter:blur(8px)}.identity{position:absolute;top:max(16px,env(safe-area-inset-top));left:max(16px,env(safe-area-inset-left));padding:10px 15px;max-width:320px}.identity h1{margin:0;font:18px/1.2 Georgia,serif;letter-spacing:.06em}.identity h1 span{font-size:13px;color:#c5b493}.identity #location{margin:4px 0 6px;color:#e2d0ad;font-style:italic;font-size:12px}.clockline{display:flex;gap:12px;align-items:center;border-top:1px solid #c1a77730;padding-top:6px;font:11px/1.4 system-ui,sans-serif;color:#d5c4a7}#period{color:#ad9f88;font-size:10px}.nav{position:absolute;right:max(16px,env(safe-area-inset-right));top:max(16px,env(safe-area-inset-top));display:flex;gap:7px}.nav button{box-shadow:0 3px 15px #0004;background:#28231ce8}#menu-button{font-weight:600}.toast{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);max-width:min(540px,calc(100vw - 32px));margin:0;padding:9px 15px;text-align:center;font:12px/1.5 system-ui,sans-serif;pointer-events:none}.action{position:absolute;left:50%;bottom:max(28px,env(safe-area-inset-bottom));transform:translateX(-50%);display:flex;gap:11px;align-items:center;max-width:calc(100vw - 32px);white-space:normal;text-align:left;background:#e8dbc1f2;color:#352c20;border-color:#a58c60;box-shadow:0 3px 26px #0005;padding:10px 16px}.action kbd{padding:3px 6px;border:1px solid #947c54;border-radius:3px;font:11px system-ui,sans-serif}.action small{display:block;font-size:10px;color:#746044}.dpad{position:absolute;left:max(18px,env(safe-area-inset-left));bottom:max(20px,env(safe-area-inset-bottom));display:none;grid-template-columns:repeat(3,42px);gap:4px}.dpad button{height:42px;min-height:42px;padding:0;font:20px/1 system-ui,sans-serif;background:#29231cce;touch-action:none;user-select:none}.dpad button:first-child{grid-column:2}.dpad button:nth-child(2){grid-column:1}.dpad.forced{display:grid}dialog{color-scheme:light;background:#e9dfcb;color:var(--ink);border:1px solid #9b835b;border-radius:9px;box-shadow:0 15px 80px #0008;width:calc(100% - 32px);max-width:560px;max-height:calc(100dvh - 48px);padding:25px 28px;overflow:auto;overscroll-behavior:contain}dialog::backdrop{background:#13110d55}dialog h2{font-weight:400;font-size:25px;line-height:1.2;margin:0 0 15px}dialog p{margin:0 0 14px}dialog button,dialog select{background:#f2e7d1;color:#3c3022;border-color:#ae956e}dialog button:hover,dialog select:hover{background:#fff4dd}dialog button[aria-pressed="true"]{background:#6c5839;color:#fff2d9}dialog .badge{color:#8f7251;font:10px/1.5 system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;margin:0 0 6px}#dialogue>button{float:right}#menu{position:fixed;left:auto;right:max(16px,env(safe-area-inset-right));top:max(16px,env(safe-area-inset-top));bottom:auto;margin:0;max-width:355px;padding:21px 23px;font:12px/1.5 system-ui,sans-serif}#menu h2{font:25px Georgia,serif;margin:0}.menuhead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:21px}.menuhead button{font-size:18px;min-height:32px;padding:3px 10px}.group{padding-top:15px;margin-top:15px;border-top:1px solid #b9a17c88}.group-title{font:italic 16px Georgia,serif;margin-bottom:10px;color:#725d41}.row{display:flex;align-items:center;gap:8px;margin:8px 0}.row>label{flex:1}.row select{max-width:150px}.row.buttons{flex-wrap:wrap}.row.buttons button{flex:1;white-space:nowrap}.check{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:12px 0}.check input{accent-color:#6b5538;width:17px;height:17px;margin:0}summary{cursor:pointer;color:#6f573b;padding:6px 0}details p{font:12px/1.6 system-ui,sans-serif;margin:9px 0;color:#715d43}#witnesses{padding:3px 0 0 15px;margin:0;color:#715d43;font-size:11px}#witnesses li{margin:6px 0}.fine{color:#8a7351;font:10px/1.5 system-ui,sans-serif}#menu .fine{margin:8px 0 0}#status:not([hidden])~#action:not([hidden]){bottom:77px}[hidden]{display:none!important}
 @media(pointer:coarse){.dpad{display:grid}.toast{bottom:170px}.action{bottom:25px;left:auto;right:14px;transform:none;max-width:calc(100vw - 180px)}.action kbd{display:none}#status:not([hidden])~#action:not([hidden]){bottom:25px}}
 #carnet{max-width:720px;font:14px/1.5 system-ui,sans-serif}#carnet h2{font:25px Georgia,serif}#carnet h3{font:italic 17px Georgia,serif;color:#5e4a30;margin:20px 0 8px}#carnet .fermer{float:right}.methode{background:#f4ecda;border-left:4px solid #8f7251;padding:10px 14px;border-radius:4px}.methode h3{margin-top:0}.methode ol{margin:0;padding-left:20px}.methode li{margin:3px 0}.reussite{margin:8px 0 0!important;color:#5e4a30;font-style:italic}.grille-wrap{overflow-x:auto}.grille{border-collapse:collapse;width:100%;font-size:13px}.grille th,.grille td{border-bottom:1px solid #b9a17c88;padding:6px 8px;text-align:left}.grille th{font-weight:600;color:#5e4a30}.grille button{min-height:30px;padding:4px 9px}.grille tr.rayee td:first-child{text-decoration:line-through;color:#8a7351}.grille tr.inconnue td{color:#9a8768;font-style:italic}.indice{border:1px solid #c2a779;border-radius:6px;padding:10px 12px;margin:0 0 10px;background:#f6efe0}.indice .texte{margin:0 0 3px;font-weight:600}.indice .source{margin:0 0 8px;color:#715d43;font-size:12px}.indice label{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:5px 0;font-size:13px}.indice label small{color:#8a7351}.indice select{max-width:52%;min-height:34px;padding:5px 8px}.indice textarea{width:100%;min-height:44px;margin-top:6px;font:13px/1.4 system-ui,sans-serif;border:1px solid #c2a779;border-radius:4px;padding:6px;background:#fffaf0;color:#3c3022}.vide{color:#715d43;font-style:italic}.carnet-note{border-top:1px solid #b9a17c88;padding-top:10px;color:#6c5839;font:13px/1.5 system-ui,sans-serif}button.petit{min-height:30px;padding:4px 9px}@media(max-width:650px){.indice label{flex-direction:column;align-items:stretch}.indice select{max-width:100%}}
-#musique,#bruitages{flex:1.4;min-width:0;width:100%;accent-color:#6b5538;min-height:28px;cursor:pointer}#musique-val,#bruitages-val{flex:none;width:44px;white-space:nowrap;font-size:12px;text-align:right;color:#715d43;font-variant-numeric:tabular-nums}.ouverture{position:fixed;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;padding:16px;overflow:auto;background:radial-gradient(ellipse at center,#1d1a14b0,#0f0d0af2);backdrop-filter:blur(5px) sepia(.35);-webkit-backdrop-filter:blur(5px) sepia(.35)}.ouverture::after{content:"";position:fixed;inset:0;background:#000;opacity:0;pointer-events:none;transition:opacity .7s ease}.ouverture.ouv-noir::after{opacity:1}.ouverture.mode-titre{background:linear-gradient(#0f0d0a40,#0f0d0a08 30%,#0f0d0a60 62%,#0f0d0ae6),url(images/ouverture/fond-menu.webp) center/cover no-repeat #15120e}.ouverture.mode-vide{background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none;pointer-events:none}.ouv-titre-bloc{text-align:center;max-width:620px;margin-top:14vh}.ouv-sur{font:13px/1 system-ui,sans-serif;letter-spacing:.35em;text-transform:uppercase;color:#e3c98f;margin:0 0 14px;text-shadow:0 1px 8px #000}.ouv-titre{font:400 66px/1.05 "Libre Caslon Text",Georgia,serif;margin:0;color:#f6ecd6;letter-spacing:.02em;text-shadow:0 2px 6px #000,0 0 40px #000c}.ouv-sous{font:italic 19px/1.4 Georgia,serif;color:#eadcbc;margin:14px 0 0;text-shadow:0 1px 8px #000}.ouverture button{font:15px/1.3 Georgia,serif;background:#f2e7d1;color:#3c3022;border:1px solid #ae956e;border-radius:5px;padding:11px 16px;min-height:46px;cursor:pointer}.ouverture button:hover{background:#fff4dd}.ouverture button:focus-visible{outline:2px solid #e6c88a;outline-offset:3px}.ouverture button:disabled{opacity:.5;cursor:default}.ouverture button small{display:block;font:13px system-ui,sans-serif;opacity:.75;margin-top:3px}.ouverture button.ouv-grand{display:block;margin:34px auto 8px;min-width:260px;font:22px/1.2 "Libre Caslon Text",Georgia,serif;padding:15px 36px;background:#f1e4c6ee;color:#2a2219;border:1px solid #d4b57a;border-radius:4px;box-shadow:0 8px 34px #000c}.ouverture button.ouv-grand:hover{background:#fff4dd}.ouverture button.ouv-lien{background:none;border:none;min-height:0;padding:6px 4px;font:14px system-ui,sans-serif;color:#eadcbc;text-decoration:underline;text-underline-offset:3px;text-shadow:0 1px 6px #000}.ouv-petits{margin:16px 0 0;color:#bda97f}.ouverture button.ouv-principal{background:#4b3c28;color:#f6ecd6;border-color:#4b3c28}.ouverture button.ouv-principal:hover{background:#5e4b33}.ouv-carte{width:100%;max-width:640px;max-height:calc(100dvh - 32px);overflow:auto;background:linear-gradient(160deg,#efe6d2,#e2d4b6);color:#312920;border:1px solid #9b835b;border-radius:6px;box-shadow:0 20px 90px #000c,inset 0 0 0 6px #e9dfcb,inset 0 0 0 7px #b49a6e;padding:30px 36px;font:16px/1.6 Georgia,serif;text-align:center}.ouv-carte h2{font:400 28px/1.2 "Libre Caslon Text",Georgia,serif;margin:4px 0 14px;color:#2a2219}.ouv-etape{font:11px/1.4 system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#8f7251;margin:0 0 6px}.ouv-tete{display:flex;align-items:center;justify-content:center;gap:16px;margin:6px 0 14px}.ouv-tete h2{margin:0}.ouv-texte{text-align:left}.ouv-texte p{margin:0 0 12px}.ouv-consigne{text-align:left;font:14px/1.5 system-ui,sans-serif;color:#5e4a30;margin:6px 0 16px}.ouv-persos{display:grid;grid-template-columns:1fr 1fr;gap:14px}.ouverture button.ouv-perso{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:16px 14px;background:#f6efe0}.ouv-portrait{position:relative;flex:none;width:96px;height:96px;border-radius:50%;overflow:hidden;background:radial-gradient(circle at 35% 30%,#d9c9a6,#9b835b);border:2px solid #7a6545;display:grid;place-items:center}.ouv-portrait span{font:400 44px "Libre Caslon Text",Georgia,serif;color:#f6ecd6}.ouv-portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.ouv-perso-nom{font:400 20px "Libre Caslon Text",Georgia,serif;color:#2a2219}.ouv-perso-role{font:12px system-ui,sans-serif;color:#8f7251;letter-spacing:.04em}.ouv-perso-texte{font:13px/1.5 system-ui,sans-serif;color:#4a3c2b}.ouv-nav{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:16px;flex-wrap:wrap}.ouv-nav .ouv-principal{margin-left:auto}.ouv-etat{font:12px system-ui,sans-serif;color:#8a7351;margin:10px 0 0;min-height:1em;text-align:right}.ouverture.mode-scene{background:#120f0b;padding:0;overflow:hidden;align-items:flex-end;backdrop-filter:none;-webkit-backdrop-filter:none}.ouv-maison{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 38%,#6a5236,#2a2017 55%,#120d09)}.ouv-maison img{width:100%;height:100%;object-fit:cover}.ouv-bulle{position:relative;width:min(760px,calc(100% - 32px));margin:0 auto max(24px,env(safe-area-inset-bottom));background:#efe6d2f7;color:#2e261c;border:1px solid #9b835b;border-radius:6px;padding:18px 24px;box-shadow:0 10px 50px #000b;font:18px/1.55 Georgia,serif}.ouv-qui{font:12px/1 system-ui,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#8f7251;margin:0 0 8px}.ouv-dit{margin:0}.ouv-pensee .ouv-dit{font-style:italic}.ouv-bulle.ouv-recit{background:#1d1812f0;color:#eadcbc;border-color:#5e4b33;text-align:center;font-style:italic}.ouv-note{font:13px/1.4 system-ui,sans-serif;color:#6c5839;border-top:1px solid #b9a17c88;padding-top:8px;margin:10px 0 0}#speech button.suite{display:block;margin:4px 0 12px auto;min-height:36px;padding:6px 16px}#dialogue .vn-portrait{display:none}#dialogue.avec-portrait{overflow:visible;margin:auto auto max(16px,env(safe-area-inset-bottom))}#dialogue.avec-portrait .vn-portrait{display:block;position:absolute;bottom:calc(100% - 8px);left:14px;height:min(34dvh,300px);width:auto;max-width:70%;object-fit:contain;object-position:left bottom;pointer-events:none;filter:drop-shadow(0 6px 14px #0009)}#dialogue.avec-portrait #speech{max-height:40dvh;overflow:auto}.ouv-bulle .vn-portrait{position:absolute;bottom:calc(100% - 8px);left:14px;height:min(42dvh,380px);width:auto;max-width:70%;object-fit:contain;object-position:left bottom;pointer-events:none;filter:drop-shadow(0 6px 14px #0009)}#speech strong,.ouv-dit strong,.ouv-texte strong,.indice .texte strong,.ouv-perso-texte strong{font-weight:700;color:#3a2410}.ouv-bulle.ouv-recit .ouv-dit strong{color:#f3e2bd}.ouv-credits{text-align:left;font:13px/1.5 system-ui,sans-serif;margin:0}.ouv-credits dt{font:italic 16px Georgia,serif;color:#5e4a30;margin-top:12px}.ouv-credits dd{margin:2px 0 0}@media(max-width:650px){.ouv-carte{padding:22px 18px;font-size:15px}.ouv-carte h2{font-size:23px}.ouv-titre{font-size:42px}.ouv-sous{font-size:16px}.ouv-titre-bloc{margin-top:auto;margin-bottom:6vh}.ouverture button.ouv-grand{min-width:220px;font-size:20px}.ouv-persos{grid-template-columns:1fr}.ouverture button.ouv-perso{flex-direction:row;flex-wrap:wrap;text-align:left;justify-content:flex-start}.ouv-portrait{width:64px;height:64px}.ouv-portrait span{font-size:30px}.ouv-perso-texte{flex-basis:100%}.ouv-bulle{font-size:16px;padding:16px 18px}}@media(max-width:650px){.identity{left:10px;top:10px;padding:8px 10px;max-width:calc(100vw - 146px)}.identity h1{font-size:16px}.identity h1 span{font-size:11px}.identity #location{font-size:11px;margin:3px 0 5px}.clockline{display:block;font-size:10px}#period{display:none}.nav{right:10px;top:10px;gap:5px}.nav button{font-size:11px;padding:9px 10px;min-height:37px}.toast{font-size:11px}.action{font-size:11px;padding:9px 11px}#menu{right:10px;top:10px;max-height:calc(100dvh - 20px);max-width:calc(100vw - 20px);padding:20px}dialog{padding:22px}.clockline{max-width:160px}}
+#musique,#bruitages{flex:1.4;min-width:0;width:100%;accent-color:#6b5538;min-height:28px;cursor:pointer}#musique-val,#bruitages-val{flex:none;width:44px;white-space:nowrap;font-size:12px;text-align:right;color:#715d43;font-variant-numeric:tabular-nums}.ouverture{position:fixed;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;padding:16px;overflow:auto;background:radial-gradient(ellipse at center,#1d1a14b0,#0f0d0af2);backdrop-filter:blur(5px) sepia(.35);-webkit-backdrop-filter:blur(5px) sepia(.35)}.ouverture::after{content:"";position:fixed;inset:0;background:#000;opacity:0;pointer-events:none;transition:opacity .7s ease}.ouverture.ouv-noir::after{opacity:1}.ouverture.mode-titre{background:linear-gradient(#0f0d0a40,#0f0d0a08 30%,#0f0d0a60 62%,#0f0d0ae6),url(images/ouverture/fond-menu.webp) center/cover no-repeat #15120e}.ouverture.mode-vide{background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none;pointer-events:none}.ouv-titre-bloc{text-align:center;max-width:620px;margin-top:14vh}.ouv-sur{font:13px/1 system-ui,sans-serif;letter-spacing:.35em;text-transform:uppercase;color:#e3c98f;margin:0 0 14px;text-shadow:0 1px 8px #000}.ouv-titre{font:400 66px/1.05 "Libre Caslon Text",Georgia,serif;margin:0;color:#f6ecd6;letter-spacing:.02em;text-shadow:0 2px 6px #000,0 0 40px #000c}.ouv-sous{font:italic 19px/1.4 Georgia,serif;color:#eadcbc;margin:14px 0 0;text-shadow:0 1px 8px #000}.ouverture button{font:15px/1.3 Georgia,serif;background:#f2e7d1;color:#3c3022;border:1px solid #ae956e;border-radius:5px;padding:11px 16px;min-height:46px;cursor:pointer}.ouverture button:hover{background:#fff4dd}.ouverture button:focus-visible{outline:2px solid #e6c88a;outline-offset:3px}.ouverture button:disabled{opacity:.5;cursor:default}.ouverture button small{display:block;font:13px system-ui,sans-serif;opacity:.75;margin-top:3px}.ouverture button.ouv-grand{display:block;margin:34px auto 8px;min-width:260px;font:22px/1.2 "Libre Caslon Text",Georgia,serif;padding:15px 36px;background:#f1e4c6ee;color:#2a2219;border:1px solid #d4b57a;border-radius:4px;box-shadow:0 8px 34px #000c}.ouverture button.ouv-grand:hover{background:#fff4dd}.ouverture button.ouv-lien{background:none;border:none;min-height:0;padding:6px 4px;font:14px system-ui,sans-serif;color:#eadcbc;text-decoration:underline;text-underline-offset:3px;text-shadow:0 1px 6px #000}.ouv-petits{margin:16px 0 0;color:#bda97f}.ouverture button.ouv-principal{background:#4b3c28;color:#f6ecd6;border-color:#4b3c28}.ouverture button.ouv-principal:hover{background:#5e4b33}.ouv-carte{width:100%;max-width:640px;max-height:calc(100dvh - 32px);overflow:auto;background:linear-gradient(160deg,#efe6d2,#e2d4b6);color:#312920;border:1px solid #9b835b;border-radius:6px;box-shadow:0 20px 90px #000c,inset 0 0 0 6px #e9dfcb,inset 0 0 0 7px #b49a6e;padding:30px 36px;font:16px/1.6 Georgia,serif;text-align:center}.ouv-carte h2{font:400 28px/1.2 "Libre Caslon Text",Georgia,serif;margin:4px 0 14px;color:#2a2219}.ouv-etape{font:11px/1.4 system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#8f7251;margin:0 0 6px}.ouv-tete{display:flex;align-items:center;justify-content:center;gap:16px;margin:6px 0 14px}.ouv-tete h2{margin:0}.ouv-texte{text-align:left}.ouv-texte p{margin:0 0 12px}.ouv-consigne{text-align:left;font:14px/1.5 system-ui,sans-serif;color:#5e4a30;margin:6px 0 16px}.ouv-persos{display:grid;grid-template-columns:1fr 1fr;gap:14px}.ouverture button.ouv-perso{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:16px 14px;background:#f6efe0}.ouv-portrait{position:relative;flex:none;width:96px;height:96px;border-radius:50%;overflow:hidden;background:radial-gradient(circle at 35% 30%,#d9c9a6,#9b835b);border:2px solid #7a6545;display:grid;place-items:center}.ouv-portrait span{font:400 44px "Libre Caslon Text",Georgia,serif;color:#f6ecd6}.ouv-portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.ouv-perso-nom{font:400 20px "Libre Caslon Text",Georgia,serif;color:#2a2219}.ouv-perso-role{font:12px system-ui,sans-serif;color:#8f7251;letter-spacing:.04em}.ouv-perso-texte{font:13px/1.5 system-ui,sans-serif;color:#4a3c2b}.ouv-nav{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:16px;flex-wrap:wrap}.ouv-nav .ouv-principal{margin-left:auto}.ouv-etat{font:12px system-ui,sans-serif;color:#8a7351;margin:10px 0 0;min-height:1em;text-align:right}.ouverture.mode-scene{background:#120f0b;padding:0;overflow:hidden;align-items:flex-end;backdrop-filter:none;-webkit-backdrop-filter:none}.ouv-maison{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 38%,#6a5236,#2a2017 55%,#120d09)}.ouv-maison img{width:100%;height:100%;object-fit:cover}.ouv-bulle{position:relative;width:min(760px,calc(100% - 32px));margin:0 auto max(24px,env(safe-area-inset-bottom));background:#efe6d2f7;color:#2e261c;border:1px solid #9b835b;border-radius:6px;padding:18px 24px;box-shadow:0 10px 50px #000b;font:18px/1.55 Georgia,serif}.ouv-qui{font:12px/1 system-ui,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#8f7251;margin:0 0 8px}.ouv-dit{margin:0}.ouv-pensee .ouv-dit{font-style:italic}.ouv-bulle.ouv-recit{background:#1d1812f0;color:#eadcbc;border-color:#5e4b33;text-align:center;font-style:italic}.ouv-note{font:13px/1.4 system-ui,sans-serif;color:#6c5839;border-top:1px solid #b9a17c88;padding-top:8px;margin:10px 0 0}#speech button.suite{display:block;margin:4px 0 12px auto;min-height:36px;padding:6px 16px}#dialogue .vn-portrait{display:none}#dialogue.avec-portrait{overflow:visible;margin:auto auto max(16px,env(safe-area-inset-bottom))}#dialogue.avec-portrait .vn-portrait{display:block;position:absolute;bottom:calc(100% - 8px);left:14px;height:min(34dvh,300px);width:auto;max-width:70%;object-fit:contain;object-position:left bottom;pointer-events:none;filter:drop-shadow(0 6px 14px #0009)}#dialogue.avec-portrait #speech{max-height:40dvh;overflow:auto}.ouv-bulle .vn-portrait{position:absolute;bottom:calc(100% - 8px);left:14px;height:min(42dvh,380px);width:auto;max-width:70%;object-fit:contain;object-position:left bottom;pointer-events:none;filter:drop-shadow(0 6px 14px #0009)}#speech strong,.ouv-dit strong,.ouv-texte strong,.indice .texte strong,.ouv-perso-texte strong{font-weight:700;color:#3a2410}.ouv-bulle.ouv-recit .ouv-dit strong{color:#f3e2bd}#speech .phrase,#carnet .phrase{cursor:pointer;border-radius:3px;padding:0 1px;transition:background .15s}#speech .phrase:hover,#carnet .phrase:hover,#speech .phrase:focus-visible{background:#ead9b2;outline:none}#speech .phrase.prise,#carnet .phrase.prise{background:#f1d88f;box-shadow:inset 0 -2px 0 #b8892a}#speech .astuce{font:12px/1.4 system-ui,sans-serif;color:#7a6545;background:#f4ecda;border-left:3px solid #b8892a;padding:6px 10px;margin:0 0 12px}.indice .question{font:13px/1.4 system-ui,sans-serif;color:#5e4a30;margin:8px 0 4px}.pastilles{display:flex;flex-wrap:wrap;gap:6px}#carnet button.pastille{min-height:32px;padding:4px 11px;border-radius:16px;font:12px system-ui,sans-serif}#carnet button.pastille.pour{background:#dfe8cf;border-color:#6d8a4a;color:#2f4a19;font-weight:600}#carnet button.pastille.contre{background:#f2d7cc;border-color:#a1503a;color:#6a2a18;font-weight:600}#carnet button.pastille.fiab.choisie{background:#6c5839;color:#fff4dd;border-color:#6c5839}#carnet button.retirer{margin-top:10px;font:12px system-ui,sans-serif}#carnet .aide{font:13px/1.4 system-ui,sans-serif;color:#715d43;margin:0 0 8px}#carnet-conversations details{border-bottom:1px solid #d3bf98;padding:4px 0}#carnet-conversations summary{font:13px system-ui,sans-serif;color:#5e4a30;padding:6px 0}#carnet-conversations p{font-size:14px;margin:6px 0 8px}.methode summary{cursor:pointer;list-style:none}.methode summary::-webkit-details-marker{display:none}.methode summary h3{display:inline}.methode summary::after{content:" ▾";color:#8f7251}.methode:not([open]) summary::after{content:" ▸ (toucher pour relire)";font:12px system-ui,sans-serif}@media(max-width:650px){#carnet .fermer{float:none;display:block;margin:0 0 10px auto}}.ouv-credits{text-align:left;font:13px/1.5 system-ui,sans-serif;margin:0}.ouv-credits dt{font:italic 16px Georgia,serif;color:#5e4a30;margin-top:12px}.ouv-credits dd{margin:2px 0 0}@media(max-width:650px){.ouv-carte{padding:22px 18px;font-size:15px}.ouv-carte h2{font-size:23px}.ouv-titre{font-size:42px}.ouv-sous{font-size:16px}.ouv-titre-bloc{margin-top:auto;margin-bottom:6vh}.ouverture button.ouv-grand{min-width:220px;font-size:20px}.ouv-persos{grid-template-columns:1fr}.ouverture button.ouv-perso{flex-direction:row;flex-wrap:wrap;text-align:left;justify-content:flex-start}.ouv-portrait{width:64px;height:64px}.ouv-portrait span{font-size:30px}.ouv-perso-texte{flex-basis:100%}.ouv-bulle{font-size:16px;padding:16px 18px}}@media(max-width:650px){.identity{left:10px;top:10px;padding:8px 10px;max-width:calc(100vw - 146px)}.identity h1{font-size:16px}.identity h1 span{font-size:11px}.identity #location{font-size:11px;margin:3px 0 5px}.clockline{display:block;font-size:10px}#period{display:none}.nav{right:10px;top:10px;gap:5px}.nav button{font-size:11px;padding:9px 10px;min-height:37px}.toast{font-size:11px}.action{font-size:11px;padding:9px 11px}#menu{right:10px;top:10px;max-height:calc(100dvh - 20px);max-width:calc(100vw - 20px);padding:20px}dialog{padding:22px}.clockline{max-width:160px}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}.plate{backdrop-filter:none}}
 #startup-retry{position:absolute;left:50%;bottom:92px;transform:translateX(-50%)}#status{overflow-wrap:anywhere}noscript .nojs{position:fixed;z-index:10;left:10%;right:10%;top:40%;padding:24px;background:#eadfc8;color:#312920;border:1px solid #947c54}
 
@@ -123,7 +123,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 <div class="hud"><section class="identity plate" aria-label="Lieu et heure"><h1>SOHO <span>· 1854</span></h1><div id="location">Broad Street</div><div class="clockline"><span id="clock">Vendredi 1 septembre · 08 h 00</span><span id="period">Le matin</span></div></section><nav class="nav" aria-label="Menu du jeu"><button id="carnet-button" aria-haspopup="dialog" title="Ouvrir le carnet (touche C)">Carnet (0)</button><button id="menu-button" aria-haspopup="dialog">⚙ Paramètres</button></nav><button id="startup-retry" hidden>Réessayer le chargement</button><p id="status" class="toast plate" role="status">Chargement du quartier…</p><button id="action" class="action" hidden><kbd>Espace</kbd><span><small>Interagir</small><span id="nearby"></span></span></button><div id="dpad" class="dpad" aria-label="Commandes tactiles"><button data-dir="0,-1" aria-label="Monter">↑</button><button data-dir="-1,0" aria-label="Aller à gauche">←</button><button data-dir="0,1" aria-label="Descendre">↓</button><button data-dir="1,0" aria-label="Aller à droite">→</button></div></div>
 <div id="ouverture" class="ouverture" role="dialog" aria-modal="true" aria-label="Choléra à Soho" hidden></div>
 <dialog id="menu" aria-labelledby="menu-title"><header class="menuhead"><div><div class="badge">La marche est en pause</div><h2 id="menu-title">Paramètres</h2></div><button id="menu-close" aria-label="Fermer le menu">×</button></header><div class="group-title">Laisser passer le temps</div><div class="row buttons"><button id="wait">Attendre 30 min</button><button id="wait2">+ 2 heures</button></div><div class="row"><label for="until">Attendre jusqu'à</label><select id="until"><option value="">Choisir…</option><option value="6">06 h</option><option value="8">08 h</option><option value="12">12 h</option><option value="18">18 h</option><option value="19">19 h</option><option value="21">21 h</option><option value="23">23 h</option></select></div><section class="group"><div class="group-title">Son</div><div class="row"><label for="musique">Musique</label><input type="range" id="musique" min="0" max="100" step="5" value="35"><output id="musique-val" for="musique">35 %</output></div><div class="row"><label for="bruitages">Bruitages</label><input type="range" id="bruitages" min="0" max="100" step="5" value="50"><output id="bruitages-val" for="bruitages">50 %</output></div><p class="fine">Une musique le jour, une autre la nuit (de 20 h à 6 h), et des bruits du quartier de temps en temps. Le son démarre au premier geste.</p></section><section class="group"><div class="group-title">Vue et ambiance</div><div class="row"><label for="zoom">Distance de la caméra</label><select id="zoom"><option value="1.1" selected>Rapprochée · ×1,1</option><option value="1.25">Très rapprochée · ×1,25</option><option value="1">Échelle ×1</option><option value="0.95">Plus large · ×0,95</option><option value="0.75">Très large · ×0,75</option></select></div><div class="row buttons"><button id="map" aria-pressed="false">Quartier</button></div><p class="fine">Les vues larges affichent davantage de décor. La vue rapprochée est conseillée pour explorer.</p><div class="row"><label for="frame-rate">Animations</label><select id="frame-rate"><option value="60" selected>Fluides</option><option value="30">Économes</option></select></div><label class="check" for="atmosphere">Brumes et fumées<input id="atmosphere" type="checkbox" checked></label><label class="check" for="weather-motion">Animer brumes et nuages<input id="weather-motion" type="checkbox" checked></label><label class="check" for="touch-controls">Afficher les flèches tactiles<input id="touch-controls" type="checkbox"></label><label class="check" for="all-markers">Repérer tous les témoins<input id="all-markers" type="checkbox"></label><div class="row buttons"><button id="fullscreen">Plein écran</button><button id="labels" aria-pressed="false">Noms des lieux</button></div></section><section class="group"><details><summary>Comment explorer ?</summary><p>Cliquez sur les pavés pour marcher, ou sur un témoin pour le rejoindre. Les flèches et ZQSD permettent aussi de se déplacer. Espace permet de parler. Votre personnage porte une écharpe rouge.</p><p>Le temps avance avec vos pas ou quand vous attendez. Les témoins suivent leurs horaires ; leurs trajets de promenade restent ceux d'une démonstration. Les repères des témoins apparaissent à proximité ; le menu permet de tous les afficher. Les intérieurs seront préparés dans une prochaine étape.</p></details><details id="schedule"><summary>Les témoins du quartier</summary><ul id="witnesses"></ul></details><details><summary>Réglages de vérification</summary><div class="row buttons"><button id="debug" aria-pressed="false">Voir les passages</button><button id="reset">Recommencer</button></div><p class="fine">Les contours verts montrent le sol praticable. Le quartier complet est disponible. Les contours montrent tout le sol praticable. Les intérieurs seront préparés ensuite.</p></details></section><section class="group"><div class="row buttons"><button id="retour-titre">Revenir à l’écran titre</button></div><p class="fine">Votre enquête est gardée : choisissez « Continuer l’enquête » pour la reprendre.</p></section></dialog>
-<dialog id="carnet" aria-labelledby="carnet-titre"><div class="badge">Votre carnet d’enquête</div><button id="carnet-close" class="fermer">Reprendre la marche</button><h2 id="carnet-titre">Carnet d’enquête</h2><section class="methode"><h3>La méthode du docteur Snow</h3><ol><li><strong>Recueillir</strong> : parlez aux habitants, notez ce qu’ils ont vu.</li><li><strong>Classer</strong> : pour chaque indice, dites quelle explication il soutient et laquelle il affaiblit.</li><li><strong>Juger</strong> : un fait vu de ses yeux vaut plus qu’une rumeur.</li><li><strong>Conclure</strong> : rayez les explications que les faits contredisent.</li></ol><p class="reussite">Vous avez réussi quand une seule explication tient debout, appuyée sur plusieurs indices fiables.</p></section><h3>Les explications possibles</h3><div class="grille-wrap"><table class="grille"><thead><tr><th>Explication</th><th>Indices pour</th><th>Indices contre</th><th></th></tr></thead><tbody id="grille-corps"></tbody></table></div><h3>Les indices</h3><div id="carnet-indices"></div><p class="fine"><button id="carnet-reset" class="petit">Effacer le carnet</button> Le carnet est gardé dans ce navigateur.</p></dialog><dialog id="dialogue" aria-labelledby="speaker"><div class="badge">Un témoignage de l'enquête</div><h2 id="speaker"></h2><div id="speech"></div><button id="close">Reprendre la marche</button></dialog>
+<dialog id="carnet" aria-labelledby="carnet-titre"><div class="badge">Votre carnet d’enquête</div><button id="carnet-close" class="fermer">Reprendre la marche</button><h2 id="carnet-titre">Carnet d’enquête</h2><details class="methode" id="carnet-methode"><summary><h3>La méthode du docteur Snow</h3></summary><ol><li><strong>Recueillir</strong> : pendant une conversation, touchez une phrase importante. Elle est copiée ici.</li><li><strong>Classer</strong> : pour chaque extrait, touchez l’explication qu’il accuse (+). Touchez encore s’il la disculpe (−).</li><li><strong>Juger</strong> : dites si vous l’avez vu vous-même, si un témoin l’a vu, ou si ce n’est qu’une rumeur.</li><li><strong>Conclure</strong> : rayez les explications que des extraits fiables contredisent.</li></ol><p class="reussite">Vous avez réussi quand une seule explication tient debout, appuyée sur plusieurs extraits fiables.</p></details><h3>Les explications possibles</h3><div class="grille-wrap"><table class="grille"><thead><tr><th>Explication</th><th>Extraits pour</th><th>Extraits contre</th><th></th></tr></thead><tbody id="grille-corps"></tbody></table></div><h3>Mes extraits</h3><div id="carnet-indices"></div><p class="fine"><button id="carnet-reset" class="petit">Effacer le carnet</button> Le carnet est gardé dans ce navigateur.</p></dialog><dialog id="dialogue" aria-labelledby="speaker"><div class="badge">Un témoignage de l'enquête</div><h2 id="speaker"></h2><div id="speech"></div><button id="close">Reprendre la marche</button></dialog>
 <noscript><div class="nojs">Le jeu a besoin de JavaScript pour démarrer. Ouvrez ce fichier dans un navigateur qui autorise JavaScript.</div></noscript>
 <script data-soho="startup">
 /* Installed before any game script: a failed bootstrap must stay visible. */
@@ -2462,10 +2462,60 @@ function rumeurPour(p){
  return possibles[((p._index || 0) * 7 + j * 3) % possibles.length];
 }
 
-const carnet = {indices:[], connues:{}, rayees:{}, notes:'', vus:{}, methodeVue:false};
-const CLE = 'soho1854-carnet';
+// ---------- le carnet : ce qu'on garde ----------
+// Depuis le 21 oct., l'élève choisit lui-même ce qu'il note : il touche une phrase dans une conversation,
+// et elle est copiée dans son carnet. Le jeu ne montre jamais quelles phrases comptent.
+// En secret, une phrase qui contient une « clé » ci-dessous est reliée à un indice de ENQUETE (pour la note finale).
+const CLES = {
+ particules:['toutes petites particules blanches'],
+ nuit:['tout ça en même temps'],
+ fosses:['ça suinte à travers les murs', 'certaines fosses débordent'],
+ vidangeur:['je respire ça toutes les nuits'],
+ entasses:['une famille par pièce', 'une seule fosse pour tout le monde'],
+ bebe:['un bébé malade depuis plusieurs jours', 'sa mère lave ses langes'],
+ brewer:['personne n’est malade'],
+ riches:['un monsieur très bien habillé est mort'],
+ preferee:['tout le monde la préfère', 'certains viennent même de loin'],
+ 'accuse-air':['moi, je crois que c’est l’air'],
+ brasserie:['aucun n’est gravement malade'],
+ biere:['la brasserie a son propre puits', 'ils ne boivent jamais d’eau'],
+ capsules:['dix-huit de mes ouvriers sont morts', 'deux grands bacs remplis d’eau de la pompe'],
+ odeur:['mais elle sentait mauvais'],
+ servante:['elle est tombée malade vendredi'],
+ hospice:['seuls cinq sont morts', 'l’hospice a son propre puits'],
+ ecoliers:['ils s’arrêtent boire à la pompe'],
+ marlborough:['beaucoup de gens l’évitent', 'on fait le chemin jusqu’à broad street'],
+ pauvres:['ce sont les pauvres qui meurent'],
+ cafe:['neuf de mes clients sont morts', 'je donne un verre d’eau de la pompe'],
+ alcools:['le gin, on le coupe avec de l’eau'],
+ fruits:['ce sont les fruits'],
+ soignante:['une femme qui soignait une malade'],
+ reverend:['j’en ai bu moi-même'],
+ fosse:['une vieille fosse'],
+};
+const normaliser = t => String(t).toLowerCase().replace(/[’']/g, '’').replace(/\s+/g, ' ').trim();
+function indiceDe(phrase){
+ const p = normaliser(phrase);
+ for (const id in CLES) if (CLES[id].some(c => p.includes(normaliser(c)))) return id;
+ return null;
+}
+const carnet = {indices:[], conversations:[], connues:{}, rayees:{}, vus:{}, astuceVue:false};
+const CLE = 'soho1854-carnet-v2';
 try { const s = JSON.parse(localStorage.getItem(CLE) || 'null'); if (s && Array.isArray(s.indices)) Object.assign(carnet, s); } catch {}
 const sauver = () => { try { localStorage.setItem(CLE, JSON.stringify(carnet)); } catch {} };
+const quandMaintenant = () => { const m = state.minutes, j = Math.max(0, Math.floor(m / 1440)), h = ((m % 1440) + 1440) % 1440;
+ return ['vendredi', 'samedi', 'dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi'][Math.min(6, j)] + ', ' + String(Math.floor(h / 60)).padStart(2, '0') + ' h ' + String(h % 60).padStart(2, '0'); };
+
+
+// ---------- les messages en bas de l'écran ----------
+// Jeremy (21 oct.) : les messages techniques du moteur perturbent les élèves. On ne garde que la voix intérieure
+// du personnage (entre guillemets) et les erreurs de chargement.
+const sayOriginal = say;
+say = function(texte){
+ const t = String(texte || '');
+ if (t.startsWith('«') || /pas pu démarrer|Réessayez/.test(t)) return sayOriginal(t);
+ ui('status').hidden = true;   // un message bloqué efface aussi l'ancien (par exemple celui du chargement)
+};
 
 // ---------- le coût du temps ----------
 // Marcher : 1 minute pour 40 unités du monde (traverser le quartier, environ 3000 unités, prend une heure).
@@ -2481,12 +2531,42 @@ step = function(dt){
 };
 
 // ---------- les dialogues ----------
+// Chaque phrase se touche : elle est copiée dans le carnet (ou retirée si on la touche encore).
+// Toutes les phrases se ressemblent : rien ne signale celles qui comptent.
+const decouper = t => String(t).split(/(?<=[.!?…»])\s+(?=[«A-ZÀ-ÖØ-Þ])/u).filter(Boolean);
+const cleExtrait = (source, phrase) => source + '|' + normaliser(phrase);
+function basculerExtrait(phrase, ctx, el){
+ const k = cleExtrait(ctx.source, phrase), i = carnet.indices.findIndex(x => x.k === k);
+ if (i >= 0){ carnet.indices.splice(i, 1); if (el) el.classList.remove('prise'); say('Phrase retirée du carnet.'); }
+ else {
+  carnet.indices.push({k, t:phrase, qui:ctx.qui, quand:ctx.quand, source:ctx.source, indice:indiceDe(phrase), pour:[], contre:[], fiab:''});
+  if (el) el.classList.add('prise');
+  const M = window.SOHO_MUSIQUE; if (M && M.demarree() && M.ECRITURE) M.jouerBruit(M.ECRITURE);
+ }
+ carnet.astuceVue = true; sauver(); majBoutonCarnet();
+ if (ui('carnet').open){ dessinerExtraits(); dessinerGrille(); }
+}
+function paragrapheCliquable(texte, ctx){
+ const el = document.createElement('p'); el.className = 'cliquable';
+ decouper(texte).forEach((ph, i) => {
+  if (i) el.append(' ');
+  const s = document.createElement('span'); s.className = 'phrase'; s.tabIndex = 0; s.setAttribute('role', 'button');
+  s.innerHTML = enGras(ph);
+  if (carnet.indices.some(x => x.k === cleExtrait(ctx.source, ph))) s.classList.add('prise');
+  s.onclick = () => basculerExtrait(ph, ctx, s);
+  s.onkeydown = e => { if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); basculerExtrait(ph, ctx, s); } };
+  el.append(s);
+ });
+ return el;
+}
 // Une bulle à la fois : le bouton « Suite » ajoute la bulle suivante sous les précédentes.
-function afficherRepliques(lignes, fin){
+function afficherRepliques(lignes, fin, ctx){
  const zone = ui('speech'); zone.replaceChildren();
+ if (ctx && !carnet.astuceVue){ const a = document.createElement('p'); a.className = 'astuce'; a.textContent = 'Astuce : touchez une phrase importante pour la copier dans votre carnet.'; zone.append(a); }
  let n = 0;
  const montrer = () => {
-  const el = document.createElement('p'); el.innerHTML = enGras(lignes[n]); zone.append(el);
+  const el = ctx ? paragrapheCliquable(lignes[n], ctx) : Object.assign(document.createElement('p'), {innerHTML:enGras(lignes[n])});
+  zone.append(el);
   if (n < lignes.length - 1){
    const b = document.createElement('button'); b.className = 'suite'; b.textContent = 'Suite';
    b.onclick = () => { b.remove(); n++; montrer(); };
@@ -2496,38 +2576,44 @@ function afficherRepliques(lignes, fin){
  };
  montrer();
 }
-function noter(e, cle, cout){
- let nouveaux = 0;
- for (const ind of e.indices || []) if (!carnet.indices.some(i => i.id === ind.id)){
-  carnet.indices.push({id:ind.id, t:ind.t, s:ind.s, pour:'', contre:'', fiab:'', note:''}); nouveaux++; }
+// Une conversation lue jusqu'au bout est gardée dans le carnet : l'élève peut la relire et y choisir des phrases plus tard.
+function garderConversation(ctx, lignes){
+ const k = ctx.source + '|' + lignes.join(' ').slice(0, 60);
+ carnet.conversations = carnet.conversations.filter(c => c.k !== k);
+ carnet.conversations.push({k, qui:ctx.qui, quand:ctx.quand, source:ctx.source, lignes});
+ if (carnet.conversations.length > 60) carnet.conversations.shift();
+}
+// À la fin de la lecture : l'explication défendue entre dans la grille, et la conversation coûte son temps.
+function finDeLecture(e, cle, cout, ctx, lignes){
  const decouverte = e.defend && !carnet.connues[e.defend];
  if (e.defend) carnet.connues[e.defend] = true;
  if (!carnet.vus[cle]){ carnet.vus[cle] = true; state.minutes += cout; updateClock(true); }
+ if (ctx) garderConversation(ctx, lignes);
  sauver(); majBoutonCarnet();
- if (!nouveaux && !decouverte) return null;
- return () => {
+ if (decouverte){
   const el = document.createElement('p'); el.className = 'carnet-note';
-  el.textContent = (nouveaux ? (nouveaux > 1 ? nouveaux + ' indices notés' : 'Un indice noté') + ' dans votre carnet (critère B iii : recueillir des informations).' : '')
-    + (decouverte ? (nouveaux ? ' ' : '') + 'Nouvelle explication dans la grille : ' + EXPLICATIONS.find(x => x.id === e.defend).nom + '.' : '');
+  el.textContent = 'Nouvelle explication dans la grille du carnet : ' + EXPLICATIONS.find(x => x.id === e.defend).nom + '.';
   ui('speech').append(el);
- };
+ }
 }
 const talkOriginal = talk;
 talk = function(p){
  if (!talkOriginal(p)) return false;
  const h = ((state.minutes % 1440) + 1440) % 1440 / 60, jour = Math.floor(state.minutes / 1440);
  if (p.ambient){
-  const r = rumeurPour(p);
-  ui('speaker').textContent = NOM_PASSANT[p.type] || 'Un passant';
+  const r = rumeurPour(p), qui = NOM_PASSANT[p.type] || 'Un passant';
+  ui('speaker').textContent = qui;
   if (!r){ afficherRepliques(['La personne presse le pas sans vous répondre.']); return true; }
-  afficherRepliques([r.l], () => { const f = noter({defend:r.d, indices:[]}, p.id + ':' + jour, 5); if (f) f(); });
+  const ctx = {qui, quand:quandMaintenant(), source:p.id + ':' + jour};
+  afficherRepliques([r.l], () => finDeLecture({defend:r.d}, p.id + ':' + jour, 5, ctx, [r.l]), ctx);
   return true;
  }
  const e0 = ENQUETE[p.id];
  if (e0){
   const e = e0.matin && h < 12 ? Object.assign({}, e0, e0.matin) : e0;
-  // Rien n'est noté tant que le joueur n'a pas lu la dernière bulle.
-  afficherRepliques(e.lignes, () => { const f = noter(e, p.id + (e0.matin && h < 12 ? ':matin' : ''), Number(p.cout) || 15); if (f) f(); });
+  const ctx = {qui:p.nom, quand:quandMaintenant(), source:p.id};
+  // Le temps et l'explication ne comptent qu'une fois la dernière bulle lue.
+  afficherRepliques(e.lignes, () => finDeLecture(e, p.id + (e0.matin && h < 12 ? ':matin' : ''), Number(p.cout) || 15, ctx, e.lignes), ctx);
  }
  return true;
 };
@@ -2541,55 +2627,83 @@ markerOpacity = function(a){
 };
 
 // ---------- le carnet ----------
-const choix = (nom, valeur, options, onChange) => {
- const sel = document.createElement('select'); sel.setAttribute('aria-label', nom);
- sel.append(new Option('Choisir…', ''));
- for (const o of options) sel.append(new Option(o.nom, o.id));
- sel.value = valeur || ''; sel.onchange = () => onChange(sel.value); return sel;
-};
+// Pour chaque extrait, deux gestes seulement, en touchant des pastilles :
+// 1. chaque explication connue : un toucher = « accuse » (+), deux = « disculpe » (−), trois = rien ;
+// 2. la fiabilité : vu moi-même, un témoin l'a vu, une opinion ou une rumeur.
 function majBoutonCarnet(){ const b = ui('carnet-button'); if (b) b.textContent = 'Carnet (' + carnet.indices.length + ')'; }
-function dessinerCarnet(){
+const bouton = (texte, classe, action, titre) => { const b = document.createElement('button'); b.type = 'button'; b.className = classe; b.textContent = texte; if (titre) b.title = titre; b.onclick = action; return b; };
+function dessinerCarnet(){ dessinerExtraits(); dessinerConversations(); dessinerGrille(); }
+function dessinerExtraits(){
  const connues = EXPLICATIONS.filter(x => carnet.connues[x.id]);
- // les indices
  const liste = ui('carnet-indices'); liste.replaceChildren();
- if (!carnet.indices.length){ const p = document.createElement('p'); p.className = 'vide'; p.textContent = 'Aucun indice pour l’instant. Parlez aux habitants et examinez la pompe.'; liste.append(p); }
- carnet.indices.forEach((ind, n) => {
+ if (!carnet.indices.length){
+  const p = document.createElement('p'); p.className = 'vide';
+  p.textContent = 'Votre carnet est vide. Pendant une conversation, touchez une phrase qui vous semble importante : elle sera copiée ici.';
+  liste.append(p);
+ }
+ carnet.indices.forEach((ex, n) => {
   const art = document.createElement('article'); art.className = 'indice';
-  const h = document.createElement('p'); h.className = 'texte'; h.innerHTML = (n + 1) + '. ' + enGras(ind.t);
-  const s = document.createElement('p'); s.className = 'source'; s.textContent = 'Source : ' + ind.s;
-  const q1 = document.createElement('label'); q1.textContent = 'Quelle explication cet indice soutient-il ?';
-  q1.append(choix('Explication soutenue', ind.pour, [...connues, {id:'aucune', nom:'Aucune'}], v => { ind.pour = v; sauver(); dessinerGrille(); }));
-  const q2 = document.createElement('label'); q2.textContent = 'Quelle explication affaiblit-il ?';
-  q2.append(choix('Explication affaiblie', ind.contre, [...connues, {id:'aucune', nom:'Aucune'}], v => { ind.contre = v; sauver(); dessinerGrille(); }));
-  const q3 = document.createElement('label'); q3.innerHTML = 'Peut-on s’y fier ? <small>(critère D iii : juger une source)</small>';
-  q3.append(choix('Fiabilité', ind.fiab, FIABILITE, v => { ind.fiab = v; sauver(); dessinerGrille(); }));
-  const note = document.createElement('textarea'); note.placeholder = 'Mes notes : que faudrait-il vérifier ?'; note.value = ind.note || '';
-  note.oninput = () => { ind.note = note.value; sauver(); };
-  art.append(h, s, q1, q2, q3, note); liste.append(art);
+  const q = document.createElement('p'); q.className = 'texte'; q.innerHTML = '« ' + enGras(ex.t) + ' »';
+  const s = document.createElement('p'); s.className = 'source'; s.textContent = ex.qui + ' · ' + ex.quand;
+  const l1 = document.createElement('p'); l1.className = 'question';
+  l1.textContent = connues.length ? 'Cet extrait accuse (+) ou disculpe (−) quelle explication ?' : 'Aucune explication entendue pour l’instant : écoutez les habitants.';
+  const p1 = document.createElement('div'); p1.className = 'pastilles';
+  for (const x of connues){
+   const etat = ex.pour.includes(x.id) ? 'pour' : ex.contre.includes(x.id) ? 'contre' : '';
+   p1.append(bouton((etat === 'pour' ? '+ ' : etat === 'contre' ? '− ' : '') + x.nom, 'pastille ' + etat, () => {
+    ex.pour = ex.pour.filter(i => i !== x.id); ex.contre = ex.contre.filter(i => i !== x.id);
+    if (etat === '') ex.pour.push(x.id); else if (etat === 'pour') ex.contre.push(x.id);
+    sauver(); dessinerExtraits(); dessinerGrille();
+   }, 'Toucher : accuse, puis disculpe, puis rien'));
+  }
+  const l2 = document.createElement('p'); l2.className = 'question'; l2.innerHTML = 'Peut-on s’y fier ? <small>(critère D iii : juger une source)</small>';
+  const p2 = document.createElement('div'); p2.className = 'pastilles';
+  for (const f of FIABILITE) p2.append(bouton(f.nom, 'pastille fiab' + (ex.fiab === f.id ? ' choisie' : ''), () => { ex.fiab = ex.fiab === f.id ? '' : f.id; sauver(); dessinerExtraits(); dessinerGrille(); }));
+  const retirer = bouton('Retirer du carnet', 'petit retirer', () => { carnet.indices.splice(n, 1); sauver(); majBoutonCarnet(); dessinerCarnet(); });
+  art.append(q, s, l1, p1, l2, p2, retirer); liste.append(art);
  });
  dessinerGrille();
+}
+// Tout ce que le joueur a entendu, pour relire et choisir des phrases plus tard.
+function dessinerConversations(){
+ let zone = ui('carnet-conversations');
+ if (!zone){
+  const h = document.createElement('h3'); h.textContent = 'Tout ce que j’ai entendu';
+  const aide = document.createElement('p'); aide.className = 'aide'; aide.textContent = 'Relisez une conversation et touchez une phrase pour la copier dans votre carnet.';
+  zone = document.createElement('div'); zone.id = 'carnet-conversations';
+  ui('carnet-reset').closest('p').before(h, aide, zone);
+ }
+ zone.replaceChildren();
+ if (!carnet.conversations.length){ const p = document.createElement('p'); p.className = 'vide'; p.textContent = 'Aucune conversation pour l’instant.'; zone.append(p); return; }
+ for (const c of carnet.conversations.slice().reverse()){
+  const d = document.createElement('details'), s = document.createElement('summary');
+  s.textContent = c.qui + ' · ' + c.quand; d.append(s);
+  for (const l of c.lignes) d.append(paragrapheCliquable(l, c));
+  zone.append(d);
+ }
 }
 function dessinerGrille(){
  const corps = ui('grille-corps'); corps.replaceChildren();
  for (const x of EXPLICATIONS){
   const tr = document.createElement('tr');
   if (!carnet.connues[x.id]){ tr.className = 'inconnue'; tr.innerHTML = '<td colspan="4">Explication pas encore entendue dans le quartier</td>'; corps.append(tr); continue; }
-  const pour = carnet.indices.filter(i => i.pour === x.id), contre = carnet.indices.filter(i => i.contre === x.id);
+  const pour = carnet.indices.filter(i => i.pour.includes(x.id)), contre = carnet.indices.filter(i => i.contre.includes(x.id));
   const solides = l => l.filter(i => i.fiab === 'vu' || i.fiab === 'temoin').length;
   const td = t => { const c = document.createElement('td'); c.textContent = t; return c; };
   const nom = td(x.nom); if (carnet.rayees[x.id]) tr.className = 'rayee';
-  const b = document.createElement('button'); b.textContent = carnet.rayees[x.id] ? 'Rétablir' : 'Rayer';
-  b.onclick = () => { carnet.rayees[x.id] = !carnet.rayees[x.id]; sauver(); dessinerGrille(); };
+  const b = bouton(carnet.rayees[x.id] ? 'Rétablir' : 'Rayer', '', () => { carnet.rayees[x.id] = !carnet.rayees[x.id]; sauver(); dessinerGrille(); });
   const cb = document.createElement('td'); cb.append(b);
-  const compte = l => !l.length ? 'aucun' : l.length + (l.length > 1 ? ' indices' : ' indice') + (solides(l) ? ', ' + solides(l) + ' fiable' + (solides(l) > 1 ? 's' : '') : '');
+  const compte = l => !l.length ? 'aucun' : l.length + (l.length > 1 ? ' extraits' : ' extrait') + (solides(l) ? ', ' + solides(l) + ' fiable' + (solides(l) > 1 ? 's' : '') : '');
   tr.append(nom, td(compte(pour)), td(compte(contre)), cb);
   corps.append(tr);
  }
 }
 function ouvrirCarnet(){
  if (ui('dialogue').open || ui('menu').open || (ui('ouverture') && !ui('ouverture').hidden)) return;
- keys.clear(); stop(); dessinerCarnet(); ui('carnet').showModal();
- if (!carnet.methodeVue){ carnet.methodeVue = true; sauver(); }
+ keys.clear(); stop(); dessinerCarnet();
+ // la méthode est ouverte tant que le carnet est vide, repliée ensuite
+ ui('carnet-methode').open = carnet.indices.length === 0;
+ ui('carnet').showModal();
 }
 ui('carnet-button').onclick = ouvrirCarnet;
 ui('carnet-close').onclick = () => ui('carnet').close();
@@ -2599,9 +2713,10 @@ addEventListener('keydown', e => {
  if (ui('carnet').open){ if (e.key !== 'Escape' && e.key !== 'Tab') e.stopImmediatePropagation(); return; }
  if ((e.key === 'c' || e.key === 'C') && !e.ctrlKey && !e.metaKey && !e.altKey && !(e.target instanceof HTMLInputElement) && !(e.target instanceof HTMLTextAreaElement)){ e.preventDefault(); ouvrirCarnet(); }
 }, true);
-ui('carnet-reset').onclick = () => { if (!confirm('Effacer tout le carnet et recommencer l’enquête ?')) return; carnet.indices = []; carnet.connues = {}; carnet.rayees = {}; carnet.vus = {}; sauver(); dessinerCarnet(); majBoutonCarnet(); };
+function viderCarnet(){ carnet.indices = []; carnet.conversations = []; carnet.connues = {}; carnet.rayees = {}; carnet.vus = {}; carnet.astuceVue = false; sauver(); majBoutonCarnet(); }
+ui('carnet-reset').onclick = () => { if (!confirm('Effacer tout le carnet et recommencer l’enquête ?')) return; viderCarnet(); dessinerCarnet(); };
 majBoutonCarnet();
-window.SOHO_ENQUETE = {carnet, ENQUETE, EXPLICATIONS, ouvrirCarnet};
+window.SOHO_ENQUETE = {carnet, ENQUETE, EXPLICATIONS, CLES, ouvrirCarnet, viderCarnet, indiceDe};
 
 // ============================================================
 // MUSIQUE · une piste de jour, une piste de nuit, fondu au changement (20 oct. 2026)
@@ -2930,12 +3045,11 @@ ouv.addEventListener('click', e => {
  else if (act === 'sc-prec'){ replique--; scene(); }
  else if (act === 'commencer'){
   // nouvelle partie : carnet vide (aucune explication connue), horloge à 7 h, joueur au point de départ
-  const c = window.SOHO_ENQUETE && window.SOHO_ENQUETE.carnet;
-  if (c){ c.indices = []; c.connues = {}; c.rayees = {}; c.vus = {}; c.notes = ''; try { localStorage.setItem('soho1854-carnet', JSON.stringify(c)); } catch {} }
+  viderCarnet();
   reset(); state.minutes = DEPART; npcs.reset(state.minutes); visibleActors = npcs.visible(); updateClock(true);
   sauverPartie(); appliquerCostume(); majBoutonCarnet();
   fondu(() => { fermerOuverture(); ouv.hidden = false; ouv.className = 'ouverture mode-vide'; setTimeout(() => { ouv.hidden = true; ouv.className = 'ouverture'; }, 900); });
-  say('Il est 7 heures. Les rues sont encore calmes. Approchez-vous des gens et appuyez sur Espace (ou touchez-les) pour leur parler.');
+  say('« Il est 7 heures. Les rues sont encore calmes. Je vais parler aux gens : je m’approche et j’appuie sur Espace, ou je les touche. »');
  }
 });
 // Entrée et Espace activent quand même le bouton qui a le focus : c'est l'action par défaut du navigateur.
@@ -3005,6 +3119,7 @@ function ouvrirMaison(){
  if (maisonTheorie){
   partie.snowTheorie = true; sauverPartie();
   carnet.connues.eau = true; sauver(); majBoutonCarnet();
+  garderConversation({qui:'Le docteur Snow', quand:quandMaintenant(), source:'snow-theorie'}, r.l.filter(x => x.qui === 'Le docteur Snow').map(x => x.texte));
   state.minutes += 30; updateClock(true);   // une vraie conversation avec Snow prend une demi-heure
  }
  keys.clear(); stop(); ouv.hidden = false; ouv.className = 'ouverture';
