@@ -3316,20 +3316,26 @@ window.SOHO_MAISON = {ouvrirMaison, maladesDepuisJeudi};
 
 // ---------- le repère : la lampe rouge du docteur ----------
 // Dans l'Angleterre victorienne, une lampe rouge au-dessus de la porte signalait la maison d'un médecin.
-// C'est le repère du joueur : il part d'ici le matin et revient ici. Si ChatGPT fournit un dessin
-// (images/objets/lampe-rouge.png, vue de dessus comme le décor), il remplace le dessin fait ici.
+// C'est le repère du joueur : il part d'ici le matin et revient ici. La lanterne vient de ChatGPT
+// (images/objets/lampe-rouge.webp, potence à gauche, lanterne à droite, fond transparent) ; le dessin fait ici
+// ne sert que si l'image manque.
 const REPERE = {x:728, y:1990};
 let imageRepere = null;
-{ const im = new Image(); im.onload = () => { imageRepere = im; }; im.src = 'images/objets/lampe-rouge.png'; }
+{ const im = new Image(), essais = ['images/objets/lampe-rouge.png']; im.onload = () => { imageRepere = im; }; im.onerror = () => { if (essais.length) im.src = essais.shift(); }; im.src = 'images/objets/lampe-rouge.webp'; }
+// Taille dans le monde : la lanterne mesure à peu près la hauteur d'une tête et d'un buste de passant.
+const LARGEUR_LAMPE = 44;
 function dessinerRepere(c, s){
  const {x, y} = REPERE, h = ((s.minutes % 1440) + 1440) % 1440 / 60, nuit = h >= 20 || h < 6;
  const pulse = reducedMotion() ? 1 : 1 + Math.sin(performance.now() / 600) * .06;
+ // avec l'image, la potence est fixée au mur à gauche du point, la lanterne pend à droite
+ const hl = imageRepere ? LARGEUR_LAMPE * imageRepere.height / imageRepere.width : 0;
+ const gx = imageRepere ? x - LARGEUR_LAMPE * .2 + LARGEUR_LAMPE * .68 : x, gy = imageRepere ? y - 52 + hl * .7 : y - 26;
  c.save();
- // halo rouge : discret le jour, fort la nuit
- const r = (nuit ? 70 : 34) * pulse, g = c.createRadialGradient(x, y - 26, 2, x, y - 26, r);
- g.addColorStop(0, nuit ? 'rgba(255,70,40,.55)' : 'rgba(255,80,50,.28)'); g.addColorStop(1, 'rgba(255,60,30,0)');
- c.fillStyle = g; c.beginPath(); c.arc(x, y - 26, r, 0, Math.PI * 2); c.fill();
- if (imageRepere){ const w = 40, hh = w * imageRepere.height / imageRepere.width; c.drawImage(imageRepere, x - w / 2, y - hh, w, hh); c.restore(); return; }
+ // halo rouge centré sur le verre : discret le jour, fort la nuit
+ const r = (nuit ? 90 : 40) * pulse, g = c.createRadialGradient(gx, gy, 2, gx, gy, r);
+ g.addColorStop(0, nuit ? 'rgba(255,70,40,.7)' : 'rgba(255,80,50,.32)'); g.addColorStop(1, 'rgba(255,60,30,0)');
+ c.fillStyle = g; c.beginPath(); c.arc(gx, gy, r, 0, Math.PI * 2); c.fill();
+ if (imageRepere){ c.drawImage(imageRepere, x - LARGEUR_LAMPE * .2, y - 52, LARGEUR_LAMPE, hl); c.restore(); return; }
  // potence de fer forgé, lanterne de verre rouge, petit toit
  c.strokeStyle = '#1d1a17'; c.lineWidth = 1.6; c.beginPath(); c.moveTo(x - 9, y - 38); c.lineTo(x, y - 38); c.lineTo(x, y - 34); c.stroke();
  c.fillStyle = '#1d1a17'; c.beginPath(); c.moveTo(x - 6, y - 33); c.lineTo(x + 6, y - 33); c.lineTo(x, y - 37); c.closePath(); c.fill();
