@@ -2530,10 +2530,10 @@ say = function(texte){
 };
 
 // ---------- le coût du temps ----------
-// Marcher : 1 minute pour 120 unités du monde (traverser tout le quartier, environ 3000 unités, prend 25 minutes).
+// Marcher : 1 minute pour 90 unités du monde (traverser tout le quartier, environ 3000 unités, prend un peu plus d'une demi-heure).
 // Ralenti le 21 oct. à la demande de Jeremy : avec 40 unités, la journée passait trop vite.
 // Parler : le « cout » du témoin, la première fois seulement.
-const PAS_MINUTE = 120;
+const PAS_MINUTE = 90;   // 22 oct. : un peu plus rapide (120 paraissait lent)
 // Une conversation coûte la moitié du temps prévu par Codex (environ 8 minutes pour un témoin, 3 pour un passant).
 const DUREE_PAROLE = .5;
 // Le moteur de Codex compte déjà le temps en marchant (1 minute pour 32 unités) : on remplace son calcul par le nôtre.
@@ -3429,45 +3429,56 @@ WORLD.render = function(c, vue, s, o){
 };
 
 // ============================================================
-// RUES · plaques de rue et nom de la rue dans le cartouche (21 oct. 2026)
-// Demande de Jeremy : faire apparaître les noms des rues de façon discrète, lisible et claire.
-// 1. Des plaques de rue au coin des façades, comme les plaques peintes ou en fonte des rues de Londres.
-//    Elles font partie du décor : dessinées après le décor, sous les personnages.
-// 2. Le cartouche en haut à gauche donne la rue où se trouve le joueur, au lieu du lieu le plus proche.
+// RUES · noms gravés dans les pavés et nom de la rue dans le cartouche (21-22 oct. 2026)
+// Demande de Jeremy (22 oct.) : le nom de chaque rue est gravé dans le pavé, une seule fois, au milieu de la rue,
+// dans le sens de la rue. Il fait partie du sol : dessiné après le décor, sous les personnages, qui marchent dessus.
+// (Les plaques sur les façades du 21 oct. sont abandonnées.)
+// Le cartouche en haut à gauche donne la rue où se trouve le joueur, au lieu du lieu le plus proche.
 // ============================================================
 const RUES = (LAYOUT.roads || []).filter(r => r.rect && r.name);
-const PLAQUES = [];
+const TAILLE_GRAVURE = 20, ESPACE_LETTRES = 5;
+const GRAVURES = [];
 {
- const dansAutreRue = (x, y, moi) => RUES.some(r => r !== moi && x > r.rect.x - 24 && x < r.rect.x + r.rect.w + 24 && y > r.rect.y - 24 && y < r.rect.y + r.rect.h + 24);
+ // longueur approximative du texte gravé, pour éviter de le poser sur un carrefour
+ const longueur = nom => nom.length * (TAILLE_GRAVURE * .68 + ESPACE_LETTRES);
+ const croise = (r, cx, cy, demi, vertical) => RUES.some(o => o !== r && (vertical
+  ? cx > o.rect.x - 4 && cx < o.rect.x + o.rect.w + 4 && cy + demi > o.rect.y - 10 && cy - demi < o.rect.y + o.rect.h + 10
+  : cy > o.rect.y - 4 && cy < o.rect.y + o.rect.h + 4 && cx + demi > o.rect.x - 10 && cx - demi < o.rect.x + o.rect.w + 10));
  for (const r of RUES){
-  const {x, y, w, h} = r.rect, vertical = h > w, long = vertical ? h : w;
-  for (let d = 150; d < long - 60; d += 560){
-   // la plaque est fixée sur la façade : au-dessus de la rue (rue horizontale) ou à sa gauche (rue verticale)
-   const px = vertical ? x - 3 : x + d, py = vertical ? y + d : y - 3;
-   if (dansAutreRue(px, py, r)) continue;
-   PLAQUES.push({x:px, y:py, nom:r.name.toUpperCase(), vertical});
+  const {x, y, w, h} = r.rect, vertical = h > w, nom = r.name.toUpperCase(), demi = longueur(nom) / 2 + 8;
+  const cx0 = x + w / 2, cy0 = y + h / 2, long = vertical ? h : w;
+  // on part du milieu et on s'en écarte peu à peu jusqu'à trouver un tronçon sans carrefour
+  let place = null;
+  for (let d = 0; d < long / 2 - demi && !place; d += 16) for (const s of [1, -1]){
+   const cx = vertical ? cx0 : cx0 + s * d, cy = vertical ? cy0 + s * d : cy0;
+   if (!croise(r, cx, cy, demi, vertical)){ place = {cx, cy}; break; }
   }
+  if (place) GRAVURES.push({x:place.cx, y:place.cy, nom, vertical});
  }
 }
-function dessinerPlaques(c, vue){
+// Écrit le texte lettre par lettre, espacé, centré sur (0, 0).
+function texteEspace(c, texte, decalage){
+ const largeurs = [...texte].map(ch => c.measureText(ch).width), total = largeurs.reduce((a, b) => a + b, 0) + ESPACE_LETTRES * (texte.length - 1);
+ let x = -total / 2;
+ [...texte].forEach((ch, i) => { c.fillText(ch, x + decalage, decalage); x += largeurs[i] + ESPACE_LETTRES; });
+}
+function dessinerGravures(c, vue){
  c.save();
- c.font = '600 9px "Libre Caslon Text", Georgia, serif'; c.textBaseline = 'middle';
- for (const p of PLAQUES){
-  if (p.x < vue.x - 160 || p.x > vue.x + vue.w + 160 || p.y < vue.y - 40 || p.y > vue.y + vue.h + 40) continue;
-  const lw = c.measureText(p.nom).width + 10, lh = 13;
-  // rue horizontale : plaque centrée sur le point ; rue verticale : plaque collée à gauche de la chaussée
-  const bx = p.vertical ? p.x - lw : p.x - lw / 2, by = p.y - lh;
-  c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(bx + 1.5, by + 1.5, lw, lh);
-  c.fillStyle = '#1f1d1b'; c.fillRect(bx, by, lw, lh);
-  c.strokeStyle = 'rgba(232,222,200,.55)'; c.lineWidth = .7; c.strokeRect(bx + 1.5, by + 1.5, lw - 3, lh - 3);
-  c.fillStyle = '#efe6d2'; c.textAlign = 'center'; c.fillText(p.nom, bx + lw / 2, by + lh / 2 + .5);
+ c.font = '700 ' + TAILLE_GRAVURE + 'px "Libre Caslon Text", Georgia, serif'; c.textAlign = 'left'; c.textBaseline = 'middle';
+ for (const g of GRAVURES){
+  if (g.x < vue.x - 400 || g.x > vue.x + vue.w + 400 || g.y < vue.y - 400 || g.y > vue.y + vue.h + 400) continue;
+  c.save(); c.translate(g.x, g.y); if (g.vertical) c.rotate(-Math.PI / 2);
+  // l'effet gravé : un bord clair en bas à droite (la lumière sur l'arête), puis le creux sombre
+  c.fillStyle = 'rgba(236,224,198,.38)'; texteEspace(c, g.nom, 1.3);
+  c.fillStyle = 'rgba(18,12,8,.78)'; texteEspace(c, g.nom, 0);
+  c.restore();
  }
  c.restore();
 }
-const renderSansPlaques = WORLD.render;
+const renderSansGravures = WORLD.render;
 WORLD.render = function(c, vue, s, o){
- const r = renderSansPlaques.apply(this, arguments);
- if (vue) dessinerPlaques(c, vue);
+ const r = renderSansGravures.apply(this, arguments);
+ if (vue) dessinerGravures(c, vue);
  return r;
 };
 // Le cartouche : la rue où l'on marche. Entre deux rues (place, cour), le lieu le plus proche, comme avant.
