@@ -3061,9 +3061,11 @@ const MATIN = perso => {
  return [
   {qui:'', texte:'Vendredi 1er septembre 1854, 7 heures du matin. 18 Sackville Street, chez le docteur Snow.'},
   {qui:lui, texte:moi + ', réveille-toi ! Le docteur est déjà levé. Cette nuit, quelqu’un a frappé à la porte plusieurs fois. Je n’ai presque pas dormi.'},
-  {qui:lui, texte:'C’était un voisin de Broad Street, de l’autre côté de Golden Square. Il cherchait un médecin. Il disait que dans sa rue, des familles entières sont tombées malades en quelques heures.'},
-  {qui:'Le docteur Snow', texte:'Bonjour. Votre ' + (perso === 'emily' ? 'frère' : 'sœur') + ' vous a raconté ? On parle de diarrhées terribles, de vomissements, de gens qui s’effondrent dans la rue. Plusieurs sont déjà morts cette nuit.'},
-  {qui:'Le docteur Snow', texte:'Le voisin a aussi parlé du 40 Broad Street. Un bébé de cinq mois y est malade depuis plusieurs jours. Maintenant, les maisons autour sont touchées aussi.'},
+  // Jeremy (22 oct.) : garder le flou au début. On ne nomme pas la maladie, on ne décrit pas les symptômes :
+  // des morts inexplicables et foudroyantes, et personne ne sait encore ce qui se passe.
+  {qui:lui, texte:'C’était un voisin de Broad Street, de l’autre côté de Golden Square. Il cherchait un médecin. Il était tout pâle. Il répétait que des gens mouraient chez lui, dans sa rue, et qu’on ne savait pas pourquoi.'},
+  {qui:'Le docteur Snow', texte:'Bonjour. Votre ' + (perso === 'emily' ? 'frère' : 'sœur') + ' vous a raconté ? Cette nuit, il y a eu des morts autour de Broad Street. Des morts inexplicables, foudroyantes : des gens en bonne santé le soir, morts avant l’aube.'},
+  {qui:'Le docteur Snow', texte:'Je ne sais pas encore ce que c’est. Personne ne le sait. Et je n’aime pas cela du tout.'},
   {qui:'Le docteur Snow', texte:'Je dois voir mes patients ce matin. Je ne peux pas y aller tout de suite. Mais il faut savoir ce qui se passe, et vite.'},
   {qui:'Le docteur Snow', texte:'Allez dans le quartier. Regardez, écoutez les gens, et notez tout dans votre carnet. Ne cherchez pas encore à comprendre : rapportez-moi des faits. Je serai de retour ce soir, vers six heures. Vous me ferez votre rapport.'},
   {qui:moi, texte:'Je prends mon carnet et mon manteau. Broad Street n’est pas loin. Si quelque chose tue les gens de ce quartier, je veux savoir quoi.', moi:true},
@@ -3245,6 +3247,39 @@ const RAPPORT_HEURE = 18;
 // L'eau n'entre dans la grille que lorsque le joueur a lui-même copié plusieurs phrases qui parlent de l'eau qu'on boit
 // (voir verifierIdeeEau) ; Snow n'expose son idée qu'après, au rapport suivant.
 const estSoir = (m, h) => Math.floor(m / 1440) > 0 ? (h >= RAPPORT_HEURE || h < 7) : h >= RAPPORT_HEURE;
+const jourDuRapport = m => { const h = ((m % 1440) + 1440) % 1440 / 60; return Math.floor(m / 1440) - (h < 7 ? 1 : 0); };
+const rapportFait = () => !!(partie.rapports || {})[jourDuRapport(state.minutes)];
+const estNuit = h => h >= 19 || h < 6;   // on peut aller dormir dès 19 h
+// Étape 3 (22 oct.) : chaque soir, Snow écoute le rapport et commente le carnet, sans jamais donner la réponse.
+// Au plus trois remarques, choisies dans l'ordre : ce qui manque le plus d'abord.
+function remarquesDeSnow(){
+ const jour = jourDuRapport(state.minutes), r = [], ranges = carnet.indices.filter(estClasse);
+ const nc = carnet.indices.length - ranges.length;
+ if (nc) r.push('Vous avez encore ' + (nc > 1 ? nc + ' extraits' : 'un extrait') + ' à classer. Une note qu’on ne range pas ne sert à rien.');
+ if (carnet.indices.length < 4) r.push('C’est encore peu. Parlez à plus de gens : chacun ne sort qu’à certaines heures, le matin, le jour ou le soir.');
+ for (const e of EXPLICATIONS){
+  const pour = ranges.filter(x => x.pour.includes(e.id));
+  if (pour.length && pour.every(x => x.fiab === 'opinion')){ r.push('Votre dossier sur ' + e.nom.charAt(0).toLowerCase() + e.nom.slice(1) + ' ne repose que sur des rumeurs. Avez-vous un fait, vu par quelqu’un ?'); break; }
+ }
+ if (ranges.length >= 4 && !ranges.some(x => x.contre.length)) r.push('Vous n’avez encore rien trouvé qui disculpe une explication. Une bonne enquête cherche aussi ce qui ne colle pas.');
+ if (jour >= 1 && !carnet.indices.some(x => ['brasserie', 'biere', 'hospice'].includes(x.indice))) r.push('Avez-vous trouvé des gens qui ne tombent pas malades, alors qu’ils vivent au même endroit que les autres ? Demandez-vous ce qu’ils font de différent.');
+ if (jour >= 3 && !carnet.indices.some(x => x.sacoche)) r.push('Il est temps de choisir vos arguments. La réunion de la paroisse approche.');
+ if (!r.length) r.push('Vos notes sont bien tenues. Continuez, et cherchez aussi ce qui pourrait vous donner tort.');
+ return r.slice(0, 3);
+}
+function rapportDuSoir(){
+ const moi = PERSONNAGES[partie.perso].prenom, lui = PERSONNAGES[autre(partie.perso)].prenom;
+ const jour = jourDuRapport(state.minutes), n = carnet.indices.length, ranges = carnet.indices.filter(estClasse).length;
+ const reste = 6 - jour;
+ return [
+  {qui:'', texte:'18 Sackville Street, le soir.'},
+  {qui:'Le docteur Snow', texte:'Bonsoir. Asseyez-vous. Alors, qu’avez-vous appris aujourd’hui ?'},
+  {qui:moi, texte:'Je lui montre mon carnet : ' + (n ? n + (n > 1 ? ' extraits, dont ' : ' extrait, dont ') + ranges + ' rangé' + (ranges > 1 ? 's' : '') + '.' : 'il est presque vide.') + ' Il le feuillette lentement, sans rien dire.', moi:true},
+  ...remarquesDeSnow().map(t => ({qui:'Le docteur Snow', texte:t})),
+  {qui:lui, texte:'D’après ce qu’on raconte, ' + environ(maladesDepuisJeudi(state.minutes)) + ' personnes sont tombées malades depuis jeudi dernier. Il faut faire vite.'},
+  {qui:'Le docteur Snow', texte:reste > 1 ? 'La paroisse se réunira jeudi soir. Il vous reste ' + reste + ' jours. Allez dormir : demain, il faudra des jambes.' : reste === 1 ? 'La réunion de la paroisse, c’est demain soir. Vérifiez vos arguments. Allez dormir.' : 'La réunion de la paroisse, c’est ce soir. Préparez vos arguments.'},
+ ];
+}
 function repliquesMaison(){
  const moi = PERSONNAGES[partie.perso].prenom, lui = PERSONNAGES[autre(partie.perso)].prenom, e = partie.perso === 'emily' ? 'e' : '';
  const m = state.minutes, h = ((m % 1440) + 1440) % 1440 / 60, n = carnet.indices.length;
@@ -3265,13 +3300,18 @@ function repliquesMaison(){
   {qui:'Le docteur Snow', texte:'Un conseil, un seul. Ne regardez pas seulement ceux qui tombent malades. Cherchez aussi ceux qui ne tombent pas malades, alors qu’ils vivent au même endroit. Demandez-vous ce qu’ils font de différent. C’est souvent là que la vérité se cache.'},
   {qui:'Le docteur Snow', texte:'Allez dormir. Demain, retournez dans le quartier. Et revenez me faire votre rapport chaque soir.'},
  ]};
- if (partie.snowRapport1 && carnet.connues.eau && !partie.snowEau && estSoir(m, h)) return {phase:'eau', l:[
+ if (estSoir(m, h) && rapportFait() && estNuit(h)) return {l:[
+  {qui:'', texte:'18 Sackville Street, la nuit.'},
+  {qui:lui, texte:'Chut… Le docteur dort déjà. Tu devrais dormir aussi : demain, la journée sera longue.'},
+ ]};
+ if (partie.snowRapport1 && carnet.connues.eau && !partie.snowEau && estSoir(m, h) && !rapportFait()) return {phase:'eau', l:[
   {qui:'', texte:'18 Sackville Street, chez le docteur Snow.'},
   {qui:'Le docteur Snow', texte:'Votre carnet parle beaucoup de l’eau, à ce que je vois. Vous vous demandez si elle y est pour quelque chose ?'},
   {qui:'Le docteur Snow', texte:'Puisque vous y êtes arrivé' + e + ' seul' + e + ', je vais vous dire mon avis. Depuis 1849, je pense que le choléra passe par l’eau que l’on boit. Le malade rejette quelque chose dans ses selles. Si ces saletés arrivent dans l’eau, ceux qui la boivent tombent malades à leur tour.'},
   {qui:'Le docteur Snow', texte:'Cet été, j’étudie le sud de Londres. Là-bas, deux compagnies vendent l’eau aux maisons. L’une la puise dans la Tamise, au milieu des égouts de la ville. L’autre la prend plus haut, là où le fleuve est propre. Les maisons de la première ont beaucoup plus de morts.'},
   {qui:'Le docteur Snow', texte:'Mais attention : une idée n’est pas une preuve. ' + (carnet.connues.miasme ? 'Les médecins du conseil de santé croient au miasme, l’air vicié. Ils ont peut-être raison. ' : 'Beaucoup de médecins pensent autrement. ') + 'Cherchez ce qui pourrait me donner tort autant que ce qui me donne raison.'},
  ]};
+ if (partie.snowRapport1 && estSoir(m, h) && !rapportFait()) return {phase:'soir', l:rapportDuSoir()};
  if (!partie.snowRapport1) return {l:[
   {qui:'', texte:'18 Sackville Street, chez le docteur Snow.'},
   {qui:lui, texte:'Déjà rentré' + e + ' ? Le docteur n’est pas encore là. Il est chez ses patients toute la journée. Il rentre ce soir, vers six heures, pour que tu lui fasses ton rapport.'},
@@ -3299,14 +3339,16 @@ function sceneMaison(){
  ecran('<div class="ouv-maison" data-img="' + IMG.maison + '"></div><div class="ouv-bulle' + (r.moi ? ' ouv-pensee' : '') + (r.qui ? '' : ' ouv-recit') + '">'
   + (r.qui ? '<p class="ouv-qui">' + esc(r.qui) + '</p>' : '') + '<p class="ouv-dit">' + enGras(r.texte) + '</p>'
   + '<div class="ouv-nav">' + (maisonN > 0 ? '<button data-act="m-prec">Retour</button>' : '<span></span>')
-  + (fin ? '<button class="ouv-principal" data-act="m-sortir" autofocus>Repartir dans le quartier</button>'
+  + (fin && estNuit(((state.minutes % 1440) + 1440) % 1440 / 60) ? '<button data-act="m-sortir">Ressortir</button><button class="ouv-principal" data-act="m-dormir" autofocus>Aller dormir</button>'
+   : fin ? '<button class="ouv-principal" data-act="m-sortir" autofocus>Repartir dans le quartier</button>'
          : '<button class="ouv-principal" data-act="m-suiv" autofocus>Suite</button>') + '</div></div>', 'scene');
 }
 function ouvrirMaison(){
  const r = repliquesMaison();
  maisonLignes = r.l; maisonN = 0; maisonPhase = r.phase || '';
  if (maisonPhase){
-  if (maisonPhase === 'rapport1') partie.snowRapport1 = true; else partie.snowEau = true;
+  if (maisonPhase === 'rapport1') partie.snowRapport1 = true; else if (maisonPhase === 'eau') partie.snowEau = true;
+  partie.rapports = partie.rapports || {}; partie.rapports[jourDuRapport(state.minutes)] = true;
   sauverPartie();
   garderConversation({qui:'Le docteur Snow', quand:quandMaintenant(), source:'snow-' + maisonPhase}, r.l.filter(x => x.qui === 'Le docteur Snow').map(x => x.texte));
   state.minutes += 30; updateClock(true);   // une vraie conversation avec Snow prend une demi-heure
@@ -3319,6 +3361,7 @@ ouv.addEventListener('click', e => {
  const act = b.dataset.act;
  if (act === 'm-suiv'){ maisonN++; sceneMaison(); }
  else if (act === 'm-prec'){ maisonN--; sceneMaison(); }
+ else if (act === 'm-dormir') dormir();
  else if (act === 'm-sortir'){ fondu(() => { fermerOuverture(); ouv.hidden = false; ouv.className = 'ouverture mode-vide'; setTimeout(() => { ouv.hidden = true; ouv.className = 'ouverture'; }, 900); }); }
 });
 // Parler à la « porte » de Snow ouvre la maison au lieu d'une bulle.
@@ -3342,9 +3385,9 @@ talk = function(p){
 // Tant que le joueur n'a pas entendu Snow, elle le lui rappelle à partir de 18 h, toutes les heures de jeu.
 let dernierRappel = -Infinity;
 setInterval(() => {
- if (!partie || !ouv.hidden || paused() || partie.snowRapport1) return;
+ if (!partie || !ouv.hidden || paused() || rapportFait()) return;
  const m = state.minutes, h = ((m % 1440) + 1440) % 1440 / 60;
- if (Math.floor(m / 1440) === 0 && h < RAPPORT_HEURE) return;
+ if (!estSoir(m, h) || h < RAPPORT_HEURE && h >= 2) return;   // de 18 h à 2 h du matin
  if (m - dernierRappel < 60) return;
  dernierRappel = m;
  const heure = Math.floor(h), n = nonClasses();
@@ -3950,6 +3993,96 @@ async function lancerGuide(){
  setTimeout(() => coach('horloge', 'Attention au temps : il passe quand je marche et quand je parle. Le soir, je devrai rentrer chez le docteur **Snow** pour lui faire mon rapport.', ui('clock')), 700);
 }
 window.SOHO_GUIDE = {lancerGuide, JIMMY};
+
+// ============================================================
+// NUITS · dormir chez Snow, le journal du matin, l'effondrement de fatigue (étape 3, 22 oct. 2026)
+// Règles décidées avec Jeremy :
+// - on ne dort que chez Snow, le soir (à partir de 19 h) ; on se réveille à 7 h, après au moins 5 heures de sommeil ;
+// - encore dehors à 2 h du matin : le personnage s'effondre, perd 8 heures et se réveille chez Snow ;
+// - chaque matin, Le Courrier de Soho (journal inventé) donne les nouvelles. C'est une source comme une autre :
+//   ses phrases se touchent et se copient, et certaines ne sont que des opinions.
+// Chiffres des malades : tableau I de Snow (1855). Chaux et inspecteurs : Paneth et al. (1998).
+// Injecté en dernier.
+// ============================================================
+const NOMS_JOURS = ['vendredi 1er septembre', 'samedi 2 septembre', 'dimanche 3 septembre', 'lundi 4 septembre', 'mardi 5 septembre', 'mercredi 6 septembre', 'jeudi 7 septembre'];
+const JOURNAL = {
+ 1:{defend:'miasme', l:[
+  'NUIT D’ÉPOUVANTE À SOHO. Depuis jeudi soir, près de deux cents personnes sont tombées malades autour de Broad Street et de Golden Square. Beaucoup sont mortes en quelques heures.',
+  'Selon plusieurs médecins, les émanations des égouts et des fosses empoisonnent l’air du quartier. Ils conseillent de fermer les fenêtres et de brûler du goudron dans les rues.']},
+ 2:{l:[
+  'LE QUARTIER SE VIDE. Des familles entières quittent Soho avec leurs malles. Les boutiques ferment, les rues sont désertes.',
+  'On compte maintenant plus de trois cents malades depuis jeudi. Les cloches sonnent le glas toute la journée.']},
+ 3:{defend:'pauvrete', l:[
+  'LA PAROISSE AGIT. Le conseil de la paroisse de Saint-James fait répandre de la chaux dans les rues et les cours, pour chasser les mauvaises odeurs.',
+  'Un lecteur nous écrit : « Que les pauvres se lavent, et le choléra s’en ira. »']},
+ 4:{l:[
+  'DES MÉDECINS DE MAISON EN MAISON. Le conseil de santé envoie des inspecteurs dans chaque rue du quartier. Ils notent les malades et l’état des maisons.',
+  'Plus de quatre cents personnes sont tombées malades depuis jeudi dernier. Mais on compte moins de nouveaux malades chaque jour.']},
+ 5:{l:[
+  'RÉUNION DEMAIN SOIR. Les autorités de la paroisse se réuniront jeudi soir pour décider des mesures à prendre.',
+  'Toute personne qui a des informations utiles sur la maladie peut venir les présenter.']},
+ 6:{l:[
+  'LE MAL RECULE-T-IL ? Hier, on a compté beaucoup moins de nouveaux malades qu’au début de la semaine. Certains disent que la chaux a fait son effet.',
+  'La réunion des autorités de la paroisse a lieu ce soir.']},
+};
+const QUI_JOURNAL = 'Le Courrier de Soho';
+function afficherJournal(jour){
+ const j = JOURNAL[jour]; if (!j) return;
+ boiteDialogue.classList.remove('pensee', 'avec-portrait');
+ if (badgeDialogue) badgeDialogue.textContent = 'Le journal du matin · ' + NOMS_JOURS[jour];
+ ui('speaker').textContent = QUI_JOURNAL;
+ keys.clear(); stop(); boiteDialogue.showModal();
+ const ctx = {qui:QUI_JOURNAL + ' (journal)', quand:quandMaintenant(), source:'journal-' + jour};
+ afficherRepliques(j.l, () => finDeLecture({defend:j.defend}, 'journal-' + jour, 0, ctx, j.l), ctx);
+ boiteDialogue.addEventListener('close', () => { if (badgeDialogue) badgeDialogue.textContent = badgeTemoignage; }, {once:true});
+}
+
+// Le matin : la ville se réveille, le joueur sort devant chez Snow.
+function nouveauMatin(minutes, recit){
+ state.minutes = minutes; updateClock(true);
+ player.px = player.gx = spawn[0]; player.py = player.gy = spawn[1]; stop(); keys.clear();
+ npcs.reset(state.minutes); visibleActors = npcs.visible(); draw();
+ const jour = Math.floor(minutes / 1440);
+ ecran('<div class="ouv-maison" data-img="' + IMG.maison + '"></div><div class="ouv-bulle ouv-recit"><p class="ouv-dit">' + enGras(recit) + '</p>'
+  + '<div class="ouv-nav"><span></span><button class="ouv-principal" data-act="n-sortir" autofocus>Sortir</button></div></div>', 'scene');
+ ouv.dataset.jour = jour;
+}
+function dormir(){
+ const m = state.minutes, j = Math.floor(m / 1440), h = ((m % 1440) + 1440) % 1440 / 60;
+ // couché le soir : réveil le lendemain à 7 h ; couché après minuit : 7 h, mais au moins 5 heures plus tard
+ const reveil = h >= 7 ? (j + 1) * 1440 + 7 * 60 : Math.max(j * 1440 + 7 * 60, m + 5 * 60);
+ const jr = Math.floor(reveil / 1440), hr = Math.round((reveil % 1440) / 60);
+ fondu(() => nouveauMatin(reveil, 'Je dors chez le docteur Snow. Je me réveille ' + NOMS_JOURS[Math.min(6, jr)] + ', à ' + hr + ' heures. ' + (JOURNAL[jr] ? 'Sur la table, le journal du matin m’attend.' : '')));
+}
+ouv.addEventListener('click', e => {
+ const b = e.target.closest('button[data-act="n-sortir"]'); if (!b) return;
+ const jour = Number(ouv.dataset.jour);
+ fondu(() => { fermerOuverture(); ouv.hidden = false; ouv.className = 'ouverture mode-vide'; setTimeout(() => { ouv.hidden = true; ouv.className = 'ouverture'; afficherJournal(jour); }, 900); });
+});
+
+// ---------- la fatigue ----------
+let dejaPrevenu = -1, effondre = false;
+setInterval(() => {
+ if (!partie || !ouv.hidden || effondre || guideActif) return;
+ const m = state.minutes, h = ((m % 1440) + 1440) % 1440 / 60, nuit = Math.floor((m - 7 * 60) / 1440);
+ const occupe = boiteDialogue.open || ui('carnet').open || ui('menu').open;
+ // vers 23 h, une fois par nuit : le personnage se dit qu'il devrait rentrer
+ if (!occupe && (h >= 23 || h < 2) && dejaPrevenu !== nuit){
+  dejaPrevenu = nuit;
+  pensee('Il est tard. Je devrais rentrer dormir chez le docteur, sous la lanterne rouge. Si je reste dehors, je vais m’écrouler de fatigue.');
+  return;
+ }
+ // à 2 h du matin, encore dehors : il s'effondre
+ if (!occupe && h >= 2 && h < 7){
+  effondre = true;
+  pensee('Je n’en peux plus… Mes jambes ne me portent plus. J’aurais dû rentrer dormir chez le docteur.', [{texte:'…', faire:() => {
+   const reveil = m + 8 * 60;
+   keys.clear(); stop(); ouv.hidden = false; ouv.className = 'ouverture';
+   fondu(() => { nouveauMatin(reveil, 'Je me suis effondré' + (partie.perso === 'emily' ? 'e' : '') + ' dans la rue. Un voisin m’a reconnu' + (partie.perso === 'emily' ? 'e' : '') + ' et m’a ramené' + (partie.perso === 'emily' ? 'e' : '') + ' chez le docteur. Je me réveille à ' + Math.round((reveil % 1440) / 60) + ' heures : la matinée est perdue.'); effondre = false; });
+  }}]);
+ }
+}, 1000);
+window.SOHO_NUITS = {dormir, afficherJournal, JOURNAL};
 
 window.SOHO_TEST={world:WORLD,openMenu,closeMenu,toggleMap,paused,state,player,camera,viewport,canvas:cv,layout:LAYOUT,npcs,DATA,floor,nearest,findPath,blocked,worldToScreen,screenToWorld,pointers,resolveWalkGoal,moveTo,goToPerson,talk,changeTime,reset,draw,step,resize,shouldPaint,placeEntry,layoutLabels,visible:()=>visibleActors,pump,pumps,keys,markerOpacity,layoutStreetLabels,reducedMotion,visualStats:()=>WORLD.decor?.stats()};
 reset();resize();requestAnimationFrame(frame);
