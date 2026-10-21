@@ -1743,7 +1743,7 @@ window.SOHO_ATMOSPHERE_ASSETS={"fumee-01":{"id":"fumee-01","kind":"fumee","file"
  const snow = D.people.find(p => p.id === 'snow');
  if (snow){ snow.nom = 'Chez le docteur Snow, 18 Sackville Street'; snow.cout = 0; }
  // La porte de Snow et le point de départ : devant la lampe rouge, sur le trottoir de Vigo Street.
- L.anchors.snow = [728, 1958];
+ L.anchors.snow = [760, 1958];
  L.anchors.start = [728, 1918];
 
  // Les nouveaux habitants. Positions prises dans les rues du plan de Codex (rectangles de layout.roads).
@@ -3179,7 +3179,7 @@ ouv.addEventListener('click', e => {
   reset(); state.minutes = DEPART; npcs.reset(state.minutes); visibleActors = npcs.visible(); updateClock(true);
   sauverPartie(); appliquerCostume(); majBoutonCarnet();
   fondu(() => { fermerOuverture(); ouv.hidden = false; ouv.className = 'ouverture mode-vide'; setTimeout(() => { ouv.hidden = true; ouv.className = 'ouverture'; }, 900); });
-  setTimeout(() => pensee('En sortant, je lève les yeux vers la lanterne rouge accrochée devant la maison. Le docteur l’a installée pour que les malades trouvent plus facilement son cabinet, même la nuit. Je la reconnaîtrai de loin quand je rentrerai.'), 1200);
+  setTimeout(() => pensee('En sortant, je lève les yeux vers le réverbère à la lanterne rouge, devant la maison. Le docteur l’a installée pour que les malades trouvent plus facilement son cabinet, même la nuit. Je la reconnaîtrai de loin quand je rentrerai.'), 1200);
   setTimeout(() => pensee('Il est 7 heures. Les rues sont encore calmes. Pour marcher, je touche les pavés là où je veux aller, ou j’utilise les flèches du clavier. Pour parler à quelqu’un, je m’approche et je le touche, ou j’appuie sur Espace.'), 1200);
  }
 });
@@ -3332,9 +3332,27 @@ let imageRepere = null;
 { const im = new Image(), essais = ['images/objets/lampe-rouge.png']; im.onload = () => { imageRepere = im; }; im.onerror = () => { if (essais.length) im.src = essais.shift(); }; im.src = 'images/objets/lampe-rouge.webp'; }
 // Taille dans le monde : la lanterne mesure à peu près la hauteur d'une tête et d'un buste de passant.
 const LARGEUR_LAMPE = 44;
+// 22 oct. : Jeremy remplace la lanterne murale par un réverbère à lanterne rouge (images/objets/reverbere-rouge.webp,
+// 1024 × 1536, fond transparent). Son pied est planté sur le trottoir, contre la façade ; la lanterne pend au-dessus
+// de la porte. Mesures relevées sur l'image : pied à 32 % de la largeur, centre du verre à (68 %, 37 %).
+const REVERBERE = {piedX:698, piedY:1982, hauteur:104};
+let imageReverbere = null;
+{ const im = new Image(); im.onload = () => { imageReverbere = im; }; im.src = 'images/objets/reverbere-rouge.webp'; }
 function dessinerRepere(c, s){
  const {x, y} = REPERE, h = ((s.minutes % 1440) + 1440) % 1440 / 60, nuit = h >= 20 || h < 6;
  const pulse = reducedMotion() ? 1 : 1 + Math.sin(performance.now() / 600) * .06;
+ if (imageReverbere){
+  const H = REVERBERE.hauteur, W = H * imageReverbere.width / imageReverbere.height;
+  const gauche = REVERBERE.piedX - W * .32, haut = REVERBERE.piedY - H, gx = gauche + W * .68, gy = haut + H * .37;
+  c.save();
+  // une petite ombre au pied, pour poser le réverbère sur le trottoir
+  c.fillStyle = 'rgba(0,0,0,.28)'; c.beginPath(); c.ellipse(REVERBERE.piedX, REVERBERE.piedY - 1, W * .16, 3, 0, 0, Math.PI * 2); c.fill();
+  c.drawImage(imageReverbere, gauche, haut, W, H);
+  const r = (nuit ? 95 : 42) * pulse, g = c.createRadialGradient(gx, gy, 2, gx, gy, r);
+  g.addColorStop(0, nuit ? 'rgba(255,70,40,.62)' : 'rgba(255,80,50,.26)'); g.addColorStop(1, 'rgba(255,60,30,0)');
+  c.globalCompositeOperation = 'lighter'; c.fillStyle = g; c.beginPath(); c.arc(gx, gy, r, 0, Math.PI * 2); c.fill();
+  c.restore(); return;
+ }
  // avec l'image, la potence est fixée au mur à gauche du point, la lanterne pend à droite
  const hl = imageRepere ? LARGEUR_LAMPE * imageRepere.height / imageRepere.width : 0;
  const gx = imageRepere ? x - LARGEUR_LAMPE * .2 + LARGEUR_LAMPE * .68 : x, gy = imageRepere ? y - 52 + hl * .7 : y - 26;
@@ -3356,7 +3374,7 @@ function dessinerRepere(c, s){
 const renderSansRepere = WORLD.render;
 WORLD.render = function(c, vue, s, o){
  const r = renderSansRepere.apply(this, arguments);
- if (vue && REPERE.x > vue.x - 80 && REPERE.x < vue.x + vue.w + 80 && REPERE.y > vue.y - 80 && REPERE.y < vue.y + vue.h + 120) dessinerRepere(c, s || state);
+ if (vue && REPERE.x > vue.x - 80 && REPERE.x < vue.x + vue.w + 80 && REPERE.y > vue.y - 120 && REPERE.y < vue.y + vue.h + 160) dessinerRepere(c, s || state);
  return r;
 };
 
