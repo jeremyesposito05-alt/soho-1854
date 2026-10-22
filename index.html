@@ -4582,12 +4582,14 @@ const A_RETENIR = [
  ['Le débat', 'En 1854, la plupart des médecins pensent que le choléra vient de l’air vicié, le miasme. Snow défend l’idée d’une transmission par l’eau. Les autorités ne le suivent pas.'],
  ['Le lien avec la suite du cours', 'Snow a raison, mais il ne peut pas montrer le microbe du choléra. C’est la théorie des germes, dans la partie II, qui l’expliquera.'],
 ];
-// À vérifier par Jeremy : ces définitions doivent être celles du tableau du livret.
+// Épidémie, miasme, contagion : mot pour mot le tableau « Définitions à connaître » de la partie I du livret
+// (_atelier livret\contenus\livret_complet.txt). Le livret ne définit pas le choléra (lexique seulement) :
+// sa définition reprend l'écran « Le choléra » de l'ouverture.
 const MOTS = [
- ['épidémie', 'Une maladie qui touche beaucoup de personnes en même temps, au même endroit.'],
- ['miasme', 'Un air vicié, chargé de mauvaises odeurs. On croyait qu’il donnait les maladies.'],
- ['contagion', 'Le passage d’une maladie d’une personne à une autre, par le contact.'],
- ['choléra', 'Une maladie qui provoque des diarrhées et des vomissements très violents. Le malade perd toute l’eau de son corps.'],
+ ['épidémie', 'Développement rapide d’une maladie qui touche en même temps un grand nombre de personnes dans une région.'],
+ ['miasme', 'Air corrompu, chargé de mauvaises vapeurs venues de la saleté ou de la pourriture, que l’on croyait responsable des maladies.'],
+ ['contagion', 'Transmission d’une maladie d’une personne à une autre, par contact direct ou indirect.'],
+ ['choléra', 'Maladie qui provoque des diarrhées et des vomissements très violents. Le malade perd toute l’eau de son corps.'],
 ];
 
 const trace = () => partie.trace || (partie.trace = {page:0, auto:{}});
