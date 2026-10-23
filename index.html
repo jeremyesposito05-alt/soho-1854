@@ -5526,14 +5526,20 @@ documentTrace = function(){
   + wP([wR('Personnage joué : ', {b:true}), wR(perso.nom)]);
  // la synthèse des points
  s += wTitre2('Synthèse');
- s += wTable([[wP(wR('Ce qui est évalué', {b:true})), wP(wR('Critères', {b:true})), wP(wR('Résultat', {b:true}))],
-  [wP(wR('La réunion du conseil : la note de l’enquêteur')), wP(wR('D')), wP(wR(r.etoiles ? '★'.repeat(r.etoiles) + '☆'.repeat(3 - r.etoiles) + ' (' + r.etoiles + ' sur 3)' : 'pas de réunion'))],
-  [wP(wR('Les questions du soir, sur cinq jours')), wP(wR('A, B, C, D')), wP(wR(n.soir + ' / ' + n.soirMax))],
-  [wP(wR('Examen, partie 1 : mes preuves')), wP(wR('B, D')), wP(wR(n.preuves + ' / ' + n.preuvesMax))],
-  [wP(wR('Examen, partie 2 : mon verdict (le rapport)')), wP(wR('C, D')), wP(wR('… / 6, noté par le professeur'))],
-  [wP(wR('Examen, partie 3 : mes connaissances')), wP(wR('A')), wP(wR(n.conn + ' / ' + n.connMax))],
-  [wP(wR('Cartes de savoir trouvées')), wP(wR('mérite')), wP(wR(Object.keys(j.cartes || {}).length + ' / ' + CARTES_SAVOIR.length))]],
-  [5000, 1600, 3000]);
+ // le barème du plan d'évaluation (23 oct.) : note sur 20, coefficient 2 ; points ramenés arrondis au demi-point
+ const demi = v => Math.round(v * 2) / 2, f = v => String(v).replace('.', ',');
+ const nbCartes = Object.keys(j.cartes || {}).length;
+ const pts = {etoiles:r.etoiles || 0, soir:demi(n.soir / n.soirMax * 4), preuves:n.preuvesMax ? demi(n.preuves / n.preuvesMax * 4) : 0, conn:n.connMax ? demi(n.conn / n.connMax * 3) : 0, bonus:nbCartes >= 9 ? 1 : 0};
+ const sousTotal = pts.etoiles + pts.soir + pts.preuves + pts.conn;
+ s += wTable([[wP(wR('Ce qui est évalué', {b:true})), wP(wR('Critères', {b:true})), wP(wR('Résultat', {b:true})), wP(wR('Points sur 20', {b:true}))],
+  [wP(wR('Les questions du soir, sur cinq jours')), wP(wR('A, B, C, D')), wP(wR(n.soir + ' / ' + n.soirMax)), wP(wR(f(pts.soir) + ' / 4'))],
+  [wP(wR('La réunion du conseil : la note de l’enquêteur')), wP(wR('D')), wP(wR(r.etoiles ? '★'.repeat(r.etoiles) + '☆'.repeat(3 - r.etoiles) : 'pas de réunion')), wP(wR(pts.etoiles + ' / 3'))],
+  [wP(wR('Examen, partie 1 : mes preuves')), wP(wR('D')), wP(wR(n.preuves + ' / ' + n.preuvesMax)), wP(wR(f(pts.preuves) + ' / 4'))],
+  [wP(wR('Examen, partie 3 : mes connaissances')), wP(wR('A')), wP(wR(n.conn + ' / ' + n.connMax)), wP(wR(f(pts.conn) + ' / 3'))],
+  [wP(wR('Examen, partie 2 : mon verdict (le rapport)')), wP(wR('A, C, D')), wP(wR('noté par le professeur')), wP(wR('… / 6'))],
+  [wP(wR('Bonus : cartes de savoir trouvées')), wP(wR('mérite')), wP(wR(nbCartes + ' / ' + CARTES_SAVOIR.length)), wP(wR(pts.bonus ? '+ 1' : '0'))],
+  [wP(wR('Note proposée', {b:true})), wP(wR('')), wP(wR('hors rapport')), wP(wR(f(sousTotal + pts.bonus) + ' / 14 + rapport … / 6', {b:true}))]],
+  [4200, 1300, 2100, 2000]);
  s += wP(wR('Barème du verdict : une réponse claire à la question en une phrase (2 points) ; deux preuves expliquées, avec leur origine (2 points) ; une limite et au moins deux mots du cours bien employés (2 points).', {size:19, color:CW.gris}), {avant:80});
  // 1 · ce que j'ai compris en 1854
  s += wTitre2('1. Ce que j’ai compris en 1854');
@@ -5618,6 +5624,7 @@ telechargerTrace = function(){
  document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 30000);
 };
 window.SOHO_EXAMEN = {notesExamen, extraitsExamen, QUESTIONS_EXAMEN, examen};
+Object.assign(window.SOHO_TRACE, {documentTrace, telechargerTrace});   // les versions de l'examen, pas celles de trace.js
 
 window.SOHO_TEST={world:WORLD,openMenu,closeMenu,toggleMap,paused,state,player,camera,viewport,canvas:cv,layout:LAYOUT,npcs,DATA,floor,nearest,findPath,blocked,worldToScreen,screenToWorld,pointers,resolveWalkGoal,moveTo,goToPerson,talk,changeTime,reset,draw,step,resize,shouldPaint,placeEntry,layoutLabels,visible:()=>visibleActors,pump,pumps,keys,markerOpacity,layoutStreetLabels,reducedMotion,visualStats:()=>WORLD.decor?.stats()};
 reset();resize();requestAnimationFrame(frame);
