@@ -5122,11 +5122,12 @@ const JOURNEES = [
   avant:[{qui:'', texte:'Le mardi, des médecins du gouvernement vont de maison en maison. Le docteur, lui, passe la journée à écrire et à compter.'}],
   mission:['J’ai obtenu la liste des morts enregistrés à la fin de la semaine dernière : quatre-vingt-trois en trois jours.', 'Il me faut savoir où ils habitaient, et ce qu’ils buvaient. Faites le tour des ateliers et des boutiques du quartier. Demandez combien de gens sont morts, et notez les rues. Les adresses sont dans votre carnet, avec la mission. Ce soir, nous mettrons tout sur une carte.'],
   // 27 oct. (Jeremy) : dire où sont les ateliers et les boutiques, et à quelle heure on y trouve les gens
-  ou:['La fabrique de capsules de M. Eley : sur Broad Street, à l’est de la pompe, avant Berwick Street. De 9 h à 18 h.',
-   'M. Gould et le médecin du conseil de santé : sur Broad Street, près de la pompe. De 9 h à 17 h.',
-   'Le marché aux fruits : en bas de Berwick Street, au sud de Broad Street. Le matin, de 8 h à 13 h.',
-   'Le révérend Whitehead : sur Berwick Street, au nord de Broad Street. Tôt le matin (7 h à 10 h) et le soir (17 h à 22 h).',
-   'Le café : au bout de Broad Street, après Berwick Street. Le soir seulement, de 18 h à 23 h.'],
+  // ids : la ligne se barre quand on a écouté jusqu'au bout toutes ces personnes
+  ou:[{ids:['eley'], t:'La fabrique de capsules de M. Eley : sur Broad Street, à l’est de la pompe, avant Berwick Street. De 9 h à 18 h.'},
+   {ids:['gould', 'inspecteur'], t:'M. Gould et le médecin du conseil de santé : sur Broad Street, près de la pompe. De 9 h à 17 h.'},
+   {ids:['marchande'], t:'Le marché aux fruits : en bas de Berwick Street, au sud de Broad Street. Le matin, de 8 h à 13 h.'},
+   {ids:['whitehead'], t:'Le révérend Whitehead : sur Berwick Street, au nord de Broad Street. Tôt le matin (7 h à 10 h) et le soir (17 h à 22 h).'},
+   {ids:['cafe'], t:'Le café : au bout de Broad Street, après Berwick Street. Le soir seulement, de 18 h à 23 h.'}],
   voix:'J’ai mes chiffres, je crois… Je peux encore chercher, ou rentrer montrer tout ça au docteur.',
   lecon:[
    'Montrez-moi vos chiffres. Dix-huit morts à la fabrique de capsules. Neuf clients du café. Et la liste officielle que j’ai obtenue.',
@@ -5482,7 +5483,7 @@ silhouette = function(c, x, y, o, pas, actor = {}){
 };
 // « Où aller » : un menu déroulant, fermé par défaut ; il reste ouvert si le joueur l'a ouvert (Jeremy, 27 oct.)
 let ouOuvert = false;
-const listeOu = ou => ou && ou.length ? '<details class="mission-ou-bloc"' + (ouOuvert ? ' open' : '') + '><summary class="mission-ou-titre">Où aller ? Les lieux et les heures</summary><ul class="mission-ou">' + ou.map(t => '<li>' + esc(t) + '</li>').join('') + '</ul></details>' : '';
+const listeOu = ou => ou && ou.length ? '<details class="mission-ou-bloc"' + (ouOuvert ? ' open' : '') + '><summary class="mission-ou-titre">Où aller ? Les lieux et les heures</summary><ul class="mission-ou">' + ou.map(x => '<li' + (x.ids.every(id => carnet.vus[id] || carnet.vus[id + ':matin']) ? ' class="fait"' : '') + '>' + esc(x.t) + '</li>').join('') + '</ul></details>' : '';
 boiteMission.addEventListener('toggle', e => { if (e.target.classList.contains('mission-ou-bloc')) ouOuvert = e.target.open; }, true);
 function majMission(){
  const jr = journeeCourante();
