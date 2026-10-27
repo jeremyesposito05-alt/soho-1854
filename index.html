@@ -5385,13 +5385,26 @@ ouv.addEventListener('click', e => {
 });
 
 // ---------- la voix intérieure ----------
+// 27 oct. (Jeremy) : quand la mission est remplie, un raccourci ramène chez le docteur, par un fondu au noir.
+// Le trajet coûte le temps qu'il aurait fallu pour marcher.
+function rentrerChezSnow(){
+ keys.clear(); stop(); ouv.hidden = false; ouv.className = 'ouverture ouv-noir';
+ setTimeout(() => {
+  const trajet = Math.hypot(player.px - spawn[0], player.py - spawn[1]) / PAS_MINUTE;
+  player.px = player.gx = spawn[0]; player.py = player.gy = spawn[1];
+  state.minutes += Math.round(trajet); updateClock(true);
+  npcs.update(0, state.minutes, false); visibleActors = npcs.visible(); draw();
+  ouvrirMaison();
+ }, 750);
+}
+const RACCOURCI = [{texte:'Rentrer chez le docteur', faire:rentrerChezSnow}, {texte:'Rester dans le quartier', faire:() => {}}];
 setInterval(() => {
  const jr = journeeCourante(); if (!jr || jr.derniere || !ouv.hidden || paused() || guideActif) return;
  if (boiteDialogue.open || ui('carnet').open || ui('menu').open) return;
  const j = jours(), i = j.i; if (j.lecons[i]) return;
- if (missionRemplie(i) && !j.voix[i]){ j.voix[i] = true; sauverPartie(); pensee(jr.voix); return; }
+ if (missionRemplie(i) && !j.voix[i]){ j.voix[i] = true; sauverPartie(); pensee(jr.voix, RACCOURCI); return; }
  const h = ((state.minutes % 1440) + 1440) % 1440 / 60;
- if (jr.nuit && h >= 4.5 && h < 7 && !j.voix[i + 'aube']){ j.voix[i + 'aube'] = true; sauverPartie(); pensee('Le ciel pâlit. L’aube approche : je dois rentrer chez le docteur, sous la lanterne rouge.'); }
+ if (jr.nuit && h >= 4.5 && h < 7 && !j.voix[i + 'aube']){ j.voix[i + 'aube'] = true; sauverPartie(); pensee('Le ciel pâlit. L’aube approche : je dois rentrer chez le docteur, sous la lanterne rouge.', RACCOURCI.slice(0, 1)); }
 }, 1500);
 
 // ---------- le carnet : la mission en cours et la page « Savoirs » ----------
