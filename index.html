@@ -5018,7 +5018,7 @@ const QUESTIONS_SNOW = {
 const NOMS_CRITERES = {A:'Critère A · connaissances', B:'Critère B · préparer l’enquête', C:'Critère C · communiquer', D:'Critère D · juger une source'};
 
 // ---------- les journées ----------
-// personnes : les six de la mission (trois vraies pistes, trois fausses) ; le joueur n'en voit que le compte.
+// personnes : les six de la mission (trois vraies pistes, trois fausses) ; le compteur accepte n'importe quelle personne.
 const JOURNEES = [
  {jour:0, nom:'Vendredi 1er septembre', debut:7 * 60,
   resume:'Écouter ce que disent les habitants autour de Broad Street : des faits, et ce qu’ils croient.',
@@ -5081,7 +5081,8 @@ const journeeCourante = () => partie && partie.perso ? JOURNEES[Math.min(JOURNEE
 const accorder = t => t.replace('{e}', moiE()).replace('{autre}', partie.perso === 'emily' ? 'votre frère' : 'votre sœur').replace('{allee}', partie.perso === 'emily' ? 'allé' : 'allée');
 function missionEtat(i){
  const jr = JOURNEES[i], j = jours(), parles = j.parles[i] || {};
- const vus = jr.personnes.filter(id => parles[id]).length, notes = j.notes[i] || 0;
+ // Toute personne différente rencontrée ce jour compte, pas seulement les six prévues : le joueur ne les connaît pas.
+ const vus = Object.keys(parles).filter(id => id && !/^(snow|journal)/.test(id)).length, notes = j.notes[i] || 0;
  const l = [];
  if (jr.parler) l.push({ok:vus >= jr.parler, t:'Parler à ' + jr.parler + ' personnes ' + jr.lieu, n:Math.min(vus, jr.parler) + ' / ' + jr.parler});
  if (jr.noter) l.push({ok:notes >= jr.noter, t:'Noter ' + jr.noter + ' phrases dans le carnet', n:Math.min(notes, jr.noter) + ' / ' + jr.noter});
