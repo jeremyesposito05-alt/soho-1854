@@ -5137,7 +5137,12 @@ const JOURNEES = [
 ];
 
 // ---------- l'état de la partie ----------
-const jours = () => partie.jours || (partie.jours = {i:0, lecons:{}, q:{}, aRevoir:[], cartes:{}, parles:{}, notes:{}, voix:{}});
+// 27 oct. (Jeremy) : une question validée ne revient jamais dans les questions à retravailler.
+const jours = () => {
+ const j = partie.jours || (partie.jours = {i:0, lecons:{}, q:{}, aRevoir:[], cartes:{}, parles:{}, notes:{}, voix:{}});
+ if (j.aRevoir.length) j.aRevoir = [...new Set(j.aRevoir)].filter(id => !(j.q[id] && j.q[id].ok));
+ return j;
+};
 const journeeCourante = () => partie && partie.perso ? JOURNEES[Math.min(JOURNEES.length - 1, jours().i)] : null;
 const accorder = t => t.replace('{e}', moiE()).replace('{autre}', partie.perso === 'emily' ? 'votre frère' : 'votre sœur').replace('{allee}', partie.perso === 'emily' ? 'allé' : 'allée');
 function missionEtat(i){
@@ -5375,7 +5380,7 @@ function repondre(k){
  qRep = k;
  const essais = (deja ? deja.essais : 0) + 1;
  j.q[id] = {essais, ok:ok || !!(deja && deja.ok), points:ok ? (essais === 1 ? 2 : 1) : (deja ? deja.points || 0 : 0)};
- j.aRevoir = j.aRevoir.filter(x => x !== id); if (!ok) j.aRevoir.push(id);
+ j.aRevoir = j.aRevoir.filter(x => x !== id); if (!j.q[id].ok) j.aRevoir.push(id);
  if (ok) qBilan.bonnes++;
  sauverPartie(); ecranQuestion();
 }
@@ -5615,7 +5620,16 @@ const QUESTIONS_EXAMEN = {
  x8:{q:'En 1854, que pensent la plupart des médecins de la cause du choléra ?', r:['Qu’il vient de l’air vicié, le miasme.', 'Qu’il vient de l’eau des pompes publiques.', 'Qu’il vient des fruits et des légumes pas mûrs.']},
 };
 // la liste de la partie 3 : les huit questions d'examen, puis les questions du soir encore manquées
-const listeConnaissances = () => [...Object.keys(QUESTIONS_EXAMEN), ...(partie.jours ? partie.jours.aRevoir : []).map(id => 'soir:' + id)];
+// La liste est figée au début de l'examen : les questions du soir réussies pendant l'examen deviennent « validées »
+// et quittent les questions à retravailler, mais elles restent dans la copie et dans sa note (27 oct.).
+const listeConnaissances = () => {
+ const x = examen();
+ if (!x.liste){
+  const soir = new Set([...(partie.jours ? partie.jours.aRevoir : []).map(id => 'soir:' + id), ...Object.keys(x.conn || {}).filter(k => k.startsWith('soir:'))]);
+  x.liste = [...Object.keys(QUESTIONS_EXAMEN), ...soir];
+ }
+ return x.liste;
+};
 const questionConn = id => id.startsWith('soir:') ? QUESTIONS_SNOW[id.slice(5)] : QUESTIONS_EXAMEN[id];
 function ordreDe(cle, n){
  const x = examen();
