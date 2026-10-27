@@ -5534,6 +5534,28 @@ function ecranCadre(){
   + '<div class="ouv-nav"><span></span><button class="ouv-principal" data-act="titre" autofocus>Entrer dans l’enquête</button></div>');
 }
 if (!partie || !partie.perso) ecranCadre();
+// ---------- l'heure et la place du joueur, sauvegardées (27 oct.) ----------
+// Bug signalé par Jeremy : après un rechargement, la journée restait « lundi » mais l'horloge repartait au vendredi.
+// On garde l'heure et la position toutes les 5 secondes, et on les rend quand on clique « Continuer l'enquête ».
+function garderHeure(){
+ if (!partie || !partie.perso || !state.ready || !ouv.hidden) return;
+ partie.minutes = state.minutes; partie.pos = [Math.round(player.px), Math.round(player.py)]; sauverPartie();
+}
+setInterval(garderHeure, 5000);
+addEventListener('pagehide', garderHeure);
+document.addEventListener('visibilitychange', () => { if (document.hidden) garderHeure(); });
+ouv.addEventListener('click', e => {
+ const b = e.target.closest('[data-act="continuer"]'); if (!b || !partie || !partie.perso) return;
+ const jr = journeeCourante();
+ // une ancienne sauvegarde sans heure : au moins le début de la journée en cours
+ const m = Number.isFinite(partie.minutes) ? partie.minutes : jr ? jr.debut : state.minutes;
+ state.minutes = Math.max(m, jr && !jr.derniere ? jr.debut : 0);
+ if (Array.isArray(partie.pos)){ player.px = player.gx = partie.pos[0]; player.py = player.gy = partie.pos[1]; }
+ else { player.px = player.gx = spawn[0]; player.py = player.gy = spawn[1]; }
+ stop(); keys.clear();
+ npcs.reset(state.minutes); visibleActors = npcs.visible(); updateClock(true); draw();
+}, true);
+
 window.SOHO_JOURNEES = {JOURNEES, CARTES_SAVOIR, QUESTIONS_SNOW, jours, demarrerJournee, passerJournee, missionEtat, missionRemplie, poserQuestions};
 
 // ============================================================
