@@ -3001,39 +3001,66 @@ let volume = 0.35;
 try { const v = parseFloat(localStorage.getItem(CLE_SON)); if (v >= 0 && v <= 1) volume = v; } catch {}
 const pistes = {};
 let contexte = null, actuelle = null, demarree = false;
+// 27 oct. (Jeremy) : « la musique ne doit jamais avoir de rupture, c'est une boucle ». La boucle du navigateur laissait
+// un court silence à la fin du fichier. Chaque piste a donc deux lecteurs du même fichier : un peu avant la fin,
+// le second repart du début et prend le relais en fondu enchaîné (FONDU_BOUCLE secondes). Sans Web Audio (rare),
+// on garde la boucle simple du navigateur.
+const FONDU_BOUCLE = 0.6;
 const piste = nom => {
  if (pistes[nom]) return pistes[nom];
- const a = new Audio(PISTES[nom]); a.loop = true; a.preload = 'auto';
- const p = {a, niveau:0, gain:null};
- if (contexte){ p.gain = contexte.createGain(); p.gain.gain.value = 0; contexte.createMediaElementSource(a).connect(p.gain).connect(contexte.destination); }
- else a.volume = 0;
+ const p = {els:[], relais:[], cur:0, niveau:0, gain:null, bascule:false};
+ for (let k = 0; k < (contexte ? 2 : 1); k++){
+  // la boucle du navigateur reste en filet de sécurité : si la durée du fichier est inconnue, la musique ne s'arrête jamais
+  const a = new Audio(PISTES[nom]); a.preload = 'auto'; a.loop = true;
+  p.els.push(a);
+  if (contexte){ if (!p.gain){ p.gain = contexte.createGain(); p.gain.gain.value = 0; p.gain.connect(contexte.destination); }
+   const r = contexte.createGain(); r.gain.value = k === 0 ? 1 : 0; contexte.createMediaElementSource(a).connect(r).connect(p.gain); p.relais.push(r); }
+  else a.volume = 0;
+ }
+ p.a = p.els[0];
  return pistes[nom] = p;
 };
+const lecteur = p => p.els[p.cur];
 const regler = (p, v) => { p.niveau = v; if (p.gain) p.gain.gain.value = v * volume; else p.a.volume = Math.min(1, v * volume); };
+// le relais de la boucle : surveillé souvent, car il faut partir juste avant la fin
+setInterval(() => {
+ if (!demarree || !contexte) return;
+ for (const nom in pistes){
+  const p = pistes[nom], a = lecteur(p);
+  if (p.bascule || a.paused || !a.duration || a.duration - a.currentTime > FONDU_BOUCLE + 0.08) continue;
+  const k = 1 - p.cur, b = p.els[k], t = contexte.currentTime;
+  p.bascule = true; b.currentTime = 0; b.play().catch(() => {});
+  p.relais[k].gain.cancelScheduledValues(t); p.relais[k].gain.setValueAtTime(0, t); p.relais[k].gain.linearRampToValueAtTime(1, t + FONDU_BOUCLE);
+  p.relais[p.cur].gain.cancelScheduledValues(t); p.relais[p.cur].gain.setValueAtTime(1, t); p.relais[p.cur].gain.linearRampToValueAtTime(0, t + FONDU_BOUCLE);
+  const ancien = p.cur; p.cur = k; p.a = b;
+  setTimeout(() => { p.els[ancien].pause(); p.bascule = false; }, FONDU_BOUCLE * 1000 + 150);
+ }
+}, 40);
 const voulue = () => { const h = (state.minutes / 60) % 24; return h >= 20 || h < 6 ? 'nuit' : 'jour'; };
 function demarrerMusique(){
  if (demarree || (volume === 0 && volumeBruits === 0)) return; demarree = true;
  try { const AC = window.AudioContext || window.webkitAudioContext; if (AC && !contexte) contexte = new AC(); } catch { contexte = null; }
  if (contexte && contexte.state === 'suspended') contexte.resume().catch(() => {});
- actuelle = voulue(); const p = piste(actuelle); regler(p, 0); p.a.play().catch(() => { demarree = false; });
+ actuelle = voulue(); const p = piste(actuelle); regler(p, 0); lecteur(p).play().catch(() => { demarree = false; });
 }
 // Toutes les 100 ms : on rapproche chaque piste de son niveau cible (fondu de 3 s environ).
 setInterval(() => {
  if (!demarree) return;
  const cible = voulue();
- if (cible !== actuelle){ actuelle = cible; const p = piste(cible); if (p.a.paused) p.a.play().catch(() => {}); }
+ if (cible !== actuelle){ actuelle = cible; const p = piste(cible); if (lecteur(p).paused) lecteur(p).play().catch(() => {}); }
  for (const nom in pistes){
   const p = pistes[nom], but = nom === actuelle ? 1 : 0;
   if (p.niveau === but) continue;
   regler(p, but > p.niveau ? Math.min(but, p.niveau + 0.033) : Math.max(but, p.niveau - 0.033));
-  if (p.niveau === 0 && nom !== actuelle){ p.a.pause(); p.a.currentTime = 0; }
+  // la piste qui s'est tue garde sa place : elle reprendra là où elle s'était arrêtée, sans repartir du début
+  if (p.niveau === 0 && nom !== actuelle) for (const a of p.els) a.pause();
  }
 }, 100);
-// onglet caché : silence ; retour : reprise
+// onglet caché : silence ; retour : reprise au même endroit
 document.addEventListener('visibilitychange', () => {
  if (!demarree) return;
- if (document.hidden){ for (const nom in pistes) pistes[nom].a.pause(); }
- else { const p = pistes[actuelle]; if (p) p.a.play().catch(() => {}); }
+ if (document.hidden){ for (const nom in pistes) for (const a of pistes[nom].els) a.pause(); }
+ else { const p = pistes[actuelle]; if (p) lecteur(p).play().catch(() => {}); }
 });
 for (const ev of ['pointerdown', 'keydown']) addEventListener(ev, demarrerMusique, {capture:true});
 const choixSon = ui('musique');
