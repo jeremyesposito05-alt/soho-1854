@@ -1873,7 +1873,7 @@ window.SOHO_ATMOSPHERE_ASSETS={"fumee-01":{"id":"fumee-01","kind":"fumee","file"
   {id:'mere_bentinck', nom:'Une mère qui fait ses malles', at:[2248, 1100], plages:[[2, 2, 0, 5]], cout:15, costume:T.manteau('#5a4a52', 'bonnet', {robe:true})},
   {id:'cocher', nom:'Un cocher, sa charrette chargée de malles', at:[1300, 960], plages:[[2, 2, 0, 5]], cout:10, costume:T.manteau('#3e3a30', 'casquette')},
   {id:'precheur', nom:'Un prêcheur des rues', at:[2248, 760], plages:[[1, 1, 20, 24], [2, 2, 0, 5]], cout:10, costume:T.manteau('#1e1c1c', 'haut')},
-  {id:'snow_pompe', nom:'Le docteur Snow, à la pompe', at:[1610, 945], plages:[[3, 3, 14, 19]], cout:0, costume:T.manteau('#1d1d22', 'haut', {col:true})},
+  {id:'snow_pompe', nom:'Le docteur Snow, à la pompe', at:[1610, 945], plages:[[3, 3, 11, 19]], cout:0, costume:T.manteau('#1d1d22', 'haut', {col:true})},
   {id:'ouvrier_chaux', nom:'Un ouvrier qui répand de la chaux', at:[1592, 1300], plages:[[3, 6, 8, 17]], cout:10, costume:T.manteau('#8a8478', 'casquette', {tablier:true})},
   {id:'apothicaire', nom:'L’apothicaire de Brewer Street', at:[1200, 1712], plages:[[3, 6, 9, 18]], cout:15, costume:T.manteau('#3a3428', 'haut')},
   {id:'jeune_mere', nom:'Une jeune mère et son bébé', at:[1968, 1600], plages:[[3, 3, 10, 16], [6, 6, 10, 16]], cout:10, costume:T.manteau('#6a5a64', 'bonnet', {robe:true})},
@@ -2561,6 +2561,9 @@ const IDS_EAU = new Set(Object.values(ENQUETE).flatMap(e => [...(e.indices || []
 // Un passant sur trois accepte de parler. Chacun garde sa réplique pour la journée.
 // h : [heure de début, heure de fin] ; j : [premier jour, dernier jour]. Une rumeur peut faire découvrir une explication.
 const RUMEURS = [
+ // lundi 4 septembre : on cherche le docteur (27 oct.)
+ {h:[7, 19], j:[3, 3], prio:true, l:'Vous cherchez un monsieur tout en noir, avec une sacoche pleine de flacons ? Je l’ai vu ce matin remplir ses bouteilles aux pompes du quartier. Il revenait toujours à celle de Broad Street.'},
+ {h:[7, 19], j:[3, 3], prio:true, l:'Le docteur Snow ? Oui, je le connais. Il passe la journée à la pompe de Broad Street. Il regarde l’eau à la lumière, comme si elle allait lui parler.'},
  // la fumée, le travail et la misère de Londres en 1854 (ajout du 22 oct.)
  {h:[7, 19], j:[0, 6], d:'miasme', l:'Regardez le ciel : toute cette fumée de charbon. Les ateliers, les brasseries et les cheminées de Londres crachent du noir toute la journée. Certains matins, on ne voit pas le bout de la rue. Moi, je dis que cet air finira par tous nous tuer.'},
  {h:[6, 21], j:[0, 6], d:'pauvrete', l:'Je suis tailleur. On travaille à huit dans une chambre sans air, de six heures du matin à dix heures du soir. On coud, on mange et on dort au même endroit. Le patron dit que la maladie, c’est pour les paresseux. Moi, je crois que c’est la fatigue et la misère qui nous tuent.'},
@@ -2590,6 +2593,9 @@ function rumeurPour(p){
  const minutes = state.minutes, j = Math.max(0, Math.min(6, Math.floor(minutes / 1440))), h = ((minutes % 1440) + 1440) % 1440 / 60;
  const possibles = RUMEURS.filter(r => dansPlage(h, r.h) && j >= r.j[0] && j <= r.j[1]);
  if (!possibles.length) return null;
+ // les répliques propres à un seul jour (le docteur à trouver, lundi) reviennent chez un passant sur deux
+ const duJour = possibles.filter(r => r.prio);
+ if (duJour.length && (p._index || 0) % 2 === 0) return duJour[((p._index || 0) / 2) % duJour.length];
  return possibles[((p._index || 0) * 7 + j * 3) % possibles.length];
 }
 
@@ -5132,7 +5138,9 @@ function missionEtat(i){
  const l = [];
  if (jr.parler) l.push({ok:vus >= jr.parler, t:'Parler à ' + jr.parler + ' personnes ' + jr.lieu, n:Math.min(vus, jr.parler) + ' / ' + jr.parler});
  if (jr.noter) l.push({ok:notes >= jr.noter, t:'Noter ' + jr.noter + ' phrases dans le carnet', n:Math.min(notes, jr.noter) + ' / ' + jr.noter});
- if (jr.trouverSnow) l.push({ok:!!parles.snow_pompe, t:'Retrouver le docteur', n:parles.snow_pompe ? 'fait' : ''});
+ // 27 oct. (Jeremy : « je ne retrouve pas le docteur ») : un indice qui se précise quand on a parlé aux gens
+ if (jr.trouverSnow) l.push({ok:!!parles.snow_pompe, n:parles.snow_pompe ? 'fait' : '',
+  t:'Retrouver le docteur' + (parles.snow_pompe ? '' : vus >= 2 ? ' : on l’a vu remplir des flacons à la pompe de Broad Street, à partir de onze heures' : ' : demandez aux gens que vous croisez')});
  if (jr.nuit) l.push({ok:false, t:'Rentrer chez le docteur avant l’aube', n:'', pasCompte:true});
  if (jr.derniere){ const a = carnet.indices.filter(x => x.sacoche).length; l.push({ok:a >= 3, t:'Choisir au moins 3 arguments pour la réunion', n:Math.min(a, 3) + ' / 3'}); }
  return l;
