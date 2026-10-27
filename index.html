@@ -3054,12 +3054,16 @@ if (choixSon){
 // « entier » : le fichier est court, on le joue en entier sans fondu d'entrée. « force » : volume propre au bruit.
 // La cloche est à part : elle sonne les heures (voir plus bas), elle n'a pas de min/max.
 // Pour en ajouter un : déposer le mp3 dans audio/ et ajouter une ligne ici.
+// 27 oct. (Jeremy) : les vomissements et les charrettes dès l'ouverture étaient « très agressifs, pas encore appropriés ».
+// Les bruits suivent maintenant le récit : « des » = premier jour où on peut l'entendre (jour 0 = vendredi 1er).
+// Le vendredi, le quartier est encore calme ; les malles des familles qui fuient arrivent le samedi (Snow),
+// et le malade ne s'entend qu'à partir de la nuit des cris (journée 2), rarement et de loin.
 const BRUITS = [
- {id:'corneilles', fichier:'audio/bruit-corneilles.mp3', quand:'jour', min:25, max:60, duree:10},
- {id:'vent', fichier:'audio/bruit-vent.mp3', quand:'toujours', min:70, max:160, duree:16, force:0.8},
- {id:'chiens', fichier:'audio/bruit-chiens.mp3', quand:'nuit', min:35, max:85, entier:true, force:0.6},
- {id:'malade', fichier:'audio/bruit-malade.mp3', quand:'toujours', min:100, max:220, entier:true, force:0.55},
- {id:'brouette', fichier:'audio/bruit-brouette.mp3', quand:'jour', min:60, max:140, duree:9, force:0.7},
+ {id:'corneilles', fichier:'audio/bruit-corneilles.mp3', quand:'jour', min:25, max:60, duree:10, des:0},
+ {id:'vent', fichier:'audio/bruit-vent.mp3', quand:'toujours', min:70, max:160, duree:16, force:0.8, des:0},
+ {id:'chiens', fichier:'audio/bruit-chiens.mp3', quand:'nuit', min:35, max:85, entier:true, force:0.6, des:0},
+ {id:'brouette', fichier:'audio/bruit-brouette.mp3', quand:'jour', min:90, max:200, duree:9, force:0.5, des:1},
+ {id:'malade', fichier:'audio/bruit-malade.mp3', quand:'toujours', min:240, max:480, entier:true, force:0.3, des:2},
 ];
 // Le crayon : un court extrait (2 s, fondus brefs) chaque fois qu'un indice entre dans le carnet.
 const ECRITURE = {id:'ecriture', fichier:'audio/bruit-ecriture.mp3', duree:2, fondu:[0.15, 0.6], force:0.9};
@@ -3101,13 +3105,14 @@ const jouerBruit = (b, retard = 0) => {
  }, 100);
 };
 setInterval(() => {
- if (!demarree || volumeBruits === 0 || document.hidden || paused()) return;
- const maintenant = performance.now() / 1000, moment = voulue();
+ // pas de bruits de rue tant que l'écran d'ouverture (titre, récit, maison de Snow) couvre la ville : la musique suffit
+ if (!demarree || volumeBruits === 0 || document.hidden || paused() || !ouv.hidden) return;
+ const maintenant = performance.now() / 1000, moment = voulue(), jour = Math.floor(state.minutes / 1440);
  for (const b of BRUITS){
   if (prochains[b.id] === undefined) prochains[b.id] = maintenant + 8 + Math.random() * 15;
   if (maintenant < prochains[b.id]) continue;
   prochains[b.id] = maintenant + b.min + Math.random() * (b.max - b.min);
-  if (b.quand === 'toujours' || b.quand === moment) jouerBruit(b);
+  if ((b.quand === 'toujours' || b.quand === moment) && jour >= (b.des || 0)) jouerBruit(b);
  }
 }, 1000);
 // La cloche de l'église sonne chaque heure pleine : autant de coups que l'heure (1 à 12), un coup toutes les 2,5 s.
@@ -3161,6 +3166,12 @@ if (boutonSon) boutonSon.onclick = () => {
 };
 for (const barre of [choixSon, choixBruits]) if (barre) barre.addEventListener('input', majBoutonSon);
 majBoutonSon();
+// 27 oct. : une musique à 0 avec des bruitages allumés vient presque toujours de l'ancien glissement des barres au clavier.
+// Une nouvelle partie remet donc la musique à son niveau de départ.
+addEventListener('click', e => {
+ const b = e.target.closest && e.target.closest('[data-act="commencer"]');
+ if (b && volume === 0 && volumeBruits > 0) reglerVolumes(.35, volumeBruits);
+}, true);
 window.SOHO_MUSIQUE = {pistes, voulue, volume:() => volume, demarree:() => demarree, BRUITS, CLOCHE, ECRITURE, jouerBruit};
 
 // ============================================================
