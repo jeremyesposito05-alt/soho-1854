@@ -1598,6 +1598,9 @@ window.SOHO_ATMOSPHERE_ASSETS={"fumee-01":{"id":"fumee-01","kind":"fumee","file"
       // the walker to retreat continuously. Rejecting every such step would
       // trap both people forever even though a clear pavement is behind them.
       if (finitePoint(player) && distance(point, player) < separation && distance(point,player)<=distance([entity.px,entity.py],player)+.01) return { player: true };
+      // 27 oct. (Claude, bouchons signalés par Jeremy) : un passant coincé depuis 3 s se faufile entre les autres
+      // pendant 2,5 s. Il ne traverse jamais le joueur (le test ci-dessus reste).
+      if (entity._fantome > elapsed) return null;
       return neighbours(point,separation).find(other => {
         if(other===entity||!other._visible)return false;
         const p=[other.px,other.py],next=distance(point,p);
@@ -1738,6 +1741,7 @@ window.SOHO_ATMOSPHERE_ASSETS={"fumee-01":{"id":"fumee-01","kind":"fumee","file"
       const obstruction = conflict(point, entity);
       if (obstruction) {
         entity._blockedFor += dt;
+        if (!obstruction.player && (entity._coince = (entity._coince || 0) + dt) > 3) { entity._coince = 0; entity._fantome = elapsed + 2.5; }
         // A street waypoint is not an appointment: if it becomes occupied by a
         // witness or a queue, keep strolling towards another circuit point.
         // Never let the entire ambient crowd queue forever at one resident.
@@ -1769,6 +1773,7 @@ window.SOHO_ATMOSPHERE_ASSETS={"fumee-01":{"id":"fumee-01","kind":"fumee","file"
       entity.phase += step * .12;
       entity.moving = true;
       entity._blockedFor = 0;
+      if (entity._coince) entity._coince = Math.max(0, entity._coince - dt * .5);
       if (step >= length - .01) path.shift();
     }
 
@@ -5027,7 +5032,7 @@ const QUESTIONS_SNOW = {
  j2a:{c:'A', q:'Je vous ai parlé de la contagion. Qu’est-ce que c’est ?', r:['Le passage d’une maladie d’une personne à une autre, par le contact.', 'Une maladie qui touche beaucoup de gens en même temps, dans une région.', 'Un air corrompu qui rendrait malades ceux qui le respirent la nuit.'], aide:'Relisez ce que je vous ai dit en rentrant : c’est dans « J’ai entendu », à mon nom.'},
  j2b:{c:'B', q:'Demain, pour savoir si l’eau de la pompe est en cause, quelles personnes comparer ?', r:['Des gens qui vivent près de la pompe mais qui boivent une autre eau.', 'Des gens qui vivent loin de la pompe et qui ne connaissent pas le quartier.', 'Des gens qui boivent l’eau de la pompe et qui ont peur de tomber malades.'], aide:'Pour savoir si une chose compte, comparez des gens qui ne diffèrent que par elle.'},
  j2c:{c:'C', q:'Laquelle de ces deux phrases rapporte le mieux ce que dit le veilleur ?', r:['Selon le veilleur, qui fait sa ronde la nuit, les cris venaient des rues proches de la pompe, et pas de Marlborough Street.', 'Le veilleur pense que le choléra est partout dans Londres cette nuit, et que toutes les rues sont touchées de la même façon.'], aide:'Une bonne phrase dit qui parle, et ce qu’il a vu. Relisez le veilleur.'},
- j2d:{c:'D', q:'Le prêcheur dit que le choléra est une punition de Dieu. Peut-on s’y fier pour trouver la cause ?', r:['Non : c’est une croyance de l’époque, il n’apporte aucun fait.', 'Oui : c’est un homme d’Église, il connaît bien tout le quartier.', 'Oui : le roi lui-même a ordonné un jeûne de prière en 1832.'], aide:'Fiable ne veut pas dire vrai. Qu’a-t-il vu de ses yeux ?'},
+ j2d:{c:'D', q:'Le prêcheur dit que le choléra est une punition de Dieu. Peut-on s’y fier pour trouver la cause ?', r:['Non : c’est une croyance de l’époque, il n’apporte aucun fait.', 'Oui : c’est un homme d’Église, il connaît bien tout le quartier.', 'Oui : le roi lui-même a ordonné un jeûne de prière en 1832.'], aide:'Une croyance n’est pas un fait. Qu’a-t-il vu de ses propres yeux ?'},
  j3a:{c:'A', q:'Selon la théorie des humeurs, quand tombe-t-on malade ?', r:['Quand les quatre liquides du corps ne sont plus en équilibre.', 'Quand un petit animal invisible entre dans le corps du malade.', 'Quand on respire l’odeur des égouts ou des ordures du quartier.'], aide:'Retournez voir l’apothicaire de Brewer Street.'},
  j3b:{c:'B', q:'Pour savoir dans quelles rues habitaient les morts, quel document faut-il chercher ?', r:['La liste officielle des décès, avec l’adresse de chaque mort.', 'Le journal du matin, qui raconte chaque jour les nouvelles du quartier.', 'Le registre de l’école, qui note chaque jour les élèves absents.'], aide:'Il me faut des adresses, et pour toutes les morts. Qui les note ?'},
  j3c:{c:'C', q:'Laquelle de ces deux phrases explique le mieux ce que montre la brasserie ?', r:['Les ouvriers de la brasserie respirent l’air de Broad Street mais ne boivent pas l’eau de la pompe, et ils ne sont pas malades.', 'La brasserie de M. Huggins est une grande brasserie de Broad Street, où travaillent beaucoup d’ouvriers qui boivent de la bière.'], aide:'Une bonne phrase ne décrit pas seulement : elle dit ce que cela montre.'},
@@ -5049,7 +5054,7 @@ const JOURNEES = [
   lecon:[
    'Vous avez entendu beaucoup de choses aujourd’hui. Avant de les ranger, une leçon, la plus importante de toutes.',
    'Une personne peut être sincère, et même bien informée, et pourtant se tromper. L’habitante de la pompe vous a dit que c’est l’air. Elle ne ment pas : elle croit ce que croient presque tous les médecins de Londres. Mais elle n’a rien vu qui le prouve.',
-   'Dans votre carnet, séparez donc deux choses. D’un côté, ce que les gens croient : c’est précieux, cela vous apprend votre époque. De l’autre, ce qui est prouvé : ce que quelqu’un a vu de ses yeux. Fiable ne veut pas dire vrai.',
+   'Dans votre carnet, séparez donc deux choses. D’un côté, ce que les gens croient. Cela ne prouve rien, mais cela vous aide à comprendre ce que pensent les gens autour de vous, et pourquoi ils agissent comme ils le font. De l’autre, ce que quelqu’un a vu de ses propres yeux : c’est un fait, et un fait pèse plus lourd. Mais attention : même un témoin sincère peut mal voir ou mal comprendre.',
    'Retenez aussi ce mot : une épidémie, c’est le développement rapide d’une maladie qui touche en même temps un grand nombre de personnes dans une région. C’est ce que nous vivons. Maintenant, quelques questions.'],
   questions:['j1a', 'j1b', 'j1c', 'j1d']},
  {jour:2, nom:'La nuit du 2 au 3 septembre', debut:2 * 1440 + 30, nuit:true,
@@ -5191,16 +5196,48 @@ function lignesLecon(jr){
  const h = ((state.minutes % 1440) + 1440) % 1440 / 60;
  l.push({qui:'', texte:'18 Sackville Street, ' + (jr.nuit ? 'avant l’aube.' : h >= 17 ? 'le soir.' : 'chez le docteur.')});
  l.push({qui:'Le docteur Snow', texte:jr.nuit ? 'Vous êtes revenu' + e + '. Bien.' : 'Vous voilà. Asseyez-vous.'});
- // l'idée de l'eau : Snow l'expose le premier soir où elle est dans le carnet (comme la phase « eau » de maison.js)
- if (carnet.connues.eau && !partie.snowEau){
+ // 27 oct. (Jeremy) : Snow reprend d'abord ce que le joueur a rapporté. Il ne livre pas sa théorie le premier soir :
+ // un simple soupçon sur l'eau, puis « faites-vous votre propre opinion ». Il ne l'expose qu'à partir du mercredi,
+ // et seulement si le joueur a lui-même réuni des extraits qui accusent l'eau.
+ l.push(...bilanDuCarnet().map(t => ({qui:'Le docteur Snow', texte:t})));
+ if (!partie.snowEau){
   partie.snowEau = true;
-  l.push({qui:'Le docteur Snow', texte:'Votre carnet parle beaucoup de l’eau, à ce que je vois. Puisque vous y êtes arrivé' + e + ' seul' + e + ', je vais vous dire mon avis. Depuis 1849, je pense que le choléra passe par l’eau que l’on boit. Le malade rejette quelque chose dans ses selles. Si ces saletés arrivent dans l’eau, ceux qui la boivent tombent malades à leur tour.'});
-  l.push({qui:'Le docteur Snow', texte:'Mais attention : une idée n’est pas une preuve. Cherchez ce qui pourrait me donner tort autant que ce qui me donne raison.'});
+  l.push({qui:'Le docteur Snow', texte:'Je vais vous faire une confidence. Moi, j’ai un petit soupçon sur l’eau. Ce n’est qu’un soupçon, et je ne vous en dirai pas plus.'});
+  l.push({qui:'Le docteur Snow', texte:'Je veux que vous poursuiviez votre enquête et que vous vous fassiez votre propre opinion. Si l’air, la saleté ou autre chose explique mieux les faits, je veux le savoir. Un médecin qui ne cherche qu’à se donner raison ne trouve rien.'});
+ } else if (jr.jour >= 5 && !partie.snowTheorie && carnet.indices.filter(x => x.pour.includes('eau')).length >= 2){
+  partie.snowTheorie = true;
+  l.push({qui:'Le docteur Snow', texte:'Vos extraits accusent l’eau, et vous y êtes arrivé' + e + ' par vous-même. Alors je peux maintenant vous dire ce que je pense depuis 1849 : le malade rejette quelque chose dans ses selles. Si ces saletés arrivent dans l’eau, ceux qui la boivent tombent malades à leur tour.'});
+  l.push({qui:'Le docteur Snow', texte:'Mais une idée n’est pas une preuve, même la mienne. Demain, devant le conseil, ce sont vos faits qui compteront, pas mon avis.'});
  }
  jr.lecon.forEach((t, k) => l.push((jr.recitLecon || []).includes(k) ? {qui:'', texte:t} : {qui:'Le docteur Snow', texte:t}));
  l[l.length - 1].fin = 'questions';
  for (const c of cartesDe(JOURNEES.indexOf(jr))) if (c.lecon) gagnerCarte(c, true);
  return l;
+}
+// Ce que le joueur a rapporté : les explications qui reviennent le plus dans son carnet, et la solidité de ses extraits.
+const RAISONS_CROYANCE = {
+ miasme:'les rues puent, et presque tous les médecins de Londres croient au miasme.',
+ pauvrete:'Soho est sale et surpeuplé, et la maladie frappe d’abord les pauvres.',
+ peche:'quand on a peur, on cherche un sens à ce qui arrive.',
+ contagion:'on voit des familles entières tomber malades l’une après l’autre.',
+ nourriture:'en été, la viande et les fruits se gâtent vite.',
+ eau:'beaucoup de gens boivent à la même pompe.',
+};
+function bilanDuCarnet(){
+ const ind = carnet.indices, n = ind.length;
+ if (!n) return ['Votre carnet est presque vide. Racontez-moi au moins ce que vous avez entendu dans les rues.'];
+ const comptes = EXPLICATIONS.map(x => ({x, n:ind.filter(i => i.pour.includes(x.id) || i.contre.includes(x.id)).length})).filter(c => c.n).sort((a, b) => b.n - a.n);
+ const nom = c => c.x.nom.charAt(0).toLowerCase() + c.x.nom.slice(1);
+ const fois = k => k > 1 ? k + ' extraits' : 'un extrait';
+ const t = [];
+ if (!comptes.length) t.push('Voyons ce que vous avez rapporté : ' + fois(n) + '. Vous ne les avez pas encore rangés, alors je ne sais pas encore de quoi ils parlent. Rangez-les ce soir, dans votre carnet.');
+ else t.push('Voyons ce que vous avez rapporté : ' + fois(n) + '. Ce qui revient le plus, c’est ' + nom(comptes[0]) + ', dans ' + fois(comptes[0].n) + '.'
+  + (comptes[1] ? ' Ensuite ' + nom(comptes[1]) + ', dans ' + fois(comptes[1].n) + '.' : '')
+  + ' Cela ne m’étonne pas : ' + RAISONS_CROYANCE[comptes[0].x.id]);
+ const rumeurs = ind.filter(i => i.fiab === 'opinion').length, faits = ind.filter(i => i.fiab === 'vu' || i.fiab === 'temoin').length;
+ if (rumeurs > faits) t.push('Mais regardez : la plupart de vos extraits sont des opinions ou des rumeurs. Très peu de gens ont vu quelque chose de leurs propres yeux.');
+ else if (faits) t.push('Et plusieurs de vos extraits viennent de gens qui ont vu les choses eux-mêmes. C’est ce qui vaut le plus.');
+ return t;
 }
 const repliquesMaisonAvantJournees = repliquesMaison;
 repliquesMaison = function(){
@@ -5218,6 +5255,23 @@ repliquesMaison = function(){
   if (j.lecons[i] === 'fini' && i < JOURNEES.length - 1) return {l:[
    {qui:'', texte:'18 Sackville Street.'},
    {qui:PERSONNAGES[autre(partie.perso)].prenom, texte:'Le docteur se repose. Tu devrais dormir aussi : demain, il aura une nouvelle mission pour toi.', fin:'dormir'}]};
+  // 27 oct. (Jeremy : « pas clair ») : rentré trop tôt, le joueur apprend quand revient le docteur et ce qui manque à sa mission.
+  if (!j.lecons[i] && !jr.derniere && jr.questions.length){
+   const lui = PERSONNAGES[autre(partie.perso)].prenom;
+   const manque = missionEtat(i).filter(c => !c.pasCompte && !c.ok);
+   const tache = c => c.t.charAt(0).toLowerCase() + c.t.slice(1) + (c.n ? ' (tu en es à ' + c.n.replace(' / ', ' sur ') + ')' : '');
+   const heure = jr.nuit ? 'avant l’aube, vers quatre heures et demie' : 'ce soir, à ' + (jr.trouverSnow ? 19 : 18) + ' heures';
+   const nc = carnet.indices.filter(x => !estClasse(x)).length;
+   const l = [
+    {qui:'', texte:'18 Sackville Street, chez le docteur Snow.'},
+    {qui:lui, texte:'Le docteur n’est pas là. Il te donnera la leçon du jour dès que ta mission sera faite. Sinon, il rentrera de toute façon ' + heure + '.'},
+    {qui:lui, texte:manque.length > 1 ? 'Pour finir ta mission, il te manque deux choses. D’abord, ' + tache(manque[0]) + '. Ensuite, ' + tache(manque[1]) + '.'
+      : 'Pour finir ta mission, il te manque une chose : ' + tache(manque[0] || {t:'Rien', n:''}) + '.'},
+   ];
+   if (nc) l.push({qui:lui, texte:'Et ' + (nc > 1 ? nc + ' phrases de ton carnet ne sont pas encore rangées' : 'une phrase de ton carnet n’est pas encore rangée') + '. Ouvre ton carnet, page « À classer », pour le faire.'});
+   l.push({qui:lui, texte:'Tout est écrit au début de ton carnet, dans le cadre « Mission en cours ». Repars dans le quartier quand tu es prêt' + moiE() + '.'});
+   return {l};
+  }
  }
  return repliquesMaisonAvantJournees();
 };
