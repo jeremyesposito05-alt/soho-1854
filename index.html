@@ -3318,7 +3318,7 @@ const CHOLERA = [
  'Le choléra est une maladie terrible. Elle commence par des diarrhées et des vomissements très violents. Le malade perd toute l’eau de son corps. Sa peau devient grise et froide.',
  'Un homme en bonne santé le matin peut être mort le soir.',
  'La maladie est arrivée en Angleterre en 1831. Depuis, elle revient de temps en temps. En 1849, elle a tué plus de 50 000 personnes dans le pays.',
- 'Tout le monde connaît le choléra. Mais en 1854, personne ne sait vraiment ce qui le provoque, ni comment il passe d’une personne à l’autre.',
+ 'Tout le monde connaît le choléra. Mais en 1854, personne ne sait vraiment ce qui le provoque. Chacun a son idée.',
 ];
 const INTRO_PERSOS = 'Pour cette enquête, vous incarnez un personnage inventé. Thomas et Emily Hale sont frère et sœur. Leurs parents sont morts du choléra en 1849. Le docteur Snow, un vieil ami de la famille, les a recueillis chez lui.';
 
@@ -3946,8 +3946,7 @@ function montrerCible(c){
 function placerCoach(c){
  // une cible donnée par une fonction est recherchée à chaque fois : le carnet se redessine souvent
  if (c.trouver){ const el = c.trouver(); if (el !== c.cible){ if (c.cible) c.cible.classList.remove('tuto-cible'); c.cible = el; if (el) el.classList.add('tuto-cible'); } }
- // une cible redessinée est un nouvel élément : on ne refait défiler que si la précédente avait disparu
- if (c.cible && c.montree && !c.montree.isConnected && c.cible.textContent === c.montree.textContent) c.montree = c.cible;
+ // une cible redessinée est un nouvel élément : le carnet, en se redessinant, revient souvent en haut ; on y retourne
  montrerCible(c);
  const {bulle, cible, doigt} = c, r = cible && cible.isConnected ? cible.getBoundingClientRect() : null;
  const w = Math.min(330, innerWidth - 24), h = bulle.offsetHeight || 120;
@@ -4152,13 +4151,13 @@ function courir(x1, y1, duree){
 // ---------- le scénario ----------
 const QUI_JIMMY = 'Jimmy, un garçon de Cambridge Street';
 const PHRASE_A = 'Cette nuit, mon voisin, le cordonnier, est tombé malade d’un coup.';
-const PHRASE_B = 'Ma mère dit que l’odeur des égouts empoisonne la rue.';
+const PHRASE_B = 'Ma mère dit que c’est l’air qui rend malade : l’air vicié qui monte des égouts.';
 function lignesJimmy(){
  const appel = partie.perso === 'emily' ? 'Mam’zelle' : 'M’sieur';
  return [
   appel + ' ! ' + appel + ' ! Vous êtes bien de chez le docteur Snow ? Je cours depuis Broad Street ! Je m’appelle Jimmy, j’habite Cambridge Street.',
   PHRASE_A + ' Il vomissait sans arrêt, et sa peau est devenue toute grise. Ce matin, il était mort. Je l’ai vu de mes yeux, quand on l’a sorti de chez lui.',
-  PHRASE_B + ' Elle a bouché toutes nos fenêtres avec des chiffons. Mais il fait si chaud à l’intérieur qu’on étouffe.',
+  PHRASE_B + ' Les savants appellent ça le miasme. Elle a bouché toutes nos fenêtres avec des chiffons. Mais il fait si chaud à l’intérieur qu’on étouffe.',
   'Le docteur peut venir ? Non ? Alors dites-lui, hein ! Il faut que quelqu’un nous aide. Moi, je retourne vite là-bas, avant que ma mère s’inquiète.',
  ];
 }
@@ -4213,22 +4212,22 @@ async function lancerGuide(){
  await attendre(() => bulles() >= 2); fermerCoach();
 
  bloquerSuite(true);
- dire('g-noter1', 'Voilà un fait important : quelqu’un est tombé malade cette nuit. Je veux le garder. Je **touche cette phrase** pour la copier dans mon carnet.', () => phraseVue(PHRASE_A), {sansBouton:true, doigt:true});
+ dire('g-noter1', 'Cette phrase est **en bleu** : c’est un fait, Jimmy l’a vu de ses yeux. C’est une preuve possible. Je **touche cette phrase** pour la copier dans mon carnet.', () => phraseVue(PHRASE_A), {sansBouton:true, doigt:true});
  await attendre(() => extrait(PHRASE_A)); fermerCoach();
- await dire('g-noter1b', 'La phrase est surlignée en jaune : elle est copiée dans mon carnet. Si je me trompe, je la touche encore et elle s’en va. Je ne garde que ce qui me paraît utile.', () => phraseVue(PHRASE_A));
+ await dire('g-noter1b', 'La phrase est surlignée : elle est copiée dans mon carnet. Je retiens le code des couleurs : **en bleu**, une preuve possible ; **en noir**, ce que les gens croient ; **en rouge**, le contexte de 1854. Il est rappelé sous chaque conversation.', () => phraseVue(PHRASE_A));
  bloquerSuite(false);
  dire('g-suite2', 'Je continue : « Suite ».', boutonSuite, {sansBouton:true});
  await attendre(() => bulles() >= 3); fermerCoach();
 
  bloquerSuite(true);
- dire('g-noter2', 'Cette phrase m’intéresse aussi, mais pour une autre raison : c’est une **explication** que les gens donnent à la maladie. Je la note aussi.', () => phraseVue(PHRASE_B), {sansBouton:true, doigt:true});
+ dire('g-noter2', 'Cette phrase est **en noir** : ce n’est pas un fait, c’est ce que croit sa mère. Mais elle me donne ma première **explication** de la maladie : l’air vicié. Je la note aussi.', () => phraseVue(PHRASE_B), {sansBouton:true, doigt:true});
  await attendre(() => extrait(PHRASE_B)); fermerCoach();
  bloquerSuite(false);
  dire('g-suite3', 'Je lis la fin.', boutonSuite, {sansBouton:true});
  await attendre(() => bulles() >= 4); fermerCoach();
 
  autoriserFermeture(true);
- dire('g-fermer', 'Une nouvelle explication est entrée dans mon carnet : **l’air vicié**. Je ferme cette conversation pour ranger mes notes tout de suite.', ui('close'), {sansBouton:true});
+ dire('g-fermer', 'J’ai trouvé ma première explication : **l’air vicié**. Ma mission en compte cinq : je chercherai les autres dans le quartier. Je ferme cette conversation pour ranger mes notes.', ui('close'), {sansBouton:true});
  await attendre(() => !boiteDialogue.open); fermerCoach();
  courir(player.px + 420, player.py + 4, 2200).then(() => { JIMMY.visible = false; draw(); });
 
@@ -4254,13 +4253,13 @@ async function lancerGuide(){
 
  // la phrase B : une opinion qui accuse le miasme
  const b = () => extrait(PHRASE_B);
- const pastilleMiasme = () => carte('odeur des égouts') && [...carte('odeur des égouts').querySelectorAll('.pastille')].find(x => x.textContent.includes('L’air vicié'));
- dire('g-b1', '« Ma mère dit que l’odeur des égouts empoisonne la rue » : cette phrase accuse l’air vicié, le **miasme**. Je touche **une fois** « L’air vicié » : la pastille devient **rouge avec un +**, elle accuse. Si je la touchais encore, elle deviendrait **verte avec un −** : elle disculperait. Une troisième fois, tout s’efface.', pastilleMiasme, {sansBouton:true, doigt:true});
+ const pastilleMiasme = () => carte('qui monte des égouts') && [...carte('qui monte des égouts').querySelectorAll('.pastille')].find(x => x.textContent.includes('L’air vicié'));
+ dire('g-b1', 'Cette phrase accuse l’air vicié, le **miasme**. Je touche **une fois** « L’air vicié » : la pastille devient **rouge avec un +**.', pastilleMiasme, {sansBouton:true, doigt:true});
  await reponse(() => b().aucune || b().pour.length || b().contre.length, () => b().pour.includes('miasme') && !b().contre.length && !b().aucune,
   () => { b().pour = []; b().contre = []; b().aucune = false; },
-  'Pas tout à fait : la mère de Jimmy accuse l’odeur, donc l’air vicié. Il me faut le **+ rouge**. Je touche « L’air vicié » jusqu’à voir le +.');
+  'Pas tout à fait : la mère de Jimmy accuse l’air vicié. Il me faut le **+ rouge**. Je touche « L’air vicié » jusqu’à voir le +.');
  fermerCoach();
- dire('g-b2', 'Puis-je m’y fier ? Jimmy n’a rien vu : il répète ce que **croit** sa mère. C’est une opinion. Je touche « 👂 Une rumeur ou une opinion ».', () => carte('odeur des égouts') && carte('odeur des égouts').querySelectorAll('.pastille.fiab')[2], {sansBouton:true, doigt:true});
+ dire('g-b2', 'Puis-je m’y fier ? Jimmy n’a rien vu : il répète ce que **croit** sa mère. C’est une opinion. Je touche « 👂 Une rumeur ou une opinion ».', () => carte('qui monte des égouts') && carte('qui monte des égouts').querySelectorAll('.pastille.fiab')[2], {sansBouton:true, doigt:true});
  await reponse(() => b().fiab, () => b().fiab === 'opinion', () => { b().fiab = ''; },
   'Pas tout à fait : personne n’a vu l’air rendre quelqu’un malade. C’est ce que croit sa mère. Je touche « 👂 Une rumeur ou une opinion ».');
  fermerCoach();
@@ -4281,7 +4280,7 @@ async function lancerGuide(){
  // 6. tout ce que j'ai entendu
  dire('g-e1', 'Dernière page : **tout ce que j’ai entendu**.', () => document.querySelector('#carnet [data-onglet="entendu"]'), {sansBouton:true, doigt:true});
  await attendre(() => ongletActif === 'entendu'); fermerCoach();
- await dire('g-e2', 'Ici, je retrouve chaque conversation, rangée par personne. Si j’ai oublié de noter une phrase, je peux encore la toucher ici. Je peux aussi chercher un mot, comme « odeur ».', () => document.querySelector('#onglet-entendu .recherche'));
+ await dire('g-e2', 'Ici, je retrouve chaque conversation, rangée par personne. Si j’ai oublié de noter une phrase, je peux encore la toucher ici. Je peux aussi chercher un mot, comme « air ».', () => document.querySelector('#onglet-entendu .recherche'));
 
  // 7. la fin : le carnet se referme, l'heure revient à son point de départ
  autoriserFermeture(true);
@@ -5114,7 +5113,10 @@ Object.assign(CLES, {
  'eley-hampstead':['elle s’en faisait apporter une grande bouteille'],
  'whitehead-familles':['je ne vois pas quel péché les réunit'],
  'nuit-maisons':['ils ne s’étaient pas touchés'],
+ // le fait vu par Jimmy, dans le tutoriel : en bleu (un témoin l'a vu)
+ 'jimmy-voisin':['mon voisin, le cordonnier, est tombé malade'],
 });
+ATTENDUS['jimmy-voisin'] = {fiab:'temoin'};
 for (const e of [ENQUETE.eley, ENQUETE.whitehead, ENQUETE.allumeur]) for (const v of Object.values(e.jours)) for (const i of v.indices){
  ATTENDUS[i.id] = i.attendu;
  if ([].concat(i.attendu.pour || []).includes('eau')) IDS_EAU.add(i.id);
@@ -5177,8 +5179,9 @@ const JOURNEES = [
   personnes:['apothicaire', 'voisine', 'agent', 'tavernier', 'pieuse'], parler:0, noter:3, lieu:'',
   verifier:5, libelleFiches:'Trouver les explications du quartier',
   fiches:[
-   {id:'h-air', titre:'L’air vicié, le miasme', court:'Brewer Street', pnj:'apothicaire',
-    cherche:'Quelqu’un qui pense que le mauvais air rend malade, et le mot savant qu’il emploie.', ou:'Brewer Street, dans sa boutique, de 9 h à 18 h.', qui:'L’apothicaire.'},
+   // Jimmy l'apporte dès le tutoriel (28 oct., Jeremy) ; l'apothicaire reste pour qui a coupé les conseils
+   {id:'h-air', titre:'L’air vicié, le miasme', court:'Jimmy, ou Brewer Street', pnj:'apothicaire', jimmy:true,
+    cherche:'Quelqu’un qui pense que le mauvais air rend malade.', ou:'Ce matin, devant chez le docteur. Sinon, Brewer Street, dans sa boutique, de 9 h à 18 h.', qui:'Jimmy, le garçon de Cambridge Street. Sinon, l’apothicaire.'},
    {id:'h-contagion', titre:'La contagion', court:'le 38 Broad Street', pnj:'voisine',
     cherche:'Quelqu’un qui pense que la maladie passe d’une personne à l’autre.', ou:'Broad Street, près du n° 38, de 11 h à 18 h.', qui:'La voisine du 38.'},
    {id:'h-misere', titre:'La saleté et la misère', court:'l’agent de police', pnj:'agent',
@@ -5294,6 +5297,7 @@ const accorder = t => t.replace('{e}', moiE()).replace('{autre}', partie.perso =
 // Une vérification est faite quand on a écouté jusqu'au bout la bonne personne (sa réplique du jour, si elle en a une).
 function ficheFaite(f, jr){
  const e = ENQUETE[f.pnj], v = e && e.jours && e.jours[jr.jour];
+ if (f.jimmy && carnet.vus.jimmy) return true;
  return v ? !!carnet.vus[f.pnj + ':j' + jr.jour] : !!(carnet.vus[f.pnj] || carnet.vus[f.pnj + ':matin']);
 }
 function missionEtat(i){
