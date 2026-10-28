@@ -233,6 +233,8 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
   boot.report=function(error){
     const text=detail(error);
     if(!boot.errors.includes(text))boot.errors.push(text);
+    // 28 oct. (Claude) : une fois le jeu démarré, une erreur (un son, une image facultative) ne doit plus tout bloquer.
+    if(boot.status==='ready'){console.warn('Soho — incident après le démarrage :',error);return;}
     boot.status='failed';boot.failed=true;clearTimeout(timer);
     if(global.SOHO_TEST?.state){global.SOHO_TEST.state.ready=false;global.SOHO_TEST.state.imageFailed=true;}
     show('Le jeu n’a pas pu démarrer. '+text);
@@ -251,7 +253,9 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
   },true);
   global.addEventListener('unhandledrejection',event=>{boot.report(event.reason||new Error('Préparation du quartier interrompue.'));});
   const retry=document.getElementById('startup-retry');if(retry)retry.onclick=()=>global.location.reload();
-  timer=setTimeout(()=>boot.report(new Error('Le chargement n’a pas abouti. '+boot.lastProgress)),45000);
+  // 28 oct. (Claude) : un chargement lent (52 Mo sans cache, wifi de l'école) n'est pas une panne. Après 45 s, on le dit
+  // et l'on continue d'attendre ; avant, le jeu se déclarait en panne et refusait de démarrer même une fois le quartier chargé.
+  timer=setTimeout(()=>{if(boot.status!=='loading')return;boot.lent=true;show('Le chargement est lent… Patientez encore un peu, ou rechargez la page.');const retry=document.getElementById('startup-retry');if(retry)retry.hidden=false;},45000);
 })(window);
 
 </script>
@@ -3433,7 +3437,11 @@ function ecranCredits(){
 }
 // Le quartier se charge pendant qu'on lit : on ne laisse partir que lorsqu'il est prêt.
 function majEtat(){
- const e = ui('ouv-etat'); if (e) e.textContent = state.ready ? '' : 'Préparation du quartier… encore un instant.';
+ // 28 oct. : on dit la vérité au joueur, chargement lent ou panne, avec de quoi recharger la page
+ const B = window.SOHO_BOOT || {}, e = ui('ouv-etat');
+ if (e) e.innerHTML = state.ready ? '' : B.failed ? 'Le quartier n’a pas pu se charger. <button type="button" class="ouv-lien" onclick="location.reload()">Recharger la page</button>'
+  : B.lent ? 'Le chargement est lent (la connexion est peut-être chargée)… Patientez, ou <button type="button" class="ouv-lien" onclick="location.reload()">rechargez la page</button>.'
+  : 'Préparation du quartier… encore un instant.';
  const b = ouv.querySelector('[data-act="commencer"]'); if (b) b.disabled = !state.ready;
 }
 const attente = setInterval(() => { if (!ouv.hidden) majEtat(); if (state.ready) { majEtat(); clearInterval(attente); } }, 500);
