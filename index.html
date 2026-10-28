@@ -1835,7 +1835,7 @@ window.SOHO_ATMOSPHERE_ASSETS={"fumee-01":{"id":"fumee-01","kind":"fumee","file"
   instituteur: [[0, 0, 8, 13]],             // l'école ferme après le vendredi
   marlborough: [[0, TOUS, 8, 18]],
   cafe:        [[5, 5, 18, 23]],            // la patronne ne parle que le mercredi soir [Snow : 6 septembre]
-  tavernier:   [[0, TOUS, 18, 3]],          // jusqu'à 3 h : la mission de nuit (journée 2) commence à minuit et demi
+  tavernier:   [[0, 0, 12, 18], [0, TOUS, 18, 3]],   // le vendredi dès midi (partie 4 : il défend la nourriture) ;          // jusqu'à 3 h : la mission de nuit (journée 2) commence à minuit et demi
   whitehead:   [[0, TOUS, 7, 10], [0, TOUS, 17, 22]],
   egoutier:    [[0, TOUS, 20, 3]],
   snow:        [[0, TOUS, 0, 24]],          // la porte du 18 Sackville Street : on peut toujours rentrer
@@ -1875,7 +1875,7 @@ window.SOHO_ATMOSPHERE_ASSETS={"fumee-01":{"id":"fumee-01","kind":"fumee","file"
   {id:'precheur', nom:'Un prêcheur des rues', at:[2248, 760], plages:[[1, 1, 20, 24], [2, 2, 0, 5]], cout:10, costume:T.manteau('#1e1c1c', 'haut')},
   {id:'snow_pompe', nom:'Le docteur Snow, à la pompe', at:[1610, 945], plages:[[3, 3, 11, 19]], cout:0, costume:T.manteau('#1d1d22', 'haut', {col:true})},
   {id:'ouvrier_chaux', nom:'Un ouvrier qui répand de la chaux', at:[1592, 1300], plages:[[3, 6, 8, 17]], cout:10, costume:T.manteau('#8a8478', 'casquette', {tablier:true})},
-  {id:'apothicaire', nom:'L’apothicaire de Brewer Street', at:[1200, 1712], plages:[[3, 6, 9, 18]], cout:15, costume:T.manteau('#3a3428', 'haut')},
+  {id:'apothicaire', nom:'L’apothicaire de Brewer Street', at:[1200, 1712], plages:[[0, 6, 9, 18]], cout:15, costume:T.manteau('#3a3428', 'haut')},
   {id:'jeune_mere', nom:'Une jeune mère et son bébé', at:[1968, 1600], plages:[[3, 3, 10, 16], [6, 6, 10, 16]], cout:10, costume:T.manteau('#6a5a64', 'bonnet', {robe:true})},
   {id:'ouvriere_capsules', nom:'Une ouvrière de la fabrique, à sa pause', at:[2080, 960], plages:[[3, 3, 11, 15], [6, 6, 11, 15]], cout:10, costume:T.manteau('#5e5448', 'bonnet', {robe:true, tablier:true})},
   {id:'inspecteur', nom:'Un médecin du conseil de santé', at:[1500, 960], plages:[[4, 6, 9, 17]], cout:15, costume:T.manteau('#262a36', 'haut', {col:true})},
@@ -2383,7 +2383,8 @@ const TERMES_GRAS = [
 const RE_GRAS = new RegExp('(?<![\\p{L}])(' + TERMES_GRAS.slice().sort((a, b) => b.length - a.length)
  .map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|') + ')(?![\\p{L}])', 'gu');
 const echapper = t => String(t).replace(/[&<>"]/g, c => ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;'}[c]));
-const enGras = t => echapper(t).replace(RE_GRAS, '<strong>$1</strong>');
+// « **mot** » met aussi en gras (leçons, pensées), en plus des mots du cours repérés automatiquement (28 oct.)
+const enGras = t => echapper(t).split(/\*\*(.+?)\*\*/).map((morceau, k) => k % 2 ? '<strong>' + morceau + '</strong>' : morceau.replace(RE_GRAS, '<strong>$1</strong>')).join('');
 
 // Les explications que l'on donnait en 1854. Aucune n'est connue au départ : on les découvre en écoutant.
 // L'eau n'entre dans la grille que lorsque Snow explique son idée (maison.js).
@@ -3319,8 +3320,8 @@ const MATIN = perso => {
   {qui:'Le docteur Snow', texte:'Je ne sais pas encore ce que c’est. Personne ne le sait. Et je n’aime pas cela du tout.'},
   {qui:'Le docteur Snow', texte:'Je dois voir mes patients ce matin. Je ne peux pas y aller tout de suite. Mais il faut savoir ce qui se passe, et vite.'},
   // 23 oct. : la mission de la journée 1 (conception, partie 3)
-  {qui:'Le docteur Snow', texte:'Allez dans les rues autour de la pompe de Broad Street et écoutez ce que disent les habitants. Ne cherchez pas encore à comprendre : je veux des faits, et je veux savoir ce que les gens croient.'},
-  {qui:'Le docteur Snow', texte:'Revenez me voir dès que vous aurez de quoi me faire un rapport, et au plus tard ce soir, vers six heures. Votre mission est notée en tête de votre carnet.'},
+  {qui:'Le docteur Snow', texte:'Ce matin, je ne vous demande pas de trouver la cause. Je vous demande de trouver toutes les explications que les gens donnent à cette maladie. Il y en a au moins cinq dans le quartier.'},
+  {qui:'Le docteur Snow', texte:'Pour chacune, trouvez quelqu’un qui la défend, et retenez bien le mot qu’il emploie. Tout est noté en tête de votre carnet, et les lieux sont marqués sur votre petit plan. Revenez ce soir, vers six heures : vous me les réciterez.'},
   {qui:moi, texte:'Je prends mon carnet et mon manteau. Broad Street n’est pas loin. Si quelque chose tue les gens de ce quartier, je veux savoir quoi.', moi:true},
  ];
 };
@@ -5090,6 +5091,11 @@ for (const e of [ENQUETE.eley, ENQUETE.whitehead, ENQUETE.allumeur]) for (const 
 }
 // la veuve de Hampstead répond aussi à l'objection de l'air : à Hampstead, l'air est pur
 OBJECTIONS.eau.bonnes.push('eley-hampstead');
+// le tavernier ouvre dès midi le vendredi (partie 4) : sa réplique de ce jour-là ne parle pas du soir
+ENQUETE.tavernier.jours = {0:{lignes:[
+  'Bonjour. Ici, c’est la taverne de Noel Street. Les ouvriers viennent boire un verre à midi et après leur journée. Je vends de la bière, du gin, un peu de tout.',
+  'Le gin, on le coupe avec de l’eau, comme dans toutes les tavernes. Et l’eau, je vais la chercher à la pompe de Broad Street. C’est la meilleure, mes clients le disent.',
+  'Le choléra ? Ce sont les fruits. Au marché, on vend des prunes pas mûres et des concombres. Ça vous retourne le ventre. Moi, je ne mange que du pain et de la viande, et je suis en pleine forme.']}};
 
 // ---------- les cartes de savoir ----------
 // pnj : la carte s'obtient en lisant jusqu'au bout ce personnage ; lecon : Snow la donne le soir.
@@ -5100,7 +5106,7 @@ const CARTES_SAVOIR = [
  {id:'peste1348', j:1, pnj:'cocher', titre:'La peste noire, 1348', texte:'Vers 1347-1351, la peste noire tue entre un tiers et la moitié des habitants de l’Europe. On l’explique alors par l’air corrompu et par la colère de Dieu.'},
  {id:'peste1665', j:1, pnj:'egoutier', titre:'La grande peste de Londres, 1665', texte:'Environ 100 000 morts à Londres, près d’un habitant sur quatre. Cent quatre-vingt-dix ans plus tard, on en parle encore à Soho.'},
  {id:'jeune1832', j:1, pnj:'precheur', titre:'Le jeûne de 1832', texte:'En mars 1832, une journée nationale de jeûne et de prière est ordonnée contre le choléra.'},
- {id:'humeurs', j:2, pnj:'apothicaire', titre:'Hippocrate et les quatre humeurs', texte:'Pour Hippocrate (Ve siècle avant J.-C.), puis Galien (IIe siècle après J.-C.), la santé vient de l’équilibre de quatre humeurs : le sang, le phlegme, la bile jaune et la bile noire.'},
+ {id:'humeurs', j:0, pnj:'apothicaire', titre:'Hippocrate et les quatre humeurs', texte:'Pour Hippocrate (Ve siècle avant J.-C.), puis Galien (IIe siècle après J.-C.), la santé vient de l’équilibre de quatre humeurs : le sang, le phlegme, la bile jaune et la bile noire.'},
  {id:'jenner', j:2, pnj:'jeune_mere', titre:'Jenner et la variole', texte:'En 1796, Edward Jenner invente la vaccination contre la variole. En 1853, une loi oblige à vacciner les bébés en Angleterre.'},
  {id:'eau-soho', j:2, pnj:'ouvriere_capsules', titre:'L’eau à Soho', texte:'Les maisons pauvres n’ont pas l’eau courante. On puise aux pompes publiques, matin et soir.'},
  {id:'miasme-autorites', j:3, pnj:'inspecteur', titre:'Le miasme selon les autorités', texte:'En 1854, la plupart des médecins et le conseil de santé pensent que le choléra vient du miasme : un air corrompu, chargé de mauvaises vapeurs venues de la saleté ou de la pourriture.'},
@@ -5112,9 +5118,9 @@ const CARTES_SAVOIR = [
 // La première réponse est la bonne ; l'ordre est tiré au sort à l'écran. Les leurres ont la même longueur
 // que la bonne réponse (mesuré le 23 oct. : jamais plus courte que les autres).
 const QUESTIONS_SNOW = {
- j1a:{c:'A', q:'Je vous ai parlé d’une épidémie. Qu’est-ce que c’est ?', r:['Une maladie qui touche beaucoup de personnes en même temps, au même endroit.', 'Une maladie qui passe d’une personne à une autre quand elles se touchent.', 'Une maladie très grave qui touche surtout les gens pauvres des grandes villes.'], aide:'Relisez la carte que je vous ai donnée ce soir.'},
- j1b:{c:'B', q:'Certains pensent que la maladie passe d’une personne à l’autre quand on touche un malade. Demain, qui interroger pour vérifier cette idée ?', r:['Des gens qui ont soigné un malade de près, pour savoir s’ils sont tombés malades.', 'Des gens qui ont peur du choléra et qui restent enfermés chez eux toute la journée.', 'Des gens qui connaissent bien tout le quartier, comme l’agent de police Turner.'], aide:'Si la maladie passe par le contact, ceux qui ont touché les malades devraient tomber malades à leur tour. Il faut aller le vérifier auprès d’eux.'},
- j1c:{c:'C', q:'L’allumeur a vu beaucoup de gens tomber malades la même nuit. Laquelle de ces deux phrases explique le mieux ce que cela montre ?', r:['Beaucoup de gens sont tombés malades la même nuit, dans les mêmes rues. Une maladie qui passe d’une personne à l’autre ne toucherait pas autant de gens à la fois.', 'L’allumeur a vu des choses terribles cette nuit-là : des fenêtres restées allumées et des gens en chemise de nuit qui couraient chercher un médecin.'], aide:'Une bonne phrase dit ce qui s’est passé, puis ce que cela montre. La deuxième raconte, mais n’explique rien.'},
+ j1a:{c:'A', q:'Je vous ai parlé du miasme. Qu’est-ce que c’est ?', r:['Un air corrompu, chargé de mauvaises vapeurs, que l’on croit responsable des maladies.', 'Le passage d’une maladie d’une personne à une autre, quand on touche un malade.', 'Une maladie qui touche beaucoup de gens en même temps, dans toute une région.'], aide:'Relisez ce que je vous ai dit ce soir : c’est un mot qui parle de l’air.'},
+ j1b:{c:'B', q:'Pour savoir si l’air de Broad Street rend malade, qui faut-il aller voir ?', r:['Des gens qui respirent cet air toute la journée, pour savoir s’ils sont tombés malades.', 'Des gens qui habitent loin de Broad Street et qui ne connaissent pas le quartier.', 'L’apothicaire, qui connaît très bien la médecine d’Hippocrate et des humeurs.'], aide:'Si l’air rend malade, ceux qui le respirent le plus devraient être malades. Il faut aller le vérifier auprès d’eux.'},
+ j1c:{c:'C', q:'Laquelle de ces deux phrases présente le mieux une explication ?', r:['Selon l’agent Turner, la saleté rend malade, parce qu’il voit des familles entières entassées dans une seule pièce, avec une seule fosse.', 'L’agent Turner fait sa ronde dans le quartier tous les jours, et il connaît chaque coin, chaque taverne et chaque voleur du quartier.'], aide:'Une bonne phrase dit qui pense quoi, et pourquoi il le pense.'},
  j1d:{c:'D', q:'L’habitante de la pompe dit : « Tout le monde le dit, c’est le miasme. » Est-ce un fait, un témoignage ou une opinion ?', r:['Une opinion : elle répète ce que les gens croient.', 'Un fait : elle habite là et voit tout chaque jour.', 'Un témoignage : elle a vu le miasme rendre malade.'], aide:'A-t-elle vu quelque chose de ses yeux, ou répète-t-elle ce qu’on dit autour d’elle ?'},
  j2a:{c:'A', q:'Je vous ai parlé de la contagion. Qu’est-ce que c’est ?', r:['Le passage d’une maladie d’une personne à une autre, par le contact.', 'Une maladie qui touche beaucoup de gens en même temps, dans une région.', 'Un air corrompu qui rendrait malades ceux qui le respirent la nuit.'], aide:'Relisez ce que je vous ai dit en rentrant : c’est dans « J’ai entendu », à mon nom.'},
  j2b:{c:'B', q:'Demain, vous voulez savoir si l’eau de la pompe rend malade. Quelles personnes faut-il surtout chercher ?', r:['Des gens qui vivent près de la pompe mais qui boivent une autre eau.', 'Des gens qui vivent loin de la pompe et qui ne connaissent pas le quartier.', 'Des gens qui boivent l’eau de la pompe et qui ont peur de tomber malades.'], aide:'Si ces gens-là restent en bonne santé alors que leurs voisins tombent malades, c’est que l’eau est suspecte.'},
@@ -5134,15 +5140,32 @@ const NOMS_CRITERES = {A:'Critère A · connaissances', B:'Critère B · prépar
 // ---------- les journées ----------
 // personnes : les six de la mission (trois vraies pistes, trois fausses) ; le compteur accepte n'importe quelle personne.
 const JOURNEES = [
+ // Partie 4 de la conception (28 oct.) : le vendredi est le jour des hypothèses. Cinq explications à trouver dans le
+ // quartier de l'épidémie, chacune défendue par quelqu'un ; Snow ajoute la sixième, la sienne, le soir.
  {jour:0, nom:'Vendredi 1er septembre', debut:7 * 60,
-  resume:'Écouter ce que disent les habitants autour de Broad Street : des faits, et ce qu’ils croient.',
-  personnes:['habitante', 'allumeur', 'instituteur', 'voisine', 'agent', 'facteur'], parler:4, noter:3, lieu:'autour de Broad Street',
-  voix:'J’ai tout ce qu’il faut, je crois… Je peux encore marcher dans le quartier, ou rentrer tout de suite chez le docteur lui faire mon rapport.',
+  resume:'Trouver toutes les explications que les gens donnent à cette maladie, et retenir leurs mots.',
+  personnes:['apothicaire', 'voisine', 'agent', 'tavernier', 'pieuse'], parler:0, noter:3, lieu:'',
+  verifier:5, libelleFiches:'Trouver les explications du quartier',
+  fiches:[
+   {id:'h-air', titre:'L’air vicié, le miasme', court:'Brewer Street', pnj:'apothicaire',
+    cherche:'Quelqu’un qui pense que le mauvais air rend malade, et le mot savant qu’il emploie.', ou:'Brewer Street, dans sa boutique, de 9 h à 18 h.', qui:'L’apothicaire.'},
+   {id:'h-contagion', titre:'La contagion', court:'le 38 Broad Street', pnj:'voisine',
+    cherche:'Quelqu’un qui pense que la maladie passe d’une personne à l’autre.', ou:'Broad Street, près du n° 38, de 11 h à 18 h.', qui:'La voisine du 38.'},
+   {id:'h-misere', titre:'La saleté et la misère', court:'l’agent de police', pnj:'agent',
+    cherche:'Quelqu’un qui pense que la saleté et l’entassement rendent malade.', ou:'Broad Street, à l’ouest de la pompe, de 6 h à 20 h.', qui:'L’agent Turner, pendant sa ronde.'},
+   {id:'h-nourriture', titre:'La nourriture', court:'la taverne', pnj:'tavernier',
+    cherche:'Quelqu’un qui accuse ce que l’on mange.', ou:'La taverne de Noel Street, dès midi.', qui:'Le tavernier.'},
+   {id:'h-punition', titre:'La punition de Dieu', court:'St Luke', pnj:'pieuse',
+    cherche:'Quelqu’un qui pense que Dieu punit le quartier.', ou:'Devant l’église St Luke, sur Berwick Street, le matin (de 8 h à 12 h) ou le soir (de 17 h à 20 h).', qui:'Une vieille dame qui vient prier.'},
+  ],
+  voix:'J’ai trouvé les cinq explications… Je peux encore écouter d’autres gens dans le quartier, ou rentrer tout de suite chez le docteur pour les lui réciter.',
   lecon:[
-   'Vous avez entendu beaucoup de témoignages aujourd’hui. Avant de les ranger, une leçon, la plus importante de toutes.',
-   'Une personne peut être sincère, et même bien informée, et pourtant se tromper. L’habitante de la pompe vous a dit que c’est l’air. Elle ne ment pas : elle croit ce que croient presque tous les médecins de Londres. Mais elle n’a rien vu qui le prouve.',
-   'Dans votre carnet, séparez donc deux choses. D’un côté, ce que les gens croient. Cela ne prouve rien, mais cela vous aide à comprendre ce que pensent les gens autour de vous, et pourquoi ils agissent comme ils le font. De l’autre, ce que quelqu’un a vu de ses propres yeux : c’est un fait, et un fait pèse plus lourd. Mais attention : même un témoin sincère peut mal voir ou mal comprendre.',
-   'Retenez aussi ce mot : une épidémie, c’est le développement rapide d’une maladie qui touche en même temps un grand nombre de personnes dans une région. C’est ce que nous vivons. Maintenant, quelques questions.'],
+   'Vous m’avez rapporté les explications du quartier. Reprenons-les avec le mot juste, et voyons depuis quand on y croit.',
+   'L’air vicié, c’est le **miasme** : un air corrompu, chargé de mauvaises vapeurs venues de la saleté ou de la pourriture, que l’on croit responsable des maladies. L’idée est très ancienne : Hippocrate l’enseignait déjà, il y a plus de deux mille ans.',
+   'La **contagion**, c’est la transmission d’une maladie d’une personne à une autre, par contact direct ou indirect. Un médecin italien, Fracastor, l’a décrite en 1546.',
+   'La saleté et la misère : depuis le rapport de M. Chadwick sur les quartiers ouvriers, en 1842, beaucoup pensent que l’entassement et les ordures rendent malade. La nourriture : on accuse souvent les fruits pas mûrs. Et la punition de Dieu : on le disait déjà pendant la peste noire, en 1348.',
+   'Retenez aussi ce mot : une **épidémie**, c’est le développement rapide d’une maladie qui touche en même temps un grand nombre de personnes dans une région. C’est ce que nous vivons.',
+   'Une dernière chose. Ces gens sont sincères, mais croire n’est pas prouver. Rangez leurs explications dans votre carnet comme ce qu’ils croient. Lundi, nous les mettrons à l’épreuve. Maintenant, quelques questions.'],
   questions:['j1a', 'j1b', 'j1c', 'j1d']},
  {jour:2, nom:'La nuit du 2 au 3 septembre', debut:2 * 1440 + 30, nuit:true,
   resume:'Trouver d’où viennent les cris, parler à ceux qui ne dorment pas, et rentrer avant l’aube.',
@@ -5249,7 +5272,7 @@ function missionEtat(i){
  const vus = Object.keys(parles).filter(id => id && !/^(snow|journal)/.test(id)).length, notes = j.notes[i] || 0;
  const l = [];
  if (jr.parler) l.push({ok:vus >= jr.parler, t:'Parler à ' + jr.parler + ' personnes ' + jr.lieu, n:Math.min(vus, jr.parler) + ' / ' + jr.parler});
- if (jr.fiches){ const n = jr.fiches.filter(f => ficheFaite(f, jr)).length; l.push({ok:n >= jr.verifier, t:'Faire ' + jr.verifier + ' vérifications sur ' + jr.fiches.length, n:Math.min(n, jr.verifier) + ' / ' + jr.verifier}); }
+ if (jr.fiches){ const n = jr.fiches.filter(f => ficheFaite(f, jr)).length; l.push({ok:n >= jr.verifier, t:jr.libelleFiches || 'Faire ' + jr.verifier + ' vérifications sur ' + jr.fiches.length, n:Math.min(n, jr.verifier) + ' / ' + jr.verifier}); }
  if (jr.noter) l.push({ok:notes >= jr.noter, t:'Noter ' + jr.noter + ' phrases dans le carnet', n:Math.min(notes, jr.noter) + ' / ' + jr.noter});
  // 27 oct. (Jeremy : « je ne retrouve pas le docteur ») : un indice qui se précise quand on a parlé aux gens
  if (jr.trouverSnow) l.push({ok:!!parles.snow_pompe, n:parles.snow_pompe ? 'fait' : '',
@@ -5343,14 +5366,16 @@ function lignesLecon(jr){
  l.push(...bilanDuCarnet().map(t => ({qui:'Le docteur Snow', texte:t})));
  if (!partie.snowEau){
   partie.snowEau = true;
-  l.push({qui:'Le docteur Snow', texte:'Je vais vous faire une confidence. Moi, j’ai un petit soupçon sur l’eau. Ce n’est qu’un soupçon, et je ne vous en dirai pas plus.'});
-  l.push({qui:'Le docteur Snow', texte:'Je veux que vous poursuiviez votre enquête et que vous vous fassiez votre propre opinion. Si l’air, la saleté ou autre chose explique mieux les faits, je veux le savoir. Un médecin qui ne cherche qu’à se donner raison ne trouve rien.'});
+  // Partie 4 : Snow ajoute la sixième explication, la sienne, comme une simple hypothèse ; elle entre dans la grille.
+  carnet.connues.eau = true; sauver();
+  l.push({qui:'Le docteur Snow', texte:'Il y a une sixième explication, que presque personne ne croit à Londres : la mienne. Depuis 1849, je pense que la maladie passe par l’eau que l’on boit.'});
+  l.push({qui:'Le docteur Snow', texte:'Ce n’est qu’une idée, et une idée n’est pas une preuve. Je l’ajoute à votre carnet, avec les cinq autres. Lundi, nous les mettrons toutes à l’épreuve, la mienne comme les autres. Si l’air, la saleté ou autre chose explique mieux les faits, je veux le savoir.'});
  } else if (jr.jour >= 5 && !partie.snowTheorie && carnet.indices.filter(x => x.pour.includes('eau')).length >= 2){
   partie.snowTheorie = true;
   l.push({qui:'Le docteur Snow', texte:'Vos extraits accusent l’eau, et vous y êtes arrivé' + e + ' par vous-même. Alors je peux maintenant vous dire ce que je pense depuis 1849 : le malade rejette quelque chose dans ses selles. Si ces saletés arrivent dans l’eau, ceux qui la boivent tombent malades à leur tour.'});
   l.push({qui:'Le docteur Snow', texte:'Mais une idée n’est pas une preuve, même la mienne. Demain, devant le conseil, ce sont vos faits qui compteront, pas mon avis.'});
  }
- if (jr.fiches) for (const f of jr.fiches) if (ficheFaite(f, jr)) l.push({qui:'Le docteur Snow', texte:f.retour});
+ if (jr.fiches) for (const f of jr.fiches) if (f.retour && ficheFaite(f, jr)) l.push({qui:'Le docteur Snow', texte:f.retour});
  jr.lecon.forEach((t, k) => l.push(Object.assign((jr.recitLecon || []).includes(k) ? {qui:'', texte:t} : {qui:'Le docteur Snow', texte:t}, jr.docs && jr.docs[k] ? {doc:jr.docs[k]} : {})));
  l[l.length - 1].fin = 'questions';
  for (const c of cartesDe(JOURNEES.indexOf(jr))) if (c.lecon) gagnerCarte(c, true);
@@ -5628,7 +5653,8 @@ function listeFiches(jr){
   const fait = ficheFaite(f, jr);
   return '<details class="fiche-mission' + (fait ? ' faite' : '') + '" data-fiche="' + f.id + '"' + (fichesOuvertes.has(f.id) ? ' open' : '') + '>'
    + '<summary><span class="case">' + (fait ? '✓' : '') + '</span><span class="fiche-titre">' + esc(f.titre) + '</span><span class="fiche-lieu">' + esc(f.court) + '</span></summary>'
-   + '<dl><dt>Ce qu’on dit</dt><dd>' + esc(f.dit) + '</dd><dt>Ce que tu vérifies</dt><dd><strong>' + esc(f.verifie) + '</strong></dd>'
+   + '<dl>' + (f.cherche ? '<dt>Ce que tu cherches</dt><dd><strong>' + esc(f.cherche) + '</strong></dd>' : '')
+   + (f.dit ? '<dt>Ce qu’on dit</dt><dd>' + esc(f.dit) + '</dd>' : '') + (f.verifie ? '<dt>Ce que tu vérifies</dt><dd><strong>' + esc(f.verifie) + '</strong></dd>' : '')
    + '<dt>Où</dt><dd>' + esc(f.ou) + ' <span class="fiche-carte">(zone dorée sur le petit plan)</span></dd><dt>À qui</dt><dd>' + esc(f.qui) + '</dd></dl></details>';
  }).join('') + '</div>';
 }
