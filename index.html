@@ -1841,7 +1841,7 @@ window.SOHO_ATMOSPHERE_ASSETS={"fumee-01":{"id":"fumee-01","kind":"fumee","file"
   cafe:        [[5, 5, 18, 23]],            // la patronne ne parle que le mercredi soir [Snow : 6 septembre]
   tavernier:   [[0, 0, 12, 18], [0, TOUS, 18, 3]],   // le vendredi dès midi (partie 4 : il défend la nourriture) ;          // jusqu'à 3 h : la mission de nuit (journée 2) commence à minuit et demi
   whitehead:   [[0, TOUS, 7, 10], [0, TOUS, 17, 22]],
-  egoutier:    [[0, TOUS, 20, 3]],
+  egoutier:    [[0, TOUS, 20, 3], [2, 2, 0, 6]],
   snow:        [[0, TOUS, 0, 24]],          // la porte du 18 Sackville Street : on peut toujours rentrer
  };
  for (const p of D.people) if (HORAIRES[p.id]) p.plages = HORAIRES[p.id];
@@ -1867,7 +1867,7 @@ window.SOHO_ATMOSPHERE_ASSETS={"fumee-01":{"id":"fumee-01","kind":"fumee","file"
   {id:'voisine', nom:'La voisine du 38 Broad Street', at:[1720, 950], plages:[[0, TOUS, 11, 18]], cout:15, costume:T.manteau('#58606a', 'bonnet', {robe:true})},
   {id:'porteuse', nom:'Une femme à la pompe de Brewer Street', at:[2690, 1712], plages:[[0, TOUS, 6, 11], [0, TOUS, 16, 19]], cout:15, costume:T.manteau('#6b5a4a', 'bonnet', {robe:true, seau:true})},
   {id:'mendiant', nom:'Un mendiant, sous un porche', at:[2500, 1256], plages:[[0, TOUS, 19, 3]], cout:10, costume:T.manteau('#4a4238', 'casquette')},
-  {id:'ouvriere', nom:'Une couturière qui rentre tard', at:[1500, 1720], plages:[[0, TOUS, 21, 3]], cout:15, costume:T.manteau('#58606a', 'bonnet', {robe:true})},
+  {id:'ouvriere', nom:'Une couturière qui rentre tard', at:[1500, 1720], plages:[[0, TOUS, 21, 3], [2, 2, 0, 6]], cout:15, costume:T.manteau('#58606a', 'bonnet', {robe:true})},
   // ---- les journées scénarisées (conception, partie 3, 23 oct.) ----
   // Jour 0 = vendredi 1er ; jour 2 = dimanche 3 (la nuit des cris, de 0 h à 6 h) ; jour 3 = lundi 4 ; jour 5 = mercredi 6 ; jour 6 = jeudi 7.
   // Les personnages de contexte restent aussi le jeudi, pour la « dernière chance ».
@@ -2706,7 +2706,7 @@ function basculerExtrait(phrase, ctx, el){
   // une phrase déjà jetée revient de la corbeille, avec son classement
   const j = (carnet.corbeille || []).findIndex(x => x.k === k);
   if (j >= 0) carnet.indices.push(carnet.corbeille.splice(j, 1)[0]);
-  else carnet.indices.push({k, t:phrase, qui:ctx.qui, quand:ctx.quand, source:ctx.source, indice:indiceDe(phrase), pour:[], contre:[], fiab:''});
+  else carnet.indices.push({k, t:phrase, qui:ctx.qui, quand:ctx.quand, source:ctx.source, indice:indiceDe(phrase), pour:[], contre:[], fiab:'', jour:Math.floor(state.minutes / 1440)});
   if (el) el.classList.add('prise');
   verifierIdeeEau();
   const M = window.SOHO_MUSIQUE; if (M && M.demarree() && M.ECRITURE) M.jouerBruit(M.ECRITURE);
@@ -2935,7 +2935,11 @@ function tamponRange(x){
 }
 function dessinerAClasserListe(){
  const zone = ui('onglet-classer'); zone.replaceChildren();
- const attente = carnet.indices.filter(x => !estClasse(x) || x === enDepart);
+ // 29 oct. (Jeremy) : dans l'ordre du texte d'origine : conversation par conversation, puis la place de la phrase dans le texte
+ const rang = x => { const i = carnet.conversations.findIndex(c => c.source === x.source); if (i < 0) return [Infinity, 0];
+  const p = carnet.conversations[i].lignes.join(' ').indexOf(x.t); return [i, p < 0 ? Infinity : p]; };
+ const attente = carnet.indices.filter(x => !estClasse(x) || x === enDepart).map(x => [x, rang(x)])
+  .sort((a, b) => a[1][0] - b[1][0] || a[1][1] - b[1][1]).map(a => a[0]);
  if (!carnet.indices.length){ zone.append(el('p', 'vide', 'Votre carnet est vide. Pendant une conversation, touchez une phrase qui vous semble importante : elle arrivera ici.')); return; }
  if (!attente.length){ zone.append(el('p', 'vide', 'Rien à classer. Tous vos extraits sont rangés dans leurs dossiers.')); return; }
  // 22 oct. (Jeremy) : une fiche de parchemin par extrait, deux étapes numérotées, la règle des pastilles dite une seule fois en haut.
@@ -2947,7 +2951,7 @@ function dessinerAClasserListe(){
   if (x === enDepart && estClasse(x)) art.append(el('div', 'tampon-range', echapper(tamponRange(x))));
   else if (x === enCorbeille) art.append(el('div', 'tampon-range tampon-corbeille', '🗑 Mise à la corbeille'));
   const genre = String(x.source).startsWith('journal') ? 'Journal' : /:\d+$/.test(String(x.source)) ? 'Rumeur de la rue' : 'Témoignage';
-  art.append(el('div', 'fiche-tete', '<span>Extrait n° ' + (carnet.indices.indexOf(x) + 1) + '</span><span class="genre">' + genre + '</span>'));
+  art.append(el('div', 'fiche-tete', '<span>Extrait n° ' + (attente.indexOf(x) + 1) + '</span><span class="genre">' + genre + '</span>'));
   const c = citation(x); c.classList.add('grande');
   art.append(c);
   art.append(el('h4', 'etape', '<span class="num">1</span>' + (connues.length ? 'Cette phrase accuse-t-elle ou disculpe-t-elle une explication ? Laquelle ?' : 'Vous n’avez encore entendu aucune explication. Écoutez les habitants : chacun a son idée sur la cause de la maladie.')));
@@ -3193,6 +3197,10 @@ const BRUITS = [
  {id:'chiens', fichier:'audio/bruit-chiens.mp3', quand:'nuit', min:35, max:85, entier:true, force:0.6, des:0},
  {id:'brouette', fichier:'audio/bruit-brouette.mp3', quand:'jour', min:90, max:200, duree:9, force:0.5, des:1},
  {id:'malade', fichier:'audio/bruit-malade.mp3', quand:'toujours', min:240, max:480, entier:true, force:0.3, des:2},
+ // 29 oct. (Jeremy) : les cris de la nuit. « jamais » : pas de tirage au hasard ici ; journees.js les joue au réveil,
+ // puis de temps en temps pendant la nuit, plus fort près de la pompe.
+ {id:'cri-femme', fichier:'audio/bruit-cri-femme.mp3', quand:'jamais', entier:true, force:0.8},
+ {id:'cri-homme', fichier:'audio/bruit-cri-homme.mp3', quand:'jamais', entier:true, force:0.8},
 ];
 // Le crayon : un court extrait (2 s, fondus brefs) chaque fois qu'un indice entre dans le carnet.
 const ECRITURE = {id:'ecriture', fichier:'audio/bruit-ecriture.mp3', duree:2, fondu:[0.15, 0.6], force:0.9};
@@ -3364,7 +3372,7 @@ const CREDITS = [
  ['L’histoire', 'John Snow, On the Mode of Communication of Cholera, 2e édition, 1855. N. Paneth et al., « A Rivalry of Foulness », American Journal of Public Health, 1998.'],
  ['La carte de Snow', 'John Snow, carte des morts du choléra autour de Broad Street, 1854, publiée en 1855 (C. F. Cheffins, lithographe). Domaine public, Wikimedia Commons, « Snow-cholera-map-1.jpg ».'],
  ['Les personnages', 'Thomas et Emily Hale sont inventés. John Snow, M. Huggins, M. Eley, M. Gould et le révérend Whitehead ont existé ; leurs paroles sont adaptées de Snow.'],
- ['Le son', 'Musiques : Broad Street et Beneath the Iron Gate. Bruitages : La Sonothèque (lasonotheque.fr).'],
+ ['Le son', 'Musiques : Broad Street et Beneath the Iron Gate. Bruitages : La Sonothèque (lasonotheque.fr). Cris de la nuit : freesound_community et Universfield (Pixabay).'],
  ['La police', 'Libre Caslon Text, licence SIL Open Font License.'],
 ];
 
@@ -5145,9 +5153,11 @@ Object.assign(CLES, {
  'jimmy-voisin':['mon voisin, le cordonnier, est tombé malade'],
  // le ramoneur (29 oct., Jeremy) : un argument contre l'air vicié, moyen (la suie n'est pas le miasme, et il est seul)
  'ramoneur-suie':['mais je n’ai jamais eu le choléra'],
+ 'famille-malade':['toute une famille est malade depuis ce matin'],
 });
 ATTENDUS['jimmy-voisin'] = {fiab:'temoin'};
 ATTENDUS['ramoneur-suie'] = {contre:'miasme', fiab:'temoin'};
+ATTENDUS['famille-malade'] = {fiab:'temoin'};
 for (const e of [ENQUETE.eley, ENQUETE.whitehead, ENQUETE.allumeur]) for (const v of Object.values(e.jours)) for (const i of v.indices){
  ATTENDUS[i.id] = i.attendu;
  if ([].concat(i.attendu.pour || []).includes('eau')) IDS_EAU.add(i.id);
@@ -5233,18 +5243,33 @@ const JOURNEES = [
   questions:['j1a', 'j1b', 'j1c', 'j1d']},
  {jour:2, nom:'La nuit du 2 au 3 septembre', debut:2 * 1440 + 30, nuit:true,
   resume:'Trouver d’où viennent les cris, parler à ceux qui ne dorment pas, et rentrer avant l’aube.',
-  personnes:['veilleur', 'mere_bentinck', 'tavernier', 'egoutier', 'ouvriere', 'precheur'], parler:4, noter:0, lieu:'dehors cette nuit',
+  personnes:['veilleur', 'mere_bentinck', 'tavernier', 'egoutier', 'ouvriere', 'precheur'], parler:0, noter:2, lieu:'dehors cette nuit',
+  // 29 oct. (Jeremy) : « quatre entretiens suffisaient, or il faut enquêter sur les cris » : trois fiches, toutes obligatoires
+  verifier:3, libelleFiches:'Enquêter sur les cris de la nuit',
+  fiches:[
+   {id:'n-cris', titre:'D’où viennent les cris ?', court:'le veilleur', pnj:'veilleur',
+    cherche:'Quelqu’un qui a fait le tour du quartier cette nuit et qui sait dans quelles rues on crie.', ou:'Cambridge Street, tout près de la pompe. Il fait sa ronde avec sa lanterne.', qui:'Le veilleur de nuit.',
+    retour:'Le veilleur vous a dit que les cris venaient des rues proches de la pompe, et que Marlborough Street dormait.',
+    manque:'Vous n’avez pas trouvé le veilleur. Moi, je l’ai croisé en rentrant : il dit que les cris venaient des rues proches de la pompe, et que Marlborough Street dormait.'},
+   {id:'n-malade', titre:'Un malade, vu de près', court:'la couturière', pnj:'ouvriere',
+    cherche:'Quelqu’un qui a vu des malades de ses propres yeux, cette nuit.', ou:'Brewer Street : elle rentre tard de l’atelier.', qui:'Une couturière qui rentre tard.',
+    retour:'La couturière a vu de ses yeux une famille entière tomber malade dans son immeuble. C’est un témoignage : elle était là.',
+    manque:'Vous n’avez pas parlé à la couturière de Brewer Street. Dans son immeuble, une famille entière est tombée malade : elle l’a vu de ses yeux.'},
+   {id:'n-rumeur', titre:'Ce qu’on raconte', court:'l’égoutier', pnj:'egoutier',
+    cherche:'Une histoire qui circule dans le quartier. Demandez-vous : celui qui la raconte l’a-t-il vue lui-même ?', ou:'Près de Brewer Street, en sortant de la taverne.', qui:'Un vieil égoutier.',
+    retour:'L’égoutier vous a parlé d’une fosse de la peste, ouverte par les travaux. Mais il n’a rien vu lui-même : c’est une rumeur.',
+    manque:'Vous n’avez pas croisé le vieil égoutier. Il raconte qu’une fosse de la peste aurait été ouverte par les travaux. Il ne l’a pas vue : c’est une rumeur.'}],
   // 27 oct. (Jeremy) : fondu au noir, silence, puis les cris ; une lueur sous la porte, et seulement alors le docteur.
   avant:[{qui:'', scene:'noire', texte:'Le samedi passe. Vous accompagnez le docteur chez ses malades, puis vous vous couchez tôt, épuisé{e}.'},
-   {qui:'', scene:'noire', son:'chiens', texte:'Au milieu de la nuit, un cri vous réveille. Puis un autre, plus proche. Dehors, des chiens se mettent à aboyer.'},
+   {qui:'', scene:'noire', son:['cri-femme', 'cri-homme', 'chiens'], texte:'Au milieu de la nuit, un cri vous réveille. Puis un autre, plus proche. Dehors, des chiens se mettent à aboyer.'},
    {qui:'', scene:'lueur', texte:'Vous vous redressez dans le noir. Une lueur passe sous la porte : quelqu’un marche dans le couloir.'},
    {qui:'', scene:'lueur', texte:'La porte s’ouvre. C’est le docteur, déjà habillé, une lampe à la main.'}],
-  mission:['Vous les avez entendus, vous aussi ? Ces cris viennent du côté de Poland Street. Habillez-vous et allez voir ce qui se passe.', 'Ne touchez pas les malades. Regardez d’où viennent les cris, et parlez à ceux qui ne dorment pas. Revenez avant l’aube.'],
+  mission:['Vous les avez entendus, vous aussi ? Ces cris viennent du côté de la pompe. Habillez-vous et allez voir ce qui se passe.', 'Cette nuit, je veux des **témoins** : des gens qui ont vu de leurs propres yeux. Trouvez le veilleur de nuit : il sait d’où viennent les cris. Trouvez aussi quelqu’un qui a vu des malades, et écoutez ce qu’on raconte. Ne touchez personne, et revenez avant l’aube.'],
   voix:'J’ai entendu assez de gens, je crois.',
   lecon:[
    'Asseyez-vous, et racontez-moi d’où venaient les cris.',
-   'Le veilleur vous a dit que les cris venaient des rues proches de la pompe, et que Marlborough Street dormait. Retenez cette façon de regarder. On ne comprend pas une maladie en regardant seulement les malades. Il faut comparer : ceux qui tombent malades, et ceux qui ne tombent pas malades, alors qu’ils vivent tout près.',
-   'Retenez aussi ce mot : la contagion, c’est le passage d’une maladie d’une personne à une autre, par le contact. Votre couturière y croit. Mais pour le prouver, il faudrait que ceux qui touchent les malades tombent malades plus que les autres. Maintenant, quelques questions.'],
+   'Retenez cette façon de regarder. On ne comprend pas une maladie en regardant seulement les malades. Il faut comparer : ceux qui tombent malades, et ceux qui ne tombent pas malades, alors qu’ils vivent tout près.',
+   'Retenez aussi ce mot : la contagion, c’est le passage d’une maladie d’une personne à une autre, par le contact. La voisine de la couturière y croit. Mais pour le prouver, il faudrait que ceux qui touchent les malades tombent malades plus que les autres. Maintenant, quelques questions.'],
   questions:['j2a', 'j2b', 'j2c', 'j2d']},
  // Partie 4 de la conception (28 oct.) : le lundi est le jour des vérifications. Six fiches, une par explication ;
  // chacune dit ce qu'on dit, ce qu'on vérifie, où, et à qui. Quatre suffisent.
@@ -5329,6 +5354,7 @@ const accorder = t => t.replace('{e}', moiE()).replace('{autre}', partie.perso =
 function ficheFaite(f, jr){
  const e = ENQUETE[f.pnj], v = e && e.jours && e.jours[jr.jour];
  if (f.jimmy && carnet.vus.jimmy) return true;
+ if (jr.nuit) return !!(jours().parles[JOURNEES.indexOf(jr)] || {})[f.pnj];
  return v ? !!carnet.vus[f.pnj + ':j' + jr.jour] : !!(carnet.vus[f.pnj] || carnet.vus[f.pnj + ':matin']);
 }
 function missionEtat(i){
@@ -5440,7 +5466,7 @@ function lignesLecon(jr){
   l.push({qui:'Le docteur Snow', texte:'Vos extraits accusent l’eau, et vous y êtes arrivé' + e + ' par vous-même. Alors je peux maintenant vous dire ce que je pense depuis 1849 : le malade rejette quelque chose dans ses selles. Si ces saletés arrivent dans l’eau, ceux qui la boivent tombent malades à leur tour.'});
   l.push({qui:'Le docteur Snow', texte:'Mais une idée n’est pas une preuve, même la mienne. Demain, devant le conseil, ce sont vos faits qui compteront, pas mon avis.'});
  }
- if (jr.fiches) for (const f of jr.fiches) if (f.retour && ficheFaite(f, jr)) l.push({qui:'Le docteur Snow', texte:f.retour});
+ if (jr.fiches) for (const f of jr.fiches){ const fait = ficheFaite(f, jr); if (fait && f.retour) l.push({qui:'Le docteur Snow', texte:f.retour}); else if (!fait && f.manque) l.push({qui:'Le docteur Snow', texte:f.manque}); }
  jr.lecon.forEach((t, k) => l.push(Object.assign((jr.recitLecon || []).includes(k) ? {qui:'', texte:t} : {qui:'Le docteur Snow', texte:t}, jr.docs && jr.docs[k] ? {doc:jr.docs[k]} : {})));
  l[l.length - 1].fin = 'questions';
  for (const c of cartesDe(JOURNEES.indexOf(jr))) if (c.lecon) gagnerCarte(c, true);
@@ -5456,14 +5482,15 @@ const RAISONS_CROYANCE = {
  eau:'beaucoup de gens boivent à la même pompe.',
 };
 function bilanDuCarnet(){
- const ind = carnet.indices, n = ind.length;
- if (!n) return ['Votre carnet est presque vide. Racontez-moi au moins ce que vous avez entendu dans les rues.'];
+ // 29 oct. (Jeremy) : le docteur ne parle que de ce qui a été noté aujourd'hui, sinon il se répète d'un soir à l'autre
+ const auj = Math.floor(state.minutes / 1440), ind = carnet.indices.filter(i => i.jour === auj), n = ind.length;
+ if (!n) return [carnet.indices.length ? 'Aujourd’hui, vous n’avez rien noté de nouveau dans votre carnet. Racontez-moi au moins ce que vous avez entendu.' : 'Votre carnet est presque vide. Racontez-moi au moins ce que vous avez entendu dans les rues.'];
  const comptes = EXPLICATIONS.map(x => ({x, n:ind.filter(i => i.pour.includes(x.id) || i.contre.includes(x.id)).length})).filter(c => c.n).sort((a, b) => b.n - a.n);
  const nom = c => c.x.nom.charAt(0).toLowerCase() + c.x.nom.slice(1);
  const fois = k => k > 1 ? k + ' extraits' : 'un extrait';
  const t = [];
- if (!comptes.length) t.push('Voyons ce que vous avez rapporté : ' + fois(n) + (n > 1 ? '. Vous ne les avez pas encore rangés, alors je ne sais pas encore de quoi ils parlent. Rangez-les ce soir, dans votre carnet.' : '. Vous ne l’avez pas encore rangé, alors je ne sais pas encore de quoi il parle. Rangez-le ce soir, dans votre carnet.'));
- else t.push('Voyons ce que vous avez rapporté : ' + fois(n) + '. Ce qui revient le plus, c’est ' + nom(comptes[0]) + ', dans ' + fois(comptes[0].n) + '.'
+ if (!comptes.length) t.push('Voyons ce que vous avez rapporté aujourd’hui : ' + fois(n) + (n > 1 ? '. Vous ne les avez pas encore rangés, alors je ne sais pas encore de quoi ils parlent. Rangez-les ce soir, dans votre carnet.' : '. Vous ne l’avez pas encore rangé, alors je ne sais pas encore de quoi il parle. Rangez-le ce soir, dans votre carnet.'));
+ else t.push('Voyons ce que vous avez rapporté aujourd’hui : ' + fois(n) + '. Ce qui revient le plus, c’est ' + nom(comptes[0]) + ', dans ' + fois(comptes[0].n) + '.'
   + (comptes[1] ? ' Ensuite ' + nom(comptes[1]) + ', dans ' + fois(comptes[1].n) + '.' : '')
   + ' Cela ne m’étonne pas : ' + RAISONS_CROYANCE[comptes[0].x.id]);
  const rumeurs = ind.filter(i => i.fiab === 'opinion').length, faits = ind.filter(i => i.fiab === 'vu' || i.fiab === 'temoin').length;
@@ -5608,7 +5635,8 @@ ouv.addEventListener('click', e => {
   const avant = jLignes[jN]; if (act === 'j-prec' && jN === 0) return;
   jN += act === 'j-suiv' ? 1 : -1;
   const r = jLignes[jN];
-  if (r.son && act === 'j-suiv'){ const M = window.SOHO_MUSIQUE, b = M.BRUITS.find(x => x.id === r.son); if (b && M.demarree()) M.jouerBruit(b, 1.2); }
+  // plusieurs sons à la suite : « un cri, puis un autre, plus proche, puis les chiens » (29 oct., Jeremy)
+  if (r.son && act === 'j-suiv'){ const M = window.SOHO_MUSIQUE; if (M.demarree()) [].concat(r.son).forEach((id, k) => { const b = M.BRUITS.find(x => x.id === id); if (b) M.jouerBruit(b, [0.8, 4.6, 6.6][k] || 0.8 + k * 2.6); }); }
   if ((avant.scene || '') !== (r.scene || '')) fondu(jScene); else jScene();
  }
  else if (act === 'j-partir'){
@@ -5688,7 +5716,8 @@ const listeOu = ou => ou && ou.length ? '<details class="mission-ou-bloc"' + (ou
 boiteMission.addEventListener('toggle', e => { if (e.target.classList.contains('mission-ou-bloc')) ouOuvert = e.target.open; }, true);
 // ---------- qui est nouveau ? (27 oct., Jeremy : « on a l'impression de revoir les mêmes gens ») ----------
 // Un témoin pas encore écouté porte une pastille dorée « ! », visible de loin ; un témoin déjà écouté, une petite coche grise.
-const dejaEcoute = a => { if (a.ambient) return !!carnet.vus[a.id + ':' + Math.floor(state.minutes / 1440)];
+const dejaEcoute = a => { { const jr = journeeCourante(); if (jr && jr.nuit && !a.ambient) return !!(jours().parles[jours().i] || {})[a.id]; }
+ if (a.ambient) return !!carnet.vus[a.id + ':' + Math.floor(state.minutes / 1440)];
  { const jj = Math.floor(state.minutes / 1440), e = ENQUETE[a.id]; if (e && e.jours && e.jours[jj]) return !!carnet.vus[a.id + ':j' + jj];
    // une suite pas encore entendue, un autre jour : le témoin redevient nouveau
    if (e && e.suite && carnet.vus[a.id] && !carnet.vus[a.id + ':suite'] && ((carnet.vusLe || {})[a.id] ?? -1) < jj) return false; } return !!(carnet.vus[a.id] || carnet.vus[a.id + ':matin']); };
@@ -5734,14 +5763,17 @@ miniCarte.id = 'mini-carte'; miniCarte.title = 'Le plan du quartier : touchez po
 document.body.append(miniCarte);
 miniCarte.addEventListener('click', () => toggleMap());
 const hacheMini = s => { let h = 7; for (const ch of String(s)) h = (h * 31 + ch.charCodeAt(0)) >>> 0; return h; };
-const placeDe = id => LAYOUT.anchors[id] || ((DATA.people.find(p => p.id === id) || {}).world);
 // une zone par mission encore à faire, décalée au hasard (mais toujours au même endroit) : on sait où chercher, pas à qui
 function zonesDuJour(){
  const jr = journeeCourante(); if (!jr) return [];
  let l = [];
  if (jr.fiches) l = jr.fiches.filter(f => !ficheFaite(f, jr)).map(f => f.pnj);
- else if (jr.ou) l = jr.ou.filter(x => !x.ids.every(id => carnet.vus[id] || carnet.vus[id + ':matin'])).map(x => x.ids[0]);
- return l.map(id => ({id, at:placeDe(id)})).filter(z => z.at).map(z => {
+ else if (jr.ou) l = jr.ou.flatMap(x => x.ids.filter(id => !(carnet.vus[id] || carnet.vus[id + ':matin'])));
+ // 29 oct. (Jeremy) : la nuit n'a ni fiches ni « où aller » ; on montre les témoins qui ne dorment pas, pas encore écoutés cette nuit
+ else if (jr.personnes){ const j = jours(), parles = j.parles[j.i] || {}; l = jr.personnes.filter(id => !parles[id]); }
+ // 29 oct. (Jeremy) : pas de tache pour quelqu'un qui n'est pas dehors à cette heure-ci ; la tache suit sa position réelle
+ const presents = new Map(npcs.visible().filter(a => a.interactable).map(a => [a.id, a]));
+ return [...new Set(l)].filter(id => presents.has(id)).map(id => ({id, at:[presents.get(id).px, presents.get(id).py]})).map(z => {
   const h = hacheMini(z.id), a = (h % 360) * Math.PI / 180, d = 40 + h % 60;
   return {x:z.at[0] + Math.cos(a) * d, y:z.at[1] + Math.sin(a) * d, r:230};
  });
@@ -5767,7 +5799,13 @@ function dessinerMiniCarte(){
  const pompe = (DATA.people.find(p => p.type === 'pompe') || {}).world;
  if (pompe){ c.fillStyle = '#2f5f8f'; c.beginPath(); c.arc(pompe[0], pompe[1], 30, 0, Math.PI * 2); c.fill(); }
  const porte = LAYOUT.anchors.snow;
- if (porte){ c.fillStyle = '#b3261e'; c.beginPath(); c.arc(porte[0], porte[1], 36, 0, Math.PI * 2); c.fill(); }
+ // 29 oct. (Jeremy) : une lueur rouge autour de la maison du docteur, à tous les niveaux
+ if (porte){
+  const lr = 200 + 40 * Math.sin(t * 2), g = c.createRadialGradient(porte[0], porte[1], 0, porte[0], porte[1], lr);
+  g.addColorStop(0, 'rgba(220,40,30,.85)'); g.addColorStop(.4, 'rgba(220,40,30,.35)'); g.addColorStop(1, 'rgba(220,40,30,0)');
+  c.fillStyle = g; c.beginPath(); c.arc(porte[0], porte[1], lr, 0, Math.PI * 2); c.fill();
+  c.fillStyle = '#b3261e'; c.beginPath(); c.arc(porte[0], porte[1], 36, 0, Math.PI * 2); c.fill();
+ }
  c.fillStyle = '#fffaf0'; c.strokeStyle = '#1f1710'; c.lineWidth = 14; c.beginPath(); c.arc(player.px, player.py, 42, 0, Math.PI * 2); c.fill(); c.stroke();
 }
 setInterval(dessinerMiniCarte, 200);
@@ -5870,6 +5908,24 @@ window.SOHO_JOURNEES = {JOURNEES, CARTES_SAVOIR, QUESTIONS_SNOW, jours, demarrer
 
 // le petit bouton « Rentrer chez le docteur », à droite du tampon (29 oct., Jeremy)
 boiteMission.addEventListener('click', e => { if (!e.target.closest('[data-retour]')) return; if (ui('carnet').open) ui('carnet-close').click(); setTimeout(rentrerChezSnow, 80); });
+
+// ---------- les cris de la nuit (29 oct., Jeremy) ----------
+// Toutes les 25 à 50 secondes, un cri au loin. Plus le joueur s'approche de la pompe de Broad Street,
+// d'où viennent les malades, plus le cri est fort : on peut le suivre à l'oreille.
+let prochainCri = 0;
+setInterval(() => {
+ const jr = journeeCourante(), M = window.SOHO_MUSIQUE;
+ if (!jr || !jr.nuit || !ouv.hidden || paused() || document.hidden || !M || !M.demarree() || volumeBruits === 0) return;
+ const t = performance.now() / 1000;
+ if (!prochainCri){ prochainCri = t + 12; return; }
+ if (t < prochainCri) return;
+ prochainCri = t + 25 + Math.random() * 25;
+ const pompe = (DATA.people.find(p => p.type === 'pompe') || {}).world; if (!pompe) return;
+ const d = Math.hypot(player.px - pompe[0], player.py - pompe[1]), proche = Math.max(0, Math.min(1, 1 - (d - 150) / 1300));
+ const b = M.BRUITS.find(x => x.id === (Math.random() < .5 ? 'cri-femme' : 'cri-homme')); if (!b) return;
+ const c = Object.assign({}, b, {force:b.force * (0.2 + 0.8 * proche)});
+ M.jouerBruit(c); if (!b.tampon) b.tampon = c.tampon;
+}, 1000);
 
 // ============================================================
 // EXAMEN · l'examen du docteur Snow et le document d'analyse (refonte du 23 oct. 2026)
@@ -6168,6 +6224,21 @@ documentTrace = function(){
  s += wTable([[wP(wR('Critère', {b:true})), wP(wR('Mon avis', {b:true})), wP(wR('Un exemple', {b:true}))],
   ...CRITERES.map(([c, nom]) => { const a = t.auto[c] || {}; return [wP([wR(c + ' ', {b:true}), wR(nom)]), wP(wR(a.niveau != null && a.niveau !== '' ? NIVEAUX[Number(a.niveau)] : '—')), wP(wR((a.exemple || '').trim() || '—'))]; })],
   [3000, 2300, 4300]);
+ // 12 · ce qui m'a échappé (29 oct., Jeremy : « donner envie de recommencer ») : on nomme ce qui manque, sans en donner le contenu
+ s += wTitre2('12. Pour ma prochaine enquête : ce qui m’a échappé');
+ const nomPnj = id => (DATA.people.find(p => p.id === id) || {}).nom || id;
+ const ecoute = id => Object.keys(carnet.vus).some(k => k === id || k.startsWith(id + ':'));
+ const manquees = CARTES_SAVOIR.filter(c => !(j.cartes || {})[c.id]);
+ const jamais = EXPLICATIONS.filter(e => !carnet.connues[e.id]).map(e => e.nom);
+ const temoins = Object.keys(ENQUETE).filter(id => id !== 'snow' && (ENQUETE[id].indices || []).length && !ecoute(id) && DATA.people.some(p => p.id === id));
+ const suites = Object.keys(ENQUETE).filter(id => ENQUETE[id].suite && ecoute(id) && !carnet.vus[id + ':suite']);
+ if (!manquees.length && !jamais.length && !temoins.length && !suites.length) s += wP(wR('Rien ! J’ai tout trouvé. Bravo, enquêteur.', {b:true, color:'2F5E2A'}));
+ if (manquees.length) s += wP(wR('Les cartes de savoir que je n’ai pas trouvées (' + manquees.length + ') :', {b:true}), {avant:80, apres:60})
+  + manquees.map(c => wP([wR('• ' + c.titre, {b:true}), wR(c.lecon ? ' : dans une leçon du docteur' : ' : à demander à ' + nomPnj(c.pnj).replace(/^./, m => m.toLowerCase()))], {retrait:280})).join('');
+ if (jamais.length) s += wP([wR('Les explications que je n’ai jamais entendues : ', {b:true}), wR(jamais.join(', '))], {avant:80});
+ if (temoins.length) s += wP([wR('Les témoins à qui je n’ai jamais parlé : ', {b:true}), wR(temoins.map(nomPnj).join(', ') + '. Ils avaient chacun quelque chose à dire.')], {avant:80});
+ if (suites.length) s += wP([wR('Ceux qui avaient encore quelque chose à me raconter, un autre jour : ', {b:true}), wR(suites.map(nomPnj).join(', '))], {avant:80});
+ s += wP(wR('Une nouvelle partie me permettrait de tout retrouver. Et quand tout est rempli, une surprise se débloque…', {i:true, color:CW.bleu}), {avant:120});
  return '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>' + s
   + '<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1134" w:right="1134" w:bottom="1134" w:left="1134" w:header="567" w:footer="567" w:gutter="0"/></w:sectPr></w:body></w:document>';
 };
