@@ -4289,8 +4289,10 @@ async function lancerGuide(){
  state.minutes = minutesAvant; updateClock(true);
  reglages.vus.guide = true; sauverReglages();
  guideActif = false; guidePrevu = false;
- // le conseil sur le temps reste celui déjà en place
- setTimeout(() => coach('horloge', 'Attention au temps : il passe quand je marche et quand je parle. Le soir, je devrai rentrer chez le docteur **Snow** pour lui faire mon rapport.', ui('clock')), 700);
+ // le conseil sur le temps reste celui déjà en place, puis une dernière bulle sur la mini-carte (29 oct., Jeremy)
+ await new Promise(ok => setTimeout(ok, 700));
+ await dire('horloge', 'Attention au temps : il passe quand je marche et quand je parle. Le soir, je devrai rentrer chez le docteur **Snow** pour lui faire mon rapport.', ui('clock'));
+ dire('g-minicarte', 'En haut à droite, ma **mini-carte** : le point blanc, c’est moi ; le rouge, la maison du docteur ; le bleu, la pompe. Les **taches dorées** montrent où chercher aujourd’hui. Je la touche pour agrandir le plan.', () => document.getElementById('mini-carte'));
 }
 // « Continuer » sur une partie où le tutoriel n'a jamais été fait (carnet vide) : on le propose aussi.
 ouv.addEventListener('click', e => {
@@ -5177,7 +5179,7 @@ const JOURNEES = [
  {jour:0, nom:'Vendredi 1er septembre', debut:7 * 60,
   resume:'Trouver toutes les explications que les gens donnent à cette maladie, et retenir leurs mots.',
   personnes:['apothicaire', 'voisine', 'agent', 'tavernier', 'pieuse'], parler:0, noter:3, lieu:'',
-  verifier:5, libelleFiches:'Trouver les explications du quartier',
+  verifier:5, libelleFiches:'Découvrir 5 idées des habitants sur la cause du choléra',
   fiches:[
    // Jimmy l'apporte dès le tutoriel (28 oct., Jeremy) ; l'apothicaire reste pour qui a coupé les conseils
    {id:'h-air', titre:'L’air vicié, le miasme', court:'Jimmy, ou Brewer Street', pnj:'apothicaire', jimmy:true,
