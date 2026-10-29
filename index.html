@@ -3855,10 +3855,11 @@ const portraitsConnus = {};   // id → {src, medaillon}, ou null si aucune imag
 const MEDAILLONS = {snow:'images/ouverture/portrait-snow.webp', thomas:'images/ouverture/portrait-thomas.webp', emily:'images/ouverture/portrait-emily.webp'};
 // 29 oct. (Jeremy) : les portraits arrivent de ChatGPT sur fond magenta (#FF00FF). On le retire au chargement :
 // le magenta devient transparent, et le liseré rosé des bords est adouci et ramené vers le gris (pas de halo rose).
-function sansMagenta(im){
+// r : la case [x0, y0, x1, y1] d'une planche ; sans r, toute l'image.
+function sansMagenta(im, r){
  try {
-  const c = document.createElement('canvas'); c.width = im.naturalWidth; c.height = im.naturalHeight;
-  const x = c.getContext('2d'); x.drawImage(im, 0, 0);
+  const c = document.createElement('canvas'); c.width = r ? r[2] - r[0] : im.naturalWidth; c.height = r ? r[3] - r[1] : im.naturalHeight;
+  const x = c.getContext('2d'); x.drawImage(im, r ? -r[0] : 0, r ? -r[1] : 0);
   const d = x.getImageData(0, 0, c.width, c.height), p = d.data;
   let vu = 0;
   for (let i = 0; i < p.length; i += 4){
@@ -3866,13 +3867,30 @@ function sansMagenta(im){
    if (m > 110){ p[i + 3] = 0; vu++; }
    else if (m > 45){ const k = (m - 45) / 65; p[i + 3] = Math.round(p[i + 3] * (1 - k)); const gris = (r + g + b) / 3; p[i] = Math.round(r - (r - gris) * k); p[i + 2] = Math.round(b - (b - gris) * k); }
   }
-  if (vu < p.length / 4 * .05) return im.src;   // presque pas de magenta : l'image est déjà détourée
+  if (!r && vu < p.length / 4 * .05) return im.src;   // presque pas de magenta : l'image est déjà détourée
   x.putImageData(d, 0, 0); return c.toDataURL('image/png');
  } catch { return im.src; }
 }
+// Les planches : une image, plusieurs personnages, chacun dans sa case (mesurée sur l'image, en pixels).
+const PLANCHES = [
+ {src:'images/portraits/planche-1.png', cases:{
+  huggins:[0, 20, 352, 446], eley:[358, 20, 696, 446], whitehead:[699, 20, 972, 446], hospice:[973, 20, 1303, 446], veilleur:[1308, 20, 1653, 446],
+  apothicaire:[0, 452, 342, 926], marchande:[346, 452, 692, 926], allumeur:[697, 452, 1000, 926], gould:[1313, 452, 1671, 926]}},
+ // l'agent Turner (case 1000-1299 du bas) attend un nouveau portrait : son casque date de 1863
+];
+const imagesPlanches = {};
 function chargerPortrait(id, suite){
  if (!id) return;
  if (id in portraitsConnus){ const c = portraitsConnus[id]; if (c) suite(c.src, c.medaillon); return; }
+ const pl = PLANCHES.find(q => q.cases[id]);
+ if (pl){
+  if (!imagesPlanches[pl.src]) imagesPlanches[pl.src] = new Promise(ok => { const im = new Image(); im.onload = () => ok(im); im.onerror = () => ok(null); im.src = pl.src; });
+  imagesPlanches[pl.src].then(im => {
+   if (!im){ portraitsConnus[id] = null; return; }
+   const src = sansMagenta(im, pl.cases[id]); portraitsConnus[id] = {src, medaillon:false}; suite(src, false);
+  });
+  return;
+ }
  const essais = ['.png', '.webp'].map(x => ({src:DOSSIER_PORTRAITS + id + x, medaillon:false}));
  if (MEDAILLONS[id]) essais.push({src:MEDAILLONS[id], medaillon:true});
  const im = new Image(); let courant = essais.shift();
