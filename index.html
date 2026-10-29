@@ -6029,6 +6029,11 @@ function choix(cle, options, ordre, valeur){
  return '<div class="reu-liste">' + ordre.map(k => '<button class="reu-carte' + (valeur === k ? ' choisie' : '') + '" data-act="x-rep" data-cle="' + esc(cle) + '" data-k="' + k + '"' + verrou() + '><span class="marque"></span><span class="nom">' + esc(options[k]) + '</span></button>').join('') + '</div>';
 }
 const etapeX = (n, t) => '<p class="ouv-etape">L’examen du docteur Snow · partie ' + n + ' sur 3 · ' + t + '</p>';
+const AVIS = [
+ ['avisAppris', 'Qu’est-ce que j’ai appris grâce à ce jeu ?', 'Une chose sur 1854, sur la médecine, ou sur la façon d’enquêter…'],
+ ['avisPlus', 'Qu’est-ce qui m’a plu ?', 'Un moment, un personnage, une façon de jouer…'],
+ ['avisMoins', 'Qu’est-ce qui m’a moins plu, ou qu’est-ce qu’il faudrait améliorer ?', 'Ce qui était trop long, pas clair, difficile…'],
+];
 const PAGES_EXAMEN = [
  // 0 · l'annonce
  () => '<p class="ouv-etape">Après la réunion · l’examen du docteur Snow</p><h2>Une dernière épreuve</h2>'
@@ -6064,17 +6069,14 @@ const PAGES_EXAMEN = [
   const n = notesExamen();
   return '<p class="ouv-etape">L’examen du docteur Snow · le résultat</p><h2>Votre copie est rendue</h2>'
    + '<div class="x-notes"><p><span>Vos preuves</span><strong>' + n.preuves + ' / ' + n.preuvesMax + '</strong></p><p><span>Vos connaissances</span><strong>' + n.conn + ' / ' + n.connMax + '</strong></p><p><span>Votre verdict</span><strong>noté par votre professeur</strong></p><p><span>Les questions du soir</span><strong>' + n.soir + ' / ' + n.soirMax + '</strong></p></div>'
-   + '<p class="reu-dit">« ' + (n.preuves + n.conn >= (n.preuvesMax + n.connMax) * .75 ? 'Excellent travail. Vous ferez un bon médecin.' : n.preuves + n.conn >= (n.preuvesMax + n.connMax) / 2 ? 'C’est un bon début. Relisez vos notes : il vous reste des choses à apprendre.' : 'Vous avez encore beaucoup à apprendre. Relisez vos leçons et vos cartes de savoir.') + ' Il reste une chose à faire avant de rendre votre carnet : regarder plus loin que Soho. »<small>Le docteur Snow</small></p>'
+   + '<p class="reu-dit">« ' + (n.preuves + n.conn >= (n.preuvesMax + n.connMax) * .75 ? 'Excellent travail. Vous ferez un bon médecin.' : n.preuves + n.conn >= (n.preuvesMax + n.connMax) / 2 ? 'C’est un bon début. Relisez vos notes : il vous reste des choses à apprendre.' : 'Vous avez encore beaucoup à apprendre. Relisez vos leçons et vos cartes de savoir.') + ' Avant de rendre votre carnet, dites-moi ce que vous avez pensé de cette enquête. »<small>Le docteur Snow</small></p>'
    + '<p class="reu-consigne">Le détail de vos réponses, et les bonnes réponses, sont dans votre document Word.</p>'
-   + navTrace(false, true, 'Regarder plus loin');
+   + navTrace(false, true, 'Donner mon avis');
  },
- // 5 · retour au présent : la courbe et les hypothèses
- () => etapeT(0, 'Retour au présent') + '<h2>Et après Soho ?</h2>'
-  + '<p class="reu-consigne">Voici l’espérance de vie à la naissance au Royaume-Uni, depuis 1750 : le nombre moyen d’années qu’un nouveau-né peut espérer vivre. En 1854, l’année de votre enquête, elle est de <strong>39,5 ans</strong>. En 2023, elle dépasse <strong>81 ans</strong>.</p>'
-  + '<div class="reu-courbe">' + svgEsperance() + '</div><p class="x-source">Source : Our World in Data, d’après Riley (2005), Zijdeman et al. (2015), Human Mortality Database et Nations unies.</p>'
-  + '<p class="reu-question">Qu’est-ce qui a fait monter cette courbe ?</p>'
-  + '<p class="reu-consigne">Proposez <strong>deux explications</strong>. Pour chacune, écrivez <strong>la preuve qu’il faudrait trouver</strong> pour la vérifier. Vous ne savez pas encore si elles sont justes : c’est normal. On reviendra à ces hypothèses à la fin de l’unité.</p>'
-  + [1, 2].map(n => '<div class="x-hypo"><label class="reu-q"><span>Explication ' + n + '</span>' + champ('hypo' + n, 2, n === 1 ? 'Par exemple : on boit une eau plus propre…' : '') + '</label><label class="reu-q"><span>La preuve qu’il faudrait trouver</span>' + champ('preuve' + n, 2) + '</label></div>').join('')
+ // 5 · votre avis sur le jeu (29 oct., Jeremy : remplace la courbe et l'auto-évaluation, faites en classe)
+ () => etapeT(0, 'Votre avis') + '<h2>Et vous, qu’avez-vous pensé de cette enquête ?</h2>'
+  + '<p class="reu-consigne">Votre professeur lira vos réponses pour améliorer le jeu. Soyez sincère : il n’y a pas de mauvaise réponse, et cette page n’est pas notée.</p>'
+  + AVIS.map(([id, q, aide]) => '<label class="reu-q"><span>' + esc(q) + '</span>' + champ(id, 3, aide) + '</label>').join('')
   + navTrace(true, true),
 ];
 // la courbe, tracée à partir des données (une valeur tous les cinq ans environ avant 1845, puis tous les cinq ans)
@@ -6096,7 +6098,7 @@ const pageRendre = () => {
  if (!(t.nom || '').trim()) manque.push('votre nom');
  if (!x.fini) manque.push('la fin de l’examen (partie 3 : « Rendre ma copie »)');
  if ((t.rapport || '').trim().split(/\s+/).filter(Boolean).length < 40) manque.push('votre verdict (le rapport est très court)');
- if (!(t.hypo1 || '').trim() || !(t.hypo2 || '').trim()) manque.push('vos deux explications de la courbe');
+ if (!AVIS.some(([id]) => (t[id] || '').trim())) manque.push('votre avis sur le jeu');
  if (!(t.finale || '').trim()) manque.push('la réponse à la question finale');
  return etapeT(0, 'Rendre votre travail') + '<h2>Votre document est prêt</h2>'
   + (manque.length ? '<div class="reu-manque"><p><strong>Il manque encore :</strong></p><ul>' + manque.map(m => '<li>' + esc(m) + '</li>').join('') + '</ul><p>Vous pouvez le télécharger quand même, et le compléter plus tard.</p></div>' : '<p class="reu-consigne">Tout est rempli. Bravo.</p>')
@@ -6107,7 +6109,9 @@ const pageRendre = () => {
 };
 // la réflexion se fait à la maison si le temps manque
 const pageReflexionMaison = () => pageReflexion().replace('<p class="reu-consigne">', '<p class="reu-consigne"><strong>À la maison, si le temps manque en classe.</strong> ');
-PAGES_TRACE.splice(0, PAGES_TRACE.length, ...PAGES_EXAMEN, pageRetenir, pageReflexionMaison, pageAuto, pageRendre);
+// sans numéro d'étape : l'auto-évaluation a disparu, les « étape n sur 4 » ne voulaient plus rien dire
+const sansEtape = f => () => f().replace(/étape \d+ sur 4 · /, '');
+PAGES_TRACE.splice(0, PAGES_TRACE.length, ...PAGES_EXAMEN, sansEtape(pageRetenir), sansEtape(pageReflexionMaison), pageRendre);
 
 // ---------- les clics de l'examen ----------
 ouv.addEventListener('click', e => {
@@ -6208,9 +6212,8 @@ documentTrace = function(){
   ...Object.entries(QUESTIONS_SNOW).map(([id, Q]) => { const v = (j.q || {})[id]; return [wP(wR(Q.c)), wP(wR(Q.q)), wP(wR(v ? v.points + ' / 2' + (v.essais > 1 ? ' (' + v.essais + ' essais)' : '') : 'non posée'))]; })],
   [1100, 6900, 1600]);
  // 7 · retour au présent
- s += wTitre2('7. Retour au présent : la courbe de l’espérance de vie');
- s += wP(wR('Au Royaume-Uni, l’espérance de vie à la naissance est de 39,5 ans en 1854, et de 81,3 ans en 2023 (Our World in Data).', {size:20}));
- for (const k of [1, 2]) s += wP([wR('Explication ' + k + ' : ', {b:true}), wR((t['hypo' + k] || '').trim() || '(pas de réponse)')], {avant:80, apres:20}) + wP([wR('La preuve qu’il faudrait trouver : ', {b:true}), wR((t['preuve' + k] || '').trim() || '(pas de réponse)')], {retrait:360});
+ s += wTitre2('7. Mon avis sur le jeu');
+ for (const [id, q] of AVIS) s += wP(wR(q, {b:true}), {avant:120, apres:60}) + ((t[id] || '').trim() ? wTexte(t[id]) : wVide());
  // 8 · réfléchir
  s += wTitre2('8. Réfléchir à mon enquête');
  for (const [id, q] of QUESTIONS) s += wP(wR(q, {b:true, color:id === 'finale' ? CW.navy : CW.texte}), {avant:120, apres:60}) + ((t[id] || '').trim() ? wTexte(t[id]) : wVide());
@@ -6229,13 +6232,8 @@ documentTrace = function(){
  s += wTitre2('10. Ce qu’il faut retenir');
  for (const [a, b] of A_RETENIR) s += wP([wR(a + ' : ', {b:true, color:CW.bleu}), wR(b)]);
  s += wTable([[wP(wR('Mot', {b:true})), wP(wR('Définition', {b:true}))], ...MOTS.map(([m, def]) => [wP(wR(m, {b:true})), wP(wR(def))])], [2200, 7400]);
- // 11 · auto-évaluation
- s += wTitre2('11. Mon auto-évaluation');
- s += wTable([[wP(wR('Critère', {b:true})), wP(wR('Mon avis', {b:true})), wP(wR('Un exemple', {b:true}))],
-  ...CRITERES.map(([c, nom]) => { const a = t.auto[c] || {}; return [wP([wR(c + ' ', {b:true}), wR(nom)]), wP(wR(a.niveau != null && a.niveau !== '' ? NIVEAUX[Number(a.niveau)] : '—')), wP(wR((a.exemple || '').trim() || '—'))]; })],
-  [3000, 2300, 4300]);
- // 12 · ce qui m'a échappé (29 oct., Jeremy : « donner envie de recommencer ») : on nomme ce qui manque, sans en donner le contenu
- s += wTitre2('12. Pour ma prochaine enquête : ce qui m’a échappé');
+ // 11 · ce qui m'a échappé (29 oct., Jeremy : « donner envie de recommencer ») : on nomme ce qui manque, sans en donner le contenu
+ s += wTitre2('11. Pour ma prochaine enquête : ce qui m’a échappé');
  const nomPnj = id => (DATA.people.find(p => p.id === id) || {}).nom || id;
  const ecoute = id => Object.keys(carnet.vus).some(k => k === id || k.startsWith(id + ':'));
  const manquees = CARTES_SAVOIR.filter(c => !(j.cartes || {})[c.id]);
@@ -6385,6 +6383,25 @@ const CIVILS_Z = [
  {lieu:'Dufour’s Place', at:[1848, 1096]}, {lieu:'Philip’s Court', at:[1968, 568]}, {lieu:'Ham Yard', at:[2568, 1592]},
  {lieu:'Angel Court', at:[2664, 1136]}, {lieu:'Naylor’s Yard', at:[664, 1232]}, {lieu:'Husband Street', at:[2488, 1104]},
 ];
+// 29 oct. (Jeremy) : à chaque partie, les civils sont cachés ailleurs : six points tirés au hasard dans les rues,
+// loin de la porte du docteur et loin les uns des autres. Si le tirage échoue, on reprend les cachettes fixes.
+function placerCivils(){
+ const rues = (LAYOUT.roads || []).filter(r => r.rect && r.name), porte = LAYOUT.anchors.snow || spawn, l = [];
+ for (let essai = 0; essai < 400 && l.length < CIVILS_Z.length && rues.length; essai++){
+  const r = rues[Math.floor(Math.random() * rues.length)], x = r.rect.x + Math.random() * r.rect.w, y = r.rect.y + Math.random() * r.rect.h;
+  const q = nearest(x, y); if (!q) continue;
+  if (Math.hypot(q[0] - porte[0], q[1] - porte[1]) < 520 || l.some(c => Math.hypot(c.at[0] - q[0], c.at[1] - q[1]) < 420)) continue;
+  l.push({lieu:r.name, at:q});
+ }
+ return l.length === CIVILS_Z.length ? l : CIVILS_Z;
+}
+// le cri d'un civil mordu : une femme ou un homme selon sa tenue, plus fort quand c'est près
+function criCivil(c){
+ const M = window.SOHO_MUSIQUE; if (!M || !M.demarree()) return;
+ const b = M.BRUITS.find(x => x.id === (c.costume.robe ? 'cri-femme' : 'cri-homme')); if (!b) return;
+ const d = Math.hypot(c.px - player.px, c.py - player.py), k = Object.assign({}, b, {force:b.force * Math.max(.3, 1 - d / 900)});
+ M.jouerBruit(k); if (!b.tampon) b.tampon = k.tampon;
+}
 // vêtements de nuit, pâles : on les distingue des zombies au premier coup d'œil
 const TENUES_CIVILS = [{manteau:'#d9cfba', robe:true, chapeau:'bonnet'}, {manteau:'#cbbfa6', chapeau:''}, {manteau:'#e2d8c3', robe:true, chapeau:''},
  {manteau:'#b9ad95', chapeau:'casquette'}, {manteau:'#d4c8b0', chapeau:''}, {manteau:'#c8b9a0', robe:true, chapeau:'bonnet'}];
@@ -6532,7 +6549,7 @@ function demarrerZ(n){
   balles_vol:[], parts:[], textes:[], coup:null, regard:{x:1, y:0}, visee:{x:1, y:0}, secousse:0, serie:0, serieT:0,
   objets:OBJETS_Z.map(o => Object.assign({}, o, {at:nearest(...o.at) || o.at, pris:false})), vagues:{}, fin:false,
   porteDit:0, hudT:0, msgT:0, ancien:[spawn[0], spawn[1]], sauves:0, perdus:0, trace:[], porteBloquee:false,
-  civils:CIVILS_Z.map((c, i) => { const q = nearest(...c.at) || c.at; return {civil:true, id:'c' + i, lieu:c.lieu, px:q[0], py:q[1], etat:'cache',
+  civils:placerCivils().map((c, i) => { const q = nearest(...c.at) || c.at; return {civil:true, id:'c' + i, lieu:c.lieu, px:q[0], py:q[1], etat:'cache',
    direction:{x:0, y:1}, moving:false, interactable:false, costume:Object.assign({}, TENUES_CIVILS[i % TENUES_CIVILS.length]), phase:0, appel:Math.random() * 3, _index:900 + i}; })};
  stop(); keys.clear();
  player.px = player.gx = player.fromX = spawn[0]; player.py = player.gy = player.fromY = spawn[1];
@@ -6659,7 +6676,7 @@ function majCivils(dt){
   if (c.etat === 'cache'){
    const d = Math.hypot(c.px - player.px, c.py - player.py);
    c.appel -= dt; if (d < 420 && c.appel <= 0){ c.appel = 4 + Math.random() * 3; Z.textes.push({x:c.px, y:c.py - 44, t:1.6, txt:'Au secours !', civil:true}); }
-   if (d < 28){ c.etat = 'suit'; sonZ('ramasser', {v:.5}); messageZ('Un civil était caché à ' + c.lieu + ' : il vous suit ! Ramenez-le chez le docteur.', 4); majHudZ(); }
+   if (d < 28){ c.etat = 'suit'; sonZ('ramasser', {v:.5}); messageZ('Un civil était caché vers ' + c.lieu + ' : il vous suit ! Ramenez-le chez le docteur.', 4); majHudZ(); }
    c.moving = false; continue;
   }
   if (c.etat !== 'suit') continue;
@@ -6681,7 +6698,7 @@ function majCivils(dt){
   const z = Z.zombies.find(z => !z.mort && !z.etourdi && Math.hypot(z.px - c.px, z.py - c.py) < 12 * TYPES_Z[z.sorte].taille);
   if (!z) continue;
   c.etat = 'mort'; Z.perdus++; z.etourdi = .8;
-  sonZ('morsure', {v:.7, pan:(c.px - player.px) / 260});
+  sonZ('morsure', {v:.7, pan:(c.px - player.px) / 260}); criCivil(c);
   const avant = Z.zombies.length; creerZombie('lent', [c.px, c.py]);
   if (Z.zombies.length > avant){ const nz = Z.zombies[Z.zombies.length - 1]; nz.costume = Object.assign({}, c.costume); nz.etourdi = 1.2; }
   messageZ('Un civil a été mordu… Il se transforme ! Protégez les autres.', 4); majHudZ();
