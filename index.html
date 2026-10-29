@@ -4552,10 +4552,10 @@ function ecranPreuves(){
  const liste = l => '<div class="reu-liste">' + l.map(x => carteExtrait(x, r.preuves.includes(x.k), 'r-preuve')).join('') + '</div>';
  const ouvert = autres.some(x => r.preuves.includes(x.k));
  carteReunion(etapeR(2, 'Les preuves') + '<h2>Prouvez-le</h2>'
-  + '<p class="reu-consigne">Vous défendez : <strong>' + esc(nomCause(r.cause) || 'aucune explication') + '</strong>. Choisissez <strong>' + (max === 3 ? 'trois extraits' : max + ' extrait' + (max > 1 ? 's' : '')) + '</strong> de votre carnet. Le conseil veut des faits que quelqu’un a vus, pas des rumeurs.</p>'
+  + '<p class="reu-consigne">Vous défendez : <strong>' + esc(nomCause(r.cause) || 'aucune explication') + '</strong>. Choisissez <strong>' + (max === 3 ? 'trois extraits' : max + ' extrait' + (max > 1 ? 's' : '')) + '</strong> de votre carnet. Le conseil veut des faits que quelqu’un a vus, pas des rumeurs. Vos arguments sont en haut, mais tout votre carnet compte : ouvrez aussi les dossiers plus bas.</p>'
   + '<p class="reu-compteur">' + r.preuves.length + ' / ' + max + '</p>'
   + (arg.length ? '<h3 class="reu-sous">Mes arguments</h3>' + liste(arg) : '')
-  + (autres.length ? '<h3 class="reu-sous">' + (arg.length ? 'Les autres extraits de mon carnet, par thème' : 'Mon carnet, par thème') + '</h3>' + listeParTheme(autres, r.preuves, 'r-preuve') : '')
+  + (autres.length ? '<h3 class="reu-sous">' + (arg.length ? 'Tout le reste de mon carnet, par thème : ouvrez les dossiers' : 'Mon carnet, par thème : ouvrez les dossiers') + '</h3>' + listeParTheme(autres, r.preuves, 'r-preuve') : '')
   + (carnet.indices.length ? '' : '<p class="reu-consigne">Votre carnet est vide.</p>')
   + '<div class="ouv-nav"><button data-act="r-retour-cause">Retour</button><button class="ouv-principal" data-act="r-vers-objection"' + (r.preuves.length >= max ? '' : ' disabled') + '>Valider</button></div>');
 }
@@ -4565,9 +4565,9 @@ function ecranObjection(){
  const r = partie.reunion, o = OBJECTIONS[r.cause];
  carteReunion(etapeR(3, 'L’objection') + '<h2>On vous contredit</h2>'
   + '<div class="reu-objection"><p class="qui">' + esc(o.qui) + '</p><p>« ' + enGras(o.texte) + ' »</p></div>'
-  + '<p class="reu-consigne">Quel extrait de votre carnet lui répond ? Choisissez-en <strong>un seul</strong>.</p>'
+  + '<p class="reu-consigne">Quel extrait de votre carnet lui répond ? Choisissez-en <strong>un seul</strong>. Vous pouvez le prendre parmi vos arguments, mais aussi <strong>n’importe où dans votre carnet</strong> : un fait qui le contredit se cache peut-être plus bas, dans les dossiers.</p>'
   + (carnet.indices.some(x => x.sacoche) ? '<h3 class="reu-sous">Mes arguments</h3><div class="reu-liste">' + carnet.indices.filter(x => x.sacoche).map(x => carteExtrait(x, r.reponse === x.k, 'r-reponse')).join('') + '</div>' : '')
-  + '<h3 class="reu-sous">Mon carnet, par thème</h3>' + listeParTheme(carnet.indices.filter(x => !x.sacoche), [r.reponse], 'r-reponse')
+  + '<h3 class="reu-sous">' + (carnet.indices.some(x => x.sacoche) ? 'Tout le reste de mon carnet, par thème : ouvrez les dossiers' : 'Mon carnet, par thème : ouvrez les dossiers') + '</h3>' + listeParTheme(carnet.indices.filter(x => !x.sacoche), [r.reponse], 'r-reponse')
   + '<div class="reu-liste"><button class="reu-carte' + (r.reponse === 'aucune' ? ' choisie' : '') + '" data-act="r-reponse" data-k="aucune"><span class="marque"></span><span class="nom">Je ne sais pas quoi répondre</span></button></div>'
   + '<div class="ouv-nav"><button data-act="r-retour-preuves">Retour</button><button class="ouv-principal" data-act="r-vers-verdict"' + (r.reponse ? '' : ' disabled') + '>Répondre</button></div>');
 }
