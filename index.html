@@ -2574,7 +2574,7 @@ const RUMEURS = [
  {h:[6, 21], j:[0, 6], d:'pauvrete', l:'Je suis tailleur. On travaille à huit dans une chambre sans air, de six heures du matin à dix heures du soir. On coud, on mange et on dort au même endroit. Le patron dit que la maladie, c’est pour les paresseux. Moi, je crois que c’est la fatigue et la misère qui nous tuent.'},
  {h:[7, 19], j:[0, 6], l:'Je travaille à la fabrique de capsules, celle de M. Eley. On manipule de la poudre toute la journée, avec les mains brûlées. Une étincelle, et tout saute. Le choléra ? C’est une misère de plus, voilà tout.'},
  {h:[6, 18], j:[0, 6], l:'Je lave le linge des familles riches, du matin au soir, les mains dans l’eau froide et la soude. Le soir, je n’ai plus de force. Ma voisine dit que l’humidité nous rend malades. Moi, je n’ai pas le temps d’être malade.'},
- {h:[7, 17], j:[0, 6], l:'Je suis ramoneur. Je passe mes journées dans les cheminées, à gratter la suie. J’en ai plein les poumons, je tousse toute la nuit. Si l’air sale rendait malade du choléra, je serais mort depuis longtemps, non ?'},
+ {h:[7, 17], j:[0, 6], l:'Je suis ramoneur. Je passe mes journées dans les cheminées, à gratter la suie. J’en ai plein les poumons et je tousse toute la nuit, mais je n’ai jamais eu le choléra. Si l’air sale rendait malade du choléra, je serais mort depuis longtemps, non ?'},
  {h:[5, 12], j:[0, 0], l:'Bonjour ! Belle journée, n’est-ce pas ? Je vais au marché de Berwick Street acheter des légumes. Il paraît qu’il y a eu du bruit cette nuit vers Broad Street. Moi, je n’ai rien entendu : je dormais comme une souche.'},
  {h:[5, 12], j:[0, 0], l:'Je vais à l’atelier. Je suis tailleur : je couds des costumes pour les messieurs riches de Regent Street. Nous, on dort à six dans une chambre. Des malades ? Il y en a toujours, en été.'},
  {h:[6, 12], j:[0, 1], l:'Je vais travailler à la brasserie. Il paraît qu’il y a eu des morts cette nuit. Mais le patron dit qu’avec une bonne bière, on ne craint rien !'},
@@ -5117,8 +5117,11 @@ Object.assign(CLES, {
  'nuit-maisons':['ils ne s’étaient pas touchés'],
  // le fait vu par Jimmy, dans le tutoriel : en bleu (un témoin l'a vu)
  'jimmy-voisin':['mon voisin, le cordonnier, est tombé malade'],
+ // le ramoneur (29 oct., Jeremy) : un argument contre l'air vicié, moyen (la suie n'est pas le miasme, et il est seul)
+ 'ramoneur-suie':['mais je n’ai jamais eu le choléra'],
 });
 ATTENDUS['jimmy-voisin'] = {fiab:'temoin'};
+ATTENDUS['ramoneur-suie'] = {contre:'miasme', fiab:'temoin'};
 for (const e of [ENQUETE.eley, ENQUETE.whitehead, ENQUETE.allumeur]) for (const v of Object.values(e.jours)) for (const i of v.indices){
  ATTENDUS[i.id] = i.attendu;
  if ([].concat(i.attendu.pour || []).includes('eau')) IDS_EAU.add(i.id);
