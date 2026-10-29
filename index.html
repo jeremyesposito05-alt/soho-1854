@@ -3876,7 +3876,11 @@ const PLANCHES = [
  {src:'images/portraits/planche-1.png', cases:{
   huggins:[0, 20, 352, 446], eley:[358, 20, 696, 446], whitehead:[699, 20, 972, 446], hospice:[973, 20, 1303, 446], veilleur:[1308, 20, 1653, 446],
   apothicaire:[0, 452, 342, 926], marchande:[346, 452, 692, 926], allumeur:[697, 452, 1000, 926], gould:[1313, 452, 1671, 926]}},
- // l'agent Turner (case 1000-1299 du bas) attend un nouveau portrait : son casque date de 1863
+ // l'agent Turner (case 1000-1299 du bas) a son portrait à part (agent.webp) : sur la planche, son casque date de 1863
+ // planche 2 : la deuxième version de l'apothicaire n'est pas reprise ; le prêcheur touche ses voisins, on coupe au plus étroit
+ {src:'images/portraits/planche-2.webp', cases:{
+  tavernier:[336, 14, 676, 447], egoutier:[682, 14, 1021, 447], ouvriere:[1028, 14, 1350, 447], voisine:[1358, 14, 1669, 447],
+  marshall:[0, 457, 325, 924], inspecteur:[331, 457, 691, 924], precheur:[691, 457, 1044, 924], mere_bentinck:[1044, 457, 1352, 924], jeune_mere:[1358, 457, 1671, 924]}},
 ];
 const imagesPlanches = {};
 function chargerPortrait(id, suite){
