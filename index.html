@@ -2808,11 +2808,16 @@ talk = function(p){
   // Le temps et l'explication ne comptent qu'une fois la dernière bulle lue.
   const ecouter = () => afficherRepliques(e.lignes, () => finDeLecture(e, cle, Math.round((Number(p.cout) || 15) * DUREE_PAROLE), ctx, e.lignes), ctx);
   // 27 oct. (Jeremy) : un témoin déjà écouté ne répète pas tout, mot pour mot, les jours suivants.
-  if (carnet.vus[cle] && p.id !== 'snow_pompe'){
+  // 29 oct. (Jeremy) : une « suite », racontée un autre jour que la première conversation (l'apothicaire et les humeurs)
+  carnet.vusLe = carnet.vusLe || {};
+  if (e0.suite && carnet.vus[cle] && !carnet.vus[p.id + ':suite'] && (carnet.vusLe[cle] ?? -1) < jour){
+   const s = Object.assign({}, e0, {defend:undefined, indices:[]}, e0.suite), ctxS = Object.assign({}, ctx, {contexte:true});
+   afficherRepliques(s.lignes, () => finDeLecture(s, p.id + ':suite', Math.round((Number(p.cout) || 15) * DUREE_PAROLE), ctxS, s.lignes), ctxS);
+  } else if (carnet.vus[cle] && p.id !== 'snow_pompe'){
    afficherRepliques(['« Je vous ai déjà raconté tout ce que je sais. » Toute la conversation est gardée dans votre carnet, page « J’ai entendu ».']);
    const b = document.createElement('button'); b.className = 'suite'; b.textContent = 'Réécouter';
    b.onclick = ecouter; ui('speech').append(b);
-  } else ecouter();
+  } else { if (!(cle in carnet.vusLe)) carnet.vusLe[cle] = jour; ecouter(); }
  }
  return true;
 };
@@ -3079,7 +3084,7 @@ addEventListener('keydown', e => {
  if (ui('carnet').open){ if (e.key !== 'Escape' && e.key !== 'Tab') e.stopImmediatePropagation(); return; }
  if ((e.key === 'c' || e.key === 'C') && !e.ctrlKey && !e.metaKey && !e.altKey && !(e.target instanceof HTMLInputElement) && !(e.target instanceof HTMLTextAreaElement)){ e.preventDefault(); ouvrirCarnet(); }
 }, true);
-function viderCarnet(){ carnet.indices = []; carnet.corbeille = []; carnet.conversations = []; carnet.connues = {}; carnet.rayees = {}; carnet.vus = {}; carnet.astuceVue = false; sauver(); majBoutonCarnet(); }
+function viderCarnet(){ carnet.indices = []; carnet.corbeille = []; carnet.conversations = []; carnet.connues = {}; carnet.rayees = {}; carnet.vus = {}; carnet.vusLe = {}; carnet.astuceVue = false; sauver(); majBoutonCarnet(); }
 ui('carnet-reset').onclick = () => { if (!confirm('Effacer tout le carnet et recommencer l’enquête ?')) return; viderCarnet(); dessinerCarnet(); };
 majBoutonCarnet();
 window.SOHO_ENQUETE = {carnet, ENQUETE, EXPLICATIONS, CLES, ouvrirCarnet, viderCarnet, indiceDe, estClasse, afficherOnglet};
@@ -5106,6 +5111,13 @@ for (const e of Object.values(ENQUETE)) for (const i of e.indices || []){
  ATTENDUS[i.id] = ATTENDUS[i.id] || i.attendu || {};
  if ([].concat(i.attendu && i.attendu.pour || []).includes('eau')) IDS_EAU.add(i.id);
 }
+// 29 oct. (Jeremy) : revenu un autre jour, l'apothicaire explique à quoi correspond chaque humeur (contexte, en rouge).
+ENQUETE.apothicaire.suite = {lignes:[
+  'Ah, vous revenez ! La dernière fois, je vous ai parlé des quatre humeurs. Vous voulez savoir à quoi elles correspondent ? Asseyez-vous, je vous explique.',
+  'Le sang vient du cœur : il est chaud et humide, comme le printemps. Le phlegme, ce liquide épais qui coule du nez quand on a un rhume, vient du cerveau : il est froid et humide, comme l’hiver.',
+  'La bile jaune vient du foie : elle est chaude et sèche, comme l’été. La bile noire vient de la rate : elle est froide et sèche, comme l’automne.',
+  'Chaque humeur donne aussi un caractère. Trop de sang, et l’on est joyeux : sanguin. Trop de bile jaune, colérique. Trop de bile noire, mélancolique, toujours triste. Trop de phlegme, flegmatique, calme et lent. Ces mots, tout le monde les emploie.',
+  'Pour soigner, il faut chasser l’humeur en trop. On saigne le malade, on le fait vomir, on le purge. Mais avec le choléra, le corps se vide déjà tout seul. Entre nous, je ne sais plus très bien quoi donner.']};
 // La dame de Bentinck Street répond aussi à l'objection de l'air : à Gravesend, l'air est pur.
 OBJECTIONS.eau.bonnes.push('bentinck');
 
@@ -5676,7 +5688,9 @@ boiteMission.addEventListener('toggle', e => { if (e.target.classList.contains('
 // ---------- qui est nouveau ? (27 oct., Jeremy : « on a l'impression de revoir les mêmes gens ») ----------
 // Un témoin pas encore écouté porte une pastille dorée « ! », visible de loin ; un témoin déjà écouté, une petite coche grise.
 const dejaEcoute = a => { if (a.ambient) return !!carnet.vus[a.id + ':' + Math.floor(state.minutes / 1440)];
- { const jj = Math.floor(state.minutes / 1440), e = ENQUETE[a.id]; if (e && e.jours && e.jours[jj]) return !!carnet.vus[a.id + ':j' + jj]; } return !!(carnet.vus[a.id] || carnet.vus[a.id + ':matin']); };
+ { const jj = Math.floor(state.minutes / 1440), e = ENQUETE[a.id]; if (e && e.jours && e.jours[jj]) return !!carnet.vus[a.id + ':j' + jj];
+   // une suite pas encore entendue, un autre jour : le témoin redevient nouveau
+   if (e && e.suite && carnet.vus[a.id] && !carnet.vus[a.id + ':suite'] && ((carnet.vusLe || {})[a.id] ?? -1) < jj) return false; } return !!(carnet.vus[a.id] || carnet.vus[a.id + ':matin']); };
 const estTemoinNouveau = a => a && a.interactable && !a.ambient && a.id !== 'snow' && !dejaEcoute(a);
 const markerOpacityAvantJournees = markerOpacity;
 markerOpacity = function(a){
