@@ -5342,7 +5342,8 @@ const JOURNEES = [
  {jour:6, nom:'Jeudi 7 septembre', debut:6 * 1440 + 7 * 60, derniere:true,
   resume:'Dernière chance : finir ce qui manque, renforcer ses preuves, puis la réunion à 19 h.',
   personnes:[], parler:0, noter:0,
-  mission:['La réunion est ce soir, à sept heures. Relisez votre carnet. Où sont vos preuves les plus faibles ? Allez les renforcer.', 'Les savoirs qui vous manquent, les questions que vous avez manquées : c’est le moment. Revenez me voir avant sept heures.'],
+  mission:['La réunion est ce soir, à sept heures. Relisez votre carnet. Où sont vos preuves les plus faibles ? Allez les renforcer.',
+   'Faites aussi un peu de ménage. Mettez à la corbeille les phrases qui ne servent à rien. Mais attention : pour chaque explication que vous pensez écarter, gardez au moins **un fait qui la contredit**. Le conseil vous demandera pourquoi vous la rejetez.', 'Les savoirs qui vous manquent, les questions que vous avez manquées : c’est le moment. Revenez me voir avant sept heures.'],
   questions:[]},
 ];
 
@@ -5374,7 +5375,11 @@ function missionEtat(i){
  if (jr.trouverSnow) l.push({ok:!!parles.snow_pompe, n:parles.snow_pompe ? 'fait' : '',
   t:'Retrouver le docteur' + (parles.snow_pompe ? '' : vus >= 2 ? ' : on l’a vu remplir des flacons à la pompe de Broad Street, à partir de onze heures' : ' : demandez aux gens que vous croisez')});
  if (jr.nuit) l.push({ok:false, t:'Rentrer chez le docteur avant l’aube', n:'', pasCompte:true});
- if (jr.derniere){ const a = carnet.indices.filter(x => x.sacoche).length; l.push({ok:a >= 3, t:'Choisir au moins 3 arguments pour la réunion', n:Math.min(a, 3) + ' / 3'}); }
+ if (jr.derniere){ const a = carnet.indices.filter(x => x.sacoche).length; l.push({ok:a >= 3, t:'Choisir au moins 3 arguments pour la réunion', n:Math.min(a, 3) + ' / 3'});
+  // un conseil, pas une condition : pour chaque explication écartée, un extrait qui la disculpe
+  const ecartees = EXPLICATIONS.filter(e => carnet.rayees[e.id]), contre = ecartees.filter(e => carnet.indices.some(x => x.contre.includes(e.id)));
+  l.push(ecartees.length ? {ok:contre.length === ecartees.length, t:'Conseil : garder un contre-argument pour chaque explication écartée', n:contre.length + ' / ' + ecartees.length, pasCompte:true}
+   : {ok:false, t:'Conseil : faire le ménage dans le carnet, et écarter les explications qui ne tiennent pas, en gardant un fait qui les contredit', n:'', pasCompte:true}); }
  return l;
 }
 const missionRemplie = i => missionEtat(i).filter(c => !c.pasCompte).every(c => c.ok);
