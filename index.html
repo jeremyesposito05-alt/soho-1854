@@ -3863,10 +3863,20 @@ function sansMagenta(im, r){
   const x = c.getContext('2d'); x.drawImage(im, r ? -r[0] : 0, r ? -r[1] : 0);
   const d = x.getImageData(0, 0, c.width, c.height), p = d.data;
   let vu = 0;
-  for (let i = 0; i < p.length; i += 4){
-   const r = p[i], g = p[i + 1], b = p[i + 2], m = Math.min(r, b) - g;   // « magenta-ité » : rouge et bleu forts, vert faible
-   if (m > 110){ p[i + 3] = 0; vu++; }
-   else if (m > 45){ const k = (m - 45) / 65; p[i + 3] = Math.round(p[i + 3] * (1 - k)); const gris = (r + g + b) / 3; p[i] = Math.round(r - (r - gris) * k); p[i + 2] = Math.round(b - (b - gris) * k); }
+  const W = c.width, H = c.height, fond = new Uint8Array(W * H);
+  for (let i = 0, n = 0; i < p.length; i += 4, n++){
+   const m = Math.min(p[i], p[i + 2]) - p[i + 1];   // « magenta-ité » : rouge et bleu forts, vert faible
+   if (m > 110){ p[i + 3] = 0; fond[n] = 1; vu++; }
+  }
+  // 30 oct. : le liseré rose restait dans les cheveux. On nettoie seulement près du fond retiré (4 pixels autour),
+  // pour ne pas toucher aux violets de l'image (les prunes de la marchande, un châle) : rouge et bleu ramenés vers le vert.
+  const pres = (xx, yy) => { for (let dy = -4; dy <= 4; dy += 2) for (let dx = -4; dx <= 4; dx += 2){ const a = xx + dx, b = yy + dy; if (a >= 0 && b >= 0 && a < W && b < H && fond[b * W + a]) return true; } return false; };
+  for (let yy = 0; yy < H; yy++) for (let xx = 0; xx < W; xx++){
+   const n = yy * W + xx, i = n * 4; if (fond[n]) continue;
+   const r = p[i], g = p[i + 1], b = p[i + 2], m = Math.min(r, b) - g;
+   if (m <= 8 || !pres(xx, yy)) continue;
+   if (m > 40) p[i + 3] = Math.round(p[i + 3] * (1 - (m - 40) / 70));
+   p[i] = Math.max(g, Math.round(r - m * .9)); p[i + 2] = Math.max(g, Math.round(b - m * .9));
   }
   if (!r && vu < p.length / 4 * .05) return im.src;   // presque pas de magenta : l'image est déjà détourée
   x.putImageData(d, 0, 0); return c.toDataURL('image/png');
@@ -3949,7 +3959,10 @@ const talkSansDecor = talk;
 talk = function(p){
  const ok = talkSansDecor(p);
  retirerDecor();
- if (ok && boiteDialogue.open && !p.ambient && DECORS[p.id] && !document.body.classList.contains('mode-zombies')) boiteDialogue.classList.add('decor-' + DECORS[p.id]);
+ // 30 oct. (Jeremy : « le décor apparaît même en pleine rue ») : l'intérieur seulement si le témoin est à son poste,
+ // devant son bâtiment ; s'il fait une course dans le quartier, on reste dans la rue
+ const aSonPoste = DECORS[p.id] === 'rue' || !p._anchor || Math.hypot(p.px - p._anchor[0], p.py - p._anchor[1]) < 110;
+ if (ok && boiteDialogue.open && !p.ambient && DECORS[p.id] && aSonPoste && !document.body.classList.contains('mode-zombies')) boiteDialogue.classList.add('decor-' + DECORS[p.id]);
  return ok;
 };
 
